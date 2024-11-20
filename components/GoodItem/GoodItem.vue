@@ -102,6 +102,7 @@
 		background-color: RGB(250, 249, 240);
 		border-radius: 5rpx;
 		box-shadow: 5rpx 5rpx 9rpx rgba(0, 0, 0, 0.5);
+		margin: 20rpx;
 	}
 
 	.card {

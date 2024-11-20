@@ -264,10 +264,138 @@ if (uni.restoreGlobal) {
     ]);
   }
   const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
-  const _sfc_main$1 = {};
+  const _sfc_main$1 = {
+    components: {
+      GoodItem: __easycom_0
+    },
+    data() {
+      return {
+        // 当前选中的项目
+        selectedProject: "",
+        // 是否显示选择弹窗
+        showSelectModal: false,
+        // 记账项目列表
+        projects: ["项目A", "项目B", "项目C"],
+        // 所有项目的 item 数据
+        allItems: {
+          "项目A": [
+            {
+              name: "商品1",
+              cnt: 10,
+              price: 100
+            },
+            {
+              name: "商品2",
+              cnt: 5,
+              price: 50
+            }
+          ],
+          "项目B": [
+            {
+              name: "商品3",
+              cnt: 15,
+              price: 150
+            },
+            {
+              name: "商品4",
+              cnt: 20,
+              price: 200
+            }
+          ],
+          "项目C": [
+            {
+              name: "商品5",
+              cnt: 30,
+              price: 300
+            },
+            {
+              name: "商品6",
+              cnt: 40,
+              price: 400
+            }
+          ]
+        }
+      };
+    },
+    computed: {
+      // 根据选中的项目筛选显示的 item 数据
+      filteredItems() {
+        return this.selectedProject ? this.allItems[this.selectedProject] : [];
+      }
+    },
+    methods: {
+      handleSettle() {
+        formatAppLog("log", "at pages/PayBill/index.vue:101", "结算功能触发！");
+      },
+      // 切换弹窗显示状态
+      toggleSelectModal() {
+        this.showSelectModal = !this.showSelectModal;
+      },
+      // 选择记账项目
+      selectProject(project) {
+        this.selectedProject = project;
+        this.toggleSelectModal();
+      }
+    }
+  };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_GoodItem = resolveEasycom(vue.resolveDynamicComponent("GoodItem"), __easycom_0);
-    return vue.openBlock(), vue.createBlock(_component_GoodItem, { class: "item" });
+    return vue.openBlock(), vue.createElementBlock("view", { class: "main-container" }, [
+      vue.createCommentVNode(" 顶部选择框 "),
+      vue.createElementVNode("view", {
+        class: "select-container",
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleSelectModal && $options.toggleSelectModal(...args))
+      }, [
+        vue.createElementVNode(
+          "text",
+          null,
+          vue.toDisplayString($data.selectedProject || "请选择记账项目"),
+          1
+          /* TEXT */
+        )
+      ]),
+      vue.createCommentVNode(" 列表 "),
+      vue.createVNode(_component_GoodItem, { class: "item" }),
+      vue.createVNode(_component_GoodItem, { class: "item" }),
+      vue.createVNode(_component_GoodItem, { class: "item" }),
+      vue.createVNode(_component_GoodItem, { class: "item" }),
+      vue.createVNode(_component_GoodItem, { class: "item" }),
+      vue.createVNode(_component_GoodItem, { class: "item" }),
+      vue.createVNode(_component_GoodItem, { class: "item" }),
+      vue.createVNode(_component_GoodItem, { class: "item" }),
+      vue.createVNode(_component_GoodItem, { class: "item" }),
+      vue.createCommentVNode(" 底部固定按钮 "),
+      vue.createElementVNode("view", {
+        class: "fixed-button",
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.handleSettle && $options.handleSettle(...args))
+      }, " 结算 "),
+      vue.createCommentVNode(" 弹窗选择 "),
+      $data.showSelectModal ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "modal-overlay"
+      }, [
+        vue.createElementVNode("view", { class: "modal-content" }, [
+          vue.createElementVNode("text", { class: "modal-title" }, "选择记账项目"),
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($data.projects, (project, idx) => {
+              return vue.openBlock(), vue.createElementBlock("view", {
+                class: "modal-item",
+                key: idx,
+                onClick: ($event) => $options.selectProject(project)
+              }, vue.toDisplayString(project), 9, ["onClick"]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          )),
+          vue.createElementVNode("button", {
+            class: "close-button",
+            onClick: _cache[2] || (_cache[2] = (...args) => $options.toggleSelectModal && $options.toggleSelectModal(...args))
+          }, "关闭")
+        ])
+      ])) : vue.createCommentVNode("v-if", true)
+    ]);
   }
   const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);

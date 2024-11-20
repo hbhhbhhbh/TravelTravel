@@ -10,6 +10,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 1000;
 }
 .modal-content[data-v-c7245072] {
 	width: 80%;
@@ -57,6 +58,7 @@ uni-input[data-v-c7245072] {
 		background-color: RGB(250, 249, 240);
 		border-radius: 0.15625rem;
 		box-shadow: 0.15625rem 0.15625rem 0.28125rem rgba(0, 0, 0, 0.5);
+		margin: 0.625rem;
 }
 .card[data-v-c7245072] {
 		padding: 0.3125rem;
