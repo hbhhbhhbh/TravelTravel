@@ -50,7 +50,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$b = {
+  const _sfc_main$c = {
     name: "GoodItem",
     props: {
       index: {
@@ -75,27 +75,34 @@ if (uni.restoreGlobal) {
       };
     },
     methods: {
+      showPer() {
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:81", "跳转");
+        uni.navigateTo({
+          url: "/pages/showPer/showPer"
+        });
+      },
       toggleModal() {
         this.showModal = !this.showModal;
       },
       submitForm() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:77", "提交的表单数据:", this.formData);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:92", "提交的表单数据:", this.formData);
         this.$emit("update-item", this.index, {
           ...this.formData
         });
         this.toggleModal();
       },
       deleteSelf() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:90", this.index);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:105", this.index);
         this.$emit("delete-item", this.index);
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       vue.Fragment,
       null,
       [
+        vue.createCommentVNode(" 卡片 "),
         vue.createElementVNode("view", { class: "Item-container" }, [
           vue.createElementVNode("view", { class: "card" }, [
             vue.createElementVNode("view", { class: "top-bar" }, [
@@ -144,6 +151,12 @@ if (uni.restoreGlobal) {
                 src: _imports_0,
                 class: "set-info"
               })
+            ]),
+            vue.createElementVNode("view", { class: "per" }, [
+              vue.createElementVNode("view", {
+                style: { "background-color": "white", "width": "350rpx", "text-align": "center", "border-radius": "5rpx", "border": "1px solid black" },
+                onClick: _cache[2] || (_cache[2] = (...args) => $options.showPer && $options.showPer(...args))
+              }, " 查看含有人员 ")
             ])
           ])
         ]),
@@ -157,14 +170,14 @@ if (uni.restoreGlobal) {
               vue.createElementVNode("text", null, "填写内容"),
               vue.createElementVNode("view", {
                 class: "close-button",
-                onClick: _cache[2] || (_cache[2] = (...args) => $options.toggleModal && $options.toggleModal(...args))
+                onClick: _cache[3] || (_cache[3] = (...args) => $options.toggleModal && $options.toggleModal(...args))
               }, "×")
             ]),
             vue.createCommentVNode(" 表单内容 "),
             vue.createElementVNode(
               "form",
               {
-                onSubmit: _cache[7] || (_cache[7] = vue.withModifiers((...args) => $options.submitForm && $options.submitForm(...args), ["prevent"]))
+                onSubmit: _cache[8] || (_cache[8] = vue.withModifiers((...args) => $options.submitForm && $options.submitForm(...args), ["prevent"]))
               },
               [
                 vue.createElementVNode("view", { class: "form-group" }, [
@@ -173,7 +186,7 @@ if (uni.restoreGlobal) {
                     "input",
                     {
                       type: "text",
-                      "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.formData.name = $event),
+                      "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.formData.name = $event),
                       placeholder: "请输入名称"
                     },
                     null,
@@ -189,7 +202,7 @@ if (uni.restoreGlobal) {
                     "input",
                     {
                       type: "number",
-                      "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.formData.cnt = $event),
+                      "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.formData.cnt = $event),
                       placeholder: "请输入数量"
                     },
                     null,
@@ -205,7 +218,7 @@ if (uni.restoreGlobal) {
                     "input",
                     {
                       type: "number",
-                      "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.formData.price = $event),
+                      "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => $data.formData.price = $event),
                       placeholder: "请输入价格"
                     },
                     null,
@@ -217,7 +230,7 @@ if (uni.restoreGlobal) {
                 ]),
                 vue.createElementVNode("button", {
                   type: "button",
-                  onClick: _cache[6] || (_cache[6] = (...args) => $options.submitForm && $options.submitForm(...args)),
+                  onClick: _cache[7] || (_cache[7] = (...args) => $options.submitForm && $options.submitForm(...args)),
                   class: "submit-button"
                 }, "提交")
               ],
@@ -231,8 +244,8 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT */
     );
   }
-  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
-  const _sfc_main$a = {
+  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
+  const _sfc_main$b = {
     __name: "index",
     setup(__props, { expose: __expose }) {
       __expose();
@@ -242,11 +255,11 @@ if (uni.restoreGlobal) {
       return __returned__;
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { style: { "display": "flex", "justify-content": "center" } });
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
-  const _sfc_main$9 = {
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
+  const _sfc_main$a = {
     components: {
       GoodItem: __easycom_0$2
     },
@@ -337,7 +350,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_GoodItem = resolveEasycom(vue.resolveDynamicComponent("GoodItem"), __easycom_0$2);
     return vue.openBlock(), vue.createElementBlock("view", { class: "main-container" }, [
       vue.createCommentVNode(" 顶部选择框和添加按钮 "),
@@ -401,7 +414,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-1fc7d2ef"], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
+  const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-1fc7d2ef"], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
   function openSqlite() {
     return new Promise((resolve, reject) => {
       plus.sqlite.openDatabase({
@@ -423,7 +436,54 @@ if (uni.restoreGlobal) {
       plus.sqlite.executeSql({
         name: "travel",
         //表格创建或者打开，后面为表格结构
-        sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"billid" INTEGER,"project" TEXT,"name" TEXT, "cnt" INTEGER, "price" INTEGER )',
+        sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"billid" INTEGER,"projectId" INTEGER,"name" TEXT, "cnt" INTEGER, "price" INTEGER )',
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function updateTableStructure(tableName, columnName, columnType) {
+    return new Promise((resolve, reject) => {
+      const sql = `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${columnType}`;
+      plus.sqlite.executeSql({
+        name: "travel",
+        // 数据库名称
+        sql,
+        success(e) {
+          resolve(`表 ${tableName} 成功添加字段 ${columnName} (${columnType})`);
+        },
+        fail(e) {
+          reject(`更新表结构失败: ${JSON.stringify(e)}`);
+        }
+      });
+    });
+  }
+  function deleteTable(tableName) {
+    return new Promise((resolve, reject) => {
+      const sql = `DROP TABLE IF EXISTS ${tableName}`;
+      plus.sqlite.executeSql({
+        name: "travel",
+        // 数据库名称
+        sql,
+        success(e) {
+          resolve(`表 ${tableName} 删除成功`);
+        },
+        fail(e) {
+          reject(`删除表 ${tableName} 失败: ${JSON.stringify(e)}`);
+        }
+      });
+    });
+  }
+  function CreateProjectSQL() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        //表格创建或者打开，后面为表格结构
+        sql: 'create table if not exists project("id" INTEGER PRIMARY KEY ,"projectId" INTEGER,"projectName" TEXT )',
         success(e) {
           resolve(e);
         },
@@ -438,7 +498,7 @@ if (uni.restoreGlobal) {
       plus.sqlite.executeSql({
         name: "travel",
         //表格创建或者打开，后面为表格结构
-        sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"userid" INTEGER,"Billid" INTEGER )',
+        sql: 'create table if not exists BillUser("id" INTEGER PRIMARY KEY ,"userid" INTEGER,"Billid" INTEGER )',
         success(e) {
           resolve(e);
         },
@@ -518,7 +578,7 @@ if (uni.restoreGlobal) {
       if (aa == void 0) {
         var sql = "select * from " + name;
       }
-      formatAppLog("log", "at common/util/operateSqlite.js:146", sql);
+      formatAppLog("log", "at common/util/operateSqlite.js:195", sql);
       return new Promise((resolve, reject) => {
         plus.sqlite.selectSql({
           name: "travel",
@@ -544,7 +604,7 @@ if (uni.restoreGlobal) {
       } else {
         var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
       }
-      formatAppLog("log", "at common/util/operateSqlite.js:179", sql);
+      formatAppLog("log", "at common/util/operateSqlite.js:228", sql);
       return new Promise((resolve, reject) => {
         plus.sqlite.executeSql({
           name: "travel",
@@ -620,6 +680,7 @@ if (uni.restoreGlobal) {
     });
   }
   const util = {
+    CreateProjectSQL,
     CreateUserSQL,
     CreateBillUserSQL,
     CreateBillSQL,
@@ -631,9 +692,11 @@ if (uni.restoreGlobal) {
     pullSQL,
     isOpen,
     closeSQL,
-    modifyInformation
+    modifyInformation,
+    updateTableStructure,
+    deleteTable
   };
-  const _sfc_main$8 = {
+  const _sfc_main$9 = {
     data() {
       return {
         // odb:'',
@@ -660,14 +723,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:47", "表格创建成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:50", "表格创建成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "数据库打开失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:55", "表格创建失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:58", "表格创建失败：", error2);
         });
       },
       createBillTable() {
@@ -682,14 +745,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:71", "表格创建成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:74", "表格创建成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "表格创建失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:79", "表格创建失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:82", "表格创建失败：", error2);
         });
       },
       createBillUserTable() {
@@ -704,14 +767,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:95", "表格创建成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:98", "表格创建成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "表格创建失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:103", "表格创建失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:106", "表格创建失败：", error2);
         });
       },
       createUserTable() {
@@ -726,19 +789,66 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:119", "表格创建成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:122", "表格创建成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "表格创建失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:127", "表格创建失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:130", "表格创建失败：", error2);
+        });
+      },
+      createProjectTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
+        });
+        util.CreateProjectSQL().then((result) => {
+          uni.showToast({
+            title: "Project表格创建成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:146", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:154", "表格创建失败：", error2);
+        });
+      },
+      updateTable() {
+        util.updateTableStructure("Bill", "project", "INTEGER");
+      },
+      deleteTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
+        });
+        util.deleteTable("Bill").then((result) => {
+          uni.showToast({
+            title: "Bill表格删除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:174", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:182", "表格创建失败：", error2);
         });
       }
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "" }, [
       vue.createCommentVNode(" <div>{{odb}}</div> "),
       vue.createElementVNode("div", null, [
@@ -757,11 +867,23 @@ if (uni.restoreGlobal) {
         vue.createElementVNode("button", {
           type: "default",
           onClick: _cache[3] || (_cache[3] = (...args) => $options.createUserTable && $options.createUserTable(...args))
-        }, "新建User库")
+        }, "新建User库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[4] || (_cache[4] = (...args) => $options.createProjectTable && $options.createProjectTable(...args))
+        }, "新建Project库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[5] || (_cache[5] = (...args) => $options.updateTable && $options.updateTable(...args))
+        }, "更新表结构库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[6] || (_cache[6] = (...args) => $options.deleteTable && $options.deleteTable(...args))
+        }, "删除表")
       ])
     ]);
   }
-  const PagesSqlSql = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "D:/uni/travel-new/pages/sql/sql.vue"]]);
+  const PagesSqlSql = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "D:/uni/travel-new/pages/sql/sql.vue"]]);
   const icons = {
     "uicon-level": "",
     "uicon-column-line": "",
@@ -3616,7 +3738,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$7 = {
+  const _sfc_main$8 = {
     name: "u-icon",
     data() {
       return {};
@@ -3675,7 +3797,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -3719,7 +3841,7 @@ if (uni.restoreGlobal) {
       /* CLASS */
     );
   }
-  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-1c933a9a"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-icon/u-icon.vue"]]);
+  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-1c933a9a"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-icon/u-icon.vue"]]);
   const props$4 = defineMixin({
     props: {
       // 搜索框形状，round-圆形，square-方形
@@ -3852,7 +3974,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$6 = {
+  const _sfc_main$7 = {
     name: "u-search",
     mixins: [mpMixin, mixin, props$4],
     data() {
@@ -3946,7 +4068,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_u_icon = resolveEasycom(vue.resolveDynamicComponent("u-icon"), __easycom_0$1);
     return vue.openBlock(), vue.createElementBlock(
       "view",
@@ -4042,7 +4164,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-ed789780"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-search/u-search.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-ed789780"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-search/u-search.vue"]]);
   const props$3 = defineMixin({
     props: {
       color: {
@@ -4076,7 +4198,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$5 = {
+  const _sfc_main$6 = {
     name: "u-line",
     mixins: [mpMixin, mixin, props$3],
     computed: {
@@ -4101,7 +4223,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -4113,7 +4235,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-bbd9963c"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-line/u-line.vue"]]);
+  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-bbd9963c"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-line/u-line.vue"]]);
   const props$2 = defineMixin({
     props: {
       // 标题
@@ -4224,7 +4346,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$4 = {
+  const _sfc_main$5 = {
     name: "u-cell",
     data() {
       return {};
@@ -4251,7 +4373,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_u_icon = resolveEasycom(vue.resolveDynamicComponent("u-icon"), __easycom_0$1);
     const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$1);
     return vue.openBlock(), vue.createElementBlock("view", {
@@ -4355,7 +4477,7 @@ if (uni.restoreGlobal) {
       _ctx.border ? (vue.openBlock(), vue.createBlock(_component_u_line, { key: 0 })) : vue.createCommentVNode("v-if", true)
     ], 14, ["hover-class"]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-b4243719"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-cell/u-cell.vue"]]);
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-b4243719"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-cell/u-cell.vue"]]);
   const props$1 = defineMixin({
     props: {
       // 用于滚动到指定item
@@ -4365,7 +4487,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$3 = {
+  const _sfc_main$4 = {
     name: "u-list-item",
     mixins: [mpMixin, mixin, props$1],
     data() {
@@ -4428,7 +4550,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["u-list-item", [`u-list-item-${_ctx.anchor}`]]),
       ref: `u-list-item-${_ctx.anchor}`,
@@ -4437,7 +4559,7 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ], 10, ["anchor"]);
   }
-  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-32197ac9"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list-item/u-list-item.vue"]]);
+  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-32197ac9"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list-item/u-list-item.vue"]]);
   const props = defineMixin({
     props: {
       // 控制是否出现滚动条，仅nvue有效
@@ -4537,7 +4659,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$2 = {
+  const _sfc_main$3 = {
     name: "u-list",
     mixins: [mpMixin, mixin, props],
     watch: {
@@ -4626,7 +4748,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("scroll-view", {
       class: "u-list",
       "scroll-into-view": _ctx.scrollIntoView,
@@ -4657,12 +4779,12 @@ if (uni.restoreGlobal) {
       ])
     ], 44, ["scroll-into-view", "scroll-y", "scroll-top", "lower-threshold", "upper-threshold", "show-scrollbar", "enable-back-to-top", "scroll-with-animation", "refresher-enabled", "refresher-threshold", "refresher-default-style", "refresher-background", "refresher-triggered"]);
   }
-  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-9ad03670"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list/u-list.vue"]]);
-  const keyword = vue.ref("");
-  const _sfc_main$1 = {
+  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-9ad03670"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list/u-list.vue"]]);
+  const keyword$1 = vue.ref("");
+  const _sfc_main$2 = {
     data() {
       return {
-        keyword,
+        keyword: keyword$1,
         indexList: [],
         showModal: false,
         // 控制模态框显示
@@ -4773,6 +4895,256 @@ if (uni.restoreGlobal) {
           this.loadUsers();
         } catch (error2) {
           formatAppLog("error", "at pages/home/index.vue:172", "添加用户失败：", error2);
+          uni.showToast({
+            title: "用户添加失败",
+            icon: "none"
+          });
+        }
+      }
+    },
+    mounted() {
+      util.openSqlite();
+      this.loadUsers();
+    }
+  };
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_up_search = resolveEasycom(vue.resolveDynamicComponent("up-search"), __easycom_0);
+    const _component_up_cell = resolveEasycom(vue.resolveDynamicComponent("up-cell"), __easycom_1);
+    const _component_up_list_item = resolveEasycom(vue.resolveDynamicComponent("up-list-item"), __easycom_2);
+    const _component_up_list = resolveEasycom(vue.resolveDynamicComponent("up-list"), __easycom_3);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
+      vue.createCommentVNode(" 列表 "),
+      vue.createVNode(_component_up_search, {
+        placeholder: "输入搜索名字",
+        modelValue: $data.keyword,
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.keyword = $event),
+        clearabled: true,
+        "show-action": true,
+        actionText: "搜索",
+        onSearch: $options.handleSearch,
+        onCustom: $options.handleSearch
+      }, null, 8, ["modelValue", "onSearch", "onCustom"]),
+      vue.createVNode(_component_up_list, {
+        onScrolltolower: $options.scrolltolower
+      }, {
+        default: vue.withCtx(() => [
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($data.indexList, (item, index2) => {
+              return vue.openBlock(), vue.createBlock(
+                _component_up_list_item,
+                {
+                  key: index2,
+                  class: "items"
+                },
+                {
+                  default: vue.withCtx(() => [
+                    vue.createVNode(_component_up_cell, {
+                      title: item.name
+                    }, null, 8, ["title"]),
+                    vue.createElementVNode("image", {
+                      src: _imports_0,
+                      style: { "height": "30rpx", "width": "30rpx", "margin-right": "30rpx" },
+                      onClick: ($event) => $options.showDeleteModal(index2)
+                    }, null, 8, ["onClick"])
+                  ]),
+                  _: 2
+                  /* DYNAMIC */
+                },
+                1024
+                /* DYNAMIC_SLOTS */
+              );
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ]),
+        _: 1
+        /* STABLE */
+      }, 8, ["onScrolltolower"]),
+      vue.createCommentVNode(" 蓝色添加按钮 "),
+      vue.createElementVNode("button", {
+        class: "add-button",
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.showAddModal && $options.showAddModal(...args))
+      }, "+"),
+      $data.showModal ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "modal-overlay"
+      }, [
+        vue.createElementVNode("view", { class: "modal-content" }, [
+          vue.createElementVNode("view", { class: "modal-header" }, "添加用户"),
+          vue.createElementVNode("view", { class: "modal-body" }, [
+            vue.withDirectives(vue.createElementVNode(
+              "input",
+              {
+                class: "input",
+                type: "text",
+                placeholder: "请输入用户名称",
+                "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.newUserName = $event)
+              },
+              null,
+              512
+              /* NEED_PATCH */
+            ), [
+              [vue.vModelText, $data.newUserName]
+            ])
+          ]),
+          vue.createElementVNode("view", { class: "modal-footer" }, [
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[3] || (_cache[3] = (...args) => $options.addUserToDB && $options.addUserToDB(...args))
+            }, "确认"),
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[4] || (_cache[4] = (...args) => $options.closeModal && $options.closeModal(...args))
+            }, "取消")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createCommentVNode(" 提示是否删除user "),
+      $data.showModaldelete ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "modal-overlay"
+      }, [
+        vue.createElementVNode("view", { class: "modal-content" }, [
+          vue.createElementVNode(
+            "view",
+            { class: "modal-header" },
+            "确认删除" + vue.toDisplayString($data.nowDeleteUser) + "？",
+            1
+            /* TEXT */
+          ),
+          vue.createElementVNode("view", { class: "modal-footer" }, [
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[5] || (_cache[5] = ($event) => $options.deleteUser($data.nowDeleteUser))
+            }, "确认"),
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[6] || (_cache[6] = (...args) => $options.closeDeleteModal && $options.closeDeleteModal(...args))
+            }, "取消")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const PagesHomeIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-4978fed5"], ["__file", "D:/uni/travel-new/pages/home/index.vue"]]);
+  const keyword = vue.ref("");
+  const _sfc_main$1 = {
+    data() {
+      return {
+        keyword,
+        indexList: [],
+        showModal: false,
+        // 控制模态框显示
+        newUserName: "",
+        // 新用户名称
+        showModaldelete: false,
+        //控制删除确认弹窗
+        nowDeleteUser: ""
+      };
+    },
+    methods: {
+      async deleteUser(name) {
+        this.closeDeleteModal();
+        formatAppLog("log", "at pages/showPer/showPer.vue:67", "要删除的名字" + name);
+        try {
+          const result = await util.deleteInformationType("user", "name", name);
+          formatAppLog("log", "at pages/showPer/showPer.vue:71", "用户" + name + "删除成功：");
+          this.handleSearch();
+        } catch (error2) {
+          formatAppLog("error", "at pages/showPer/showPer.vue:74", "加载用户失败：", error2);
+          uni.showToast({
+            title: "加载用户失败",
+            icon: "none"
+          });
+        }
+      },
+      closeDeleteModal() {
+        this.showModaldelete = false;
+        this.nowDeleteUser = "";
+      },
+      showDeleteModal(index2) {
+        this.showModaldelete = true;
+        this.nowDeleteUser = this.indexList[index2].name;
+      },
+      handleSearch() {
+        this.performSearch(this.keyword);
+      },
+      async performSearch(keyword2) {
+        try {
+          var result;
+          if (keyword2 == "") {
+            this.loadUsers();
+            return;
+          } else {
+            formatAppLog("log", "at pages/showPer/showPer.vue:103", "按条件搜索： " + keyword2);
+            result = await util.selectInformationType("user", "name", '"' + keyword2 + '%"');
+            formatAppLog("log", "at pages/showPer/showPer.vue:106", "result: ", result);
+          }
+          formatAppLog("log", "at pages/showPer/showPer.vue:108", "用户列表加载成功：", result);
+          this.indexList = result;
+        } catch (error2) {
+          formatAppLog("error", "at pages/showPer/showPer.vue:111", "加载用户失败：", error2);
+          uni.showToast({
+            title: "加载用户失败",
+            icon: "none"
+          });
+        }
+      },
+      async loadUsers() {
+        try {
+          const result = await util.selectInformationType("user");
+          formatAppLog("log", "at pages/showPer/showPer.vue:122", "用户列表加载成功：", result);
+          this.indexList = result;
+        } catch (error2) {
+          formatAppLog("error", "at pages/showPer/showPer.vue:125", "加载用户失败：", error2);
+          uni.showToast({
+            title: "加载用户失败",
+            icon: "none"
+          });
+        }
+      },
+      showAddModal() {
+        this.showModal = true;
+      },
+      closeModal() {
+        this.showModal = false;
+        this.newUserName = "";
+      },
+      scrolltolower() {
+        this.loadmore();
+      },
+      loadmore() {
+        for (let i = 0; i < 30; i++) {
+          this.indexList.push({
+            url: this.urls[uni.$u.random(0, this.urls.length - 1)]
+          });
+        }
+      },
+      async addUserToDB() {
+        if (!this.newUserName.trim()) {
+          uni.showToast({
+            title: "名称不能为空",
+            icon: "none"
+          });
+          return;
+        }
+        const obj = {
+          id: 1,
+          name: this.newUserName
+        };
+        try {
+          await util.addUser(obj);
+          uni.showToast({
+            title: "用户添加成功",
+            icon: "success"
+          });
+          this.closeModal();
+          this.loadUsers();
+        } catch (error2) {
+          formatAppLog("error", "at pages/showPer/showPer.vue:172", "添加用户失败：", error2);
           uni.showToast({
             title: "用户添加失败",
             icon: "none"
@@ -4907,11 +5279,12 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const PagesHomeIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-4978fed5"], ["__file", "D:/uni/travel-new/pages/home/index.vue"]]);
+  const PagesShowPerShowPer = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-8ab1b92c"], ["__file", "D:/uni/travel-new/pages/showPer/showPer.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/PayBill/index", PagesPayBillIndex);
   __definePage("pages/sql/sql", PagesSqlSql);
   __definePage("pages/home/index", PagesHomeIndex);
+  __definePage("pages/showPer/showPer", PagesShowPerShowPer);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");

@@ -21,7 +21,7 @@ function CreateBillSQL() {
 		plus.sqlite.executeSql({
 			name: 'travel',
 			//表格创建或者打开，后面为表格结构
-			sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"billid" INTEGER,"project" TEXT,"name" TEXT, "cnt" INTEGER, "price" INTEGER )',
+			sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"billid" INTEGER,"projectId" INTEGER,"name" TEXT, "cnt" INTEGER, "price" INTEGER )',
 			success(e) {
 				resolve(e);
 			},
@@ -31,7 +31,56 @@ function CreateBillSQL() {
 		})
 	})
 }
+//更新表
+function updateTableStructure(tableName, columnName, columnType) {
+	return new Promise((resolve, reject) => {
+		const sql = `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${columnType}`;
+		plus.sqlite.executeSql({
+			name: 'travel', // 数据库名称
+			sql: sql,
+			success(e) {
+				resolve(`表 ${tableName} 成功添加字段 ${columnName} (${columnType})`);
+			},
+			fail(e) {
+				reject(`更新表结构失败: ${JSON.stringify(e)}`);
+			},
+		});
+	});
+}
+//删除表
+function deleteTable(tableName) {
+	return new Promise((resolve, reject) => {
+		const sql = `DROP TABLE IF EXISTS ${tableName}`;
+		plus.sqlite.executeSql({
+			name: 'travel', // 数据库名称
+			sql: sql,
+			success(e) {
+				resolve(`表 ${tableName} 删除成功`);
+			},
+			fail(e) {
+				reject(`删除表 ${tableName} 失败: ${JSON.stringify(e)}`);
+			},
+		});
+	});
+}
 
+//创建project表
+function CreateProjectSQL() {
+	return new Promise((resolve, reject) => {
+		//创建表格在executeSql方法里写
+		plus.sqlite.executeSql({
+			name: 'travel',
+			//表格创建或者打开，后面为表格结构
+			sql: 'create table if not exists project("id" INTEGER PRIMARY KEY ,"projectId" INTEGER,"projectName" TEXT )',
+			success(e) {
+				resolve(e);
+			},
+			fail(e) {
+				reject(e);
+			}
+		})
+	})
+}
 //创建项目账单-用户表
 function CreateBillUserSQL() {
 	return new Promise((resolve, reject) => {
@@ -39,7 +88,7 @@ function CreateBillUserSQL() {
 		plus.sqlite.executeSql({
 			name: 'travel',
 			//表格创建或者打开，后面为表格结构
-			sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"userid" INTEGER,"Billid" INTEGER )',
+			sql: 'create table if not exists BillUser("id" INTEGER PRIMARY KEY ,"userid" INTEGER,"Billid" INTEGER )',
 			success(e) {
 				resolve(e);
 			},
@@ -272,6 +321,7 @@ function pullSQL(id, num) {
 }
 //把这些方法导出去
 export default {
+	CreateProjectSQL,
 	CreateUserSQL,
 	CreateBillUserSQL,
 	CreateBillSQL,
@@ -284,4 +334,6 @@ export default {
 	isOpen,
 	closeSQL,
 	modifyInformation,
+	updateTableStructure,
+	deleteTable,
 }

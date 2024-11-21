@@ -55,7 +55,7 @@ uni-input[data-v-c7245072] {
 .Item-container[data-v-c7245072] {
 
 		width: 18.75rem;
-		height: 4.6875rem;
+		height: 6.25rem;
 		background-color: RGB(250, 249, 240);
 		border-radius: 0.15625rem;
 		box-shadow: 0.15625rem 0.15625rem 0.28125rem rgba(0, 0, 0, 0.5);
@@ -82,4 +82,10 @@ uni-input[data-v-c7245072] {
 }
 .input-item[data-v-c7245072] {
 		color: RGB(87, 91, 90);
+}
+.per[data-v-c7245072] {
+		display: flex;
+		justify-content: center;
+		font-size: 0.625rem;
+		margin-top: 0.46875rem;
 }

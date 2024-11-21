@@ -1,4 +1,5 @@
 <template>
+	<!-- 卡片 -->
 	<view class="Item-container">
 		<view class="card">
 			<view class="top-bar">
@@ -12,6 +13,14 @@
 				<view class="input-item cnt" style="font-size: 25rpx; width: 200rpx">{{ showData.cnt }}</view>
 				<view class="input-item price" style="font-size: 25rpx; width: 120rpx">{{ showData.price }}</view>
 				<image @click="deleteSelf" src="../../static/GoodItem/delete.png" class="set-info"></image>
+			</view>
+			<view class="per">
+				<view
+					style="background-color: white;width:350rpx;text-align: center;border-radius: 5rpx;border: 1px solid black;"
+					@click="showPer">
+					查看含有人员
+				</view>
+
 			</view>
 		</view>
 	</view>
@@ -68,6 +77,12 @@
 			};
 		},
 		methods: {
+			showPer() {
+				console.log("跳转");
+				uni.navigateTo({
+					url: "/pages/showPer/showPer"
+				})
+			},
 			toggleModal() {
 				// 切换弹窗显示状态
 				this.showModal = !this.showModal;
@@ -101,7 +116,7 @@
 	.Item-container {
 
 		width: 600rpx;
-		height: 150rpx;
+		height: 200rpx;
 		background-color: RGB(250, 249, 240);
 		border-radius: 5rpx;
 		box-shadow: 5rpx 5rpx 9rpx rgba(0, 0, 0, 0.5);
@@ -134,5 +149,13 @@
 
 	.input-item {
 		color: RGB(87, 91, 90);
+	}
+
+	.per {
+		display: flex;
+		justify-content: center;
+		font-size: 20rpx;
+		margin-top: 15rpx;
+
 	}
 </style>

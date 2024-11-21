@@ -32,6 +32,13 @@
 			"style": {
 				"navigationBarTitleText": "人员"
 			}
+		},
+
+		{
+			"path": "pages/showPer/showPer",
+			"style": {
+				"navigationBarTitleText": "当前人员"
+			}
 		}
 	],
 

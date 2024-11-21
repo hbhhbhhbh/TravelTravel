@@ -6,6 +6,9 @@
 			<button type="default" @click="isopenDB">判断数据库是否打开</button>
 			<button type="default" @click="createBillUserTable">新建BillUser库</button>
 			<button type="default" @click="createUserTable">新建User库</button>
+			<button type="default" @click="createProjectTable">新建Project库</button>
+			<button type="default" @click="updateTable">更新表结构库</button>
+			<button type="default" @click="deleteTable">删除表</button>
 		</div>
 	</view>
 </template>
@@ -113,6 +116,58 @@
 					.then((result) => {
 						uni.showToast({
 							title: 'BillUser表格创建成功',
+							icon: 'success',
+							duration: 2000
+						});
+						console.log('表格创建成功：', result); // 可选，保留日志
+					})
+					.catch((error) => {
+						uni.showToast({
+							title: '表格创建失败',
+							icon: 'error',
+							duration: 2000
+						});
+						console.error('表格创建失败：', error); // 可选，保留日志
+					});
+			},
+			createProjectTable() {
+				uni.showToast({
+					title: '测试',
+					icon: 'success',
+					duration: 2000
+				});
+				util.CreateProjectSQL()
+					.then((result) => {
+						uni.showToast({
+							title: 'Project表格创建成功',
+							icon: 'success',
+							duration: 2000
+						});
+						console.log('表格创建成功：', result); // 可选，保留日志
+					})
+					.catch((error) => {
+						uni.showToast({
+							title: '表格创建失败',
+							icon: 'error',
+							duration: 2000
+						});
+						console.error('表格创建失败：', error); // 可选，保留日志
+					});
+			},
+
+			updateTable() {
+				util.updateTableStructure("Bill", "project", "INTEGER");
+			},
+			deleteTable() {
+				uni.showToast({
+					title: '测试',
+					icon: 'success',
+					duration: 2000
+				});
+				util.deleteTable("Bill")
+					.then((result) => {
+						uni.showToast({
+							title: 'Bill表格删除成功',
 							icon: 'success',
 							duration: 2000
 						});
