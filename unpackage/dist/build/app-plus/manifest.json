@@ -17,6 +17,7 @@
     "url": ""
   },
   "permissions": {
+    "SQLite": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }
@@ -119,6 +120,12 @@
         {
           "pagePath": "pages/PayBill/index",
           "text": "分账",
+          "iconPath": "/static/paylist.png",
+          "selectedIconPath": "/static/paylistSelected.png"
+        },
+        {
+          "pagePath": "pages/sql/sql",
+          "text": "sql-test",
           "iconPath": "/static/paylist.png",
           "selectedIconPath": "/static/paylistSelected.png"
         }

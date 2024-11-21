@@ -49,20 +49,19 @@
 			index: {
 				type: Number, // 父组件传入的索引，用于标识具体的卡片
 				required: true
-			}
+			},
+			showData: {
+				type: Object,
+				required: true, // 从父组件接收数据
+			},
 		},
+		inheritAttrs: false,
 		data() {
 			return {
 				showModal: false, // 控制弹窗显示
-				showData: {
-					name: '', // 表单字段：名称
-					price: '', // 表单字段：价格
-					cnt: ''
-				},
+
 				formData: {
-					name: '', // 表单字段：名称
-					price: '', // 表单字段：价格
-					cnt: ''
+					...this.showData,
 				}
 			};
 		},
@@ -77,14 +76,16 @@
 
 				// 可以在这里发送表单数据到后台
 				// axios.post('/api/submit', this.formData).then(...);
-
+				this.$emit('update-item', this.index, {
+					...this.formData
+				});
 				// 隐藏弹窗
 				this.toggleModal();
-				this.showData.cnt = this.formData.cnt;
-				this.showData.price = this.formData.price;
-				this.showData.name = this.formData.name;
+
+
 			},
 			deleteSelf() {
+				console.log(this.index)
 				// 触发自定义事件，通知父组件删除此卡片
 				this.$emit('delete-item', this.index);
 			}
@@ -92,7 +93,7 @@
 	};
 </script>
 
-<style>
+<style scoped>
 	@import '@/components/GoodItem/box.css';
 
 	.Item-container {

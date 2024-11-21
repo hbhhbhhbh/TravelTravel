@@ -30,6 +30,7 @@
 }
 
 .close-button {
+	background-color: white;
 	cursor: pointer;
 	font-size: 32rpx;
 	color: #999;

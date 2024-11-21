@@ -50,32 +50,27 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$3 = {
+  const _sfc_main$4 = {
     name: "GoodItem",
     props: {
       index: {
         type: Number,
         // 父组件传入的索引，用于标识具体的卡片
         required: true
+      },
+      showData: {
+        type: Object,
+        required: true
+        // 从父组件接收数据
       }
     },
+    inheritAttrs: false,
     data() {
       return {
         showModal: false,
         // 控制弹窗显示
-        showData: {
-          name: "",
-          // 表单字段：名称
-          price: "",
-          // 表单字段：价格
-          cnt: ""
-        },
         formData: {
-          name: "",
-          // 表单字段：名称
-          price: "",
-          // 表单字段：价格
-          cnt: ""
+          ...this.showData
         }
       };
     },
@@ -84,18 +79,19 @@ if (uni.restoreGlobal) {
         this.showModal = !this.showModal;
       },
       submitForm() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:76", "提交的表单数据:", this.formData);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:75", "提交的表单数据:", this.formData);
+        this.$emit("update-item", this.index, {
+          ...this.formData
+        });
         this.toggleModal();
-        this.showData.cnt = this.formData.cnt;
-        this.showData.price = this.formData.price;
-        this.showData.name = this.formData.name;
       },
       deleteSelf() {
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:88", this.index);
         this.$emit("delete-item", this.index);
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       vue.Fragment,
       null,
@@ -119,7 +115,7 @@ if (uni.restoreGlobal) {
                   class: "input-item name",
                   style: { "font-size": "25rpx", "width": "200rpx" }
                 },
-                vue.toDisplayString($data.showData.name),
+                vue.toDisplayString($props.showData.name),
                 1
                 /* TEXT */
               ),
@@ -129,7 +125,7 @@ if (uni.restoreGlobal) {
                   class: "input-item cnt",
                   style: { "font-size": "25rpx", "width": "200rpx" }
                 },
-                vue.toDisplayString($data.showData.cnt),
+                vue.toDisplayString($props.showData.cnt),
                 1
                 /* TEXT */
               ),
@@ -139,7 +135,7 @@ if (uni.restoreGlobal) {
                   class: "input-item price",
                   style: { "font-size": "25rpx", "width": "120rpx" }
                 },
-                vue.toDisplayString($data.showData.price),
+                vue.toDisplayString($props.showData.price),
                 1
                 /* TEXT */
               ),
@@ -234,57 +230,37 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
-  const _sfc_main$2 = {
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
+  const _sfc_main$3 = {
     __name: "index",
     setup(__props, { expose: __expose }) {
       __expose();
-      const list = vue.ref([
-        {
-          text: "点赞",
-          color: "blue",
-          fontSize: 28
-        },
-        {
-          text: "分享"
-        },
-        {
-          text: "评论"
-        }
-      ]);
       const show = vue.ref(true);
-      const __returned__ = { list, show, ref: vue.ref, GoodItem: __easycom_0 };
+      const __returned__ = { show, ref: vue.ref, GoodItem: __easycom_0 };
       Object.defineProperty(__returned__, "__isScriptSetup", { enumerable: false, value: true });
       return __returned__;
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { style: { "display": "flex", "justify-content": "center" } }, [
-      vue.createVNode($setup["GoodItem"])
-    ]);
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { style: { "display": "flex", "justify-content": "center" } });
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
-  const _sfc_main$1 = {
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
+  const _sfc_main$2 = {
     components: {
       GoodItem: __easycom_0
     },
     data() {
       return {
-        // 当前选中的项目
-        selectedProject: "",
-        // 是否显示选择弹窗
-        showSelectModal: false,
-        // 记账项目列表
-        projects: ["项目A", "项目B", "项目C"],
-        // 所有项目的 item 数据
-        allItems: {
+        projectItems: {
           "项目A": [
             {
+              id: 1,
               name: "商品1",
               cnt: 10,
               price: 100
             },
             {
+              id: 2,
               name: "商品2",
               cnt: 5,
               price: 50
@@ -292,114 +268,333 @@ if (uni.restoreGlobal) {
           ],
           "项目B": [
             {
+              id: 3,
               name: "商品3",
-              cnt: 15,
-              price: 150
+              cnt: 8,
+              price: 80
             },
             {
+              id: 4,
               name: "商品4",
-              cnt: 20,
-              price: 200
+              cnt: 12,
+              price: 120
             }
           ],
-          "项目C": [
-            {
-              name: "商品5",
-              cnt: 30,
-              price: 300
-            },
-            {
-              name: "商品6",
-              cnt: 40,
-              price: 400
-            }
-          ]
-        }
+          "项目C": []
+        },
+        projects: ["项目A", "项目B", "项目C"],
+        // 项目名称
+        selectedProjectIndex: 0,
+        // 当前选中的项目索引
+        nextId: 5
+        // 自动递增的 ID
       };
     },
     computed: {
-      // 根据选中的项目筛选显示的 item 数据
-      filteredItems() {
-        return this.selectedProject ? this.allItems[this.selectedProject] : [];
+      currentItems() {
+        const selectedProject = this.projects[this.selectedProjectIndex];
+        return this.projectItems[selectedProject] || [];
+      },
+      totalPrice() {
+        return this.currentItems.reduce((sum, item) => {
+          return sum + Number(item.price);
+        }, 0);
       }
     },
     methods: {
+      handleProjectChange(e) {
+        this.selectedProjectIndex = parseInt(e.detail.value, 10);
+        formatAppLog("log", "at pages/PayBill/index.vue:93", "切换到项目:", this.projects[this.selectedProjectIndex]);
+      },
+      handleDelete(index2) {
+        const selectedProject = this.projects[this.selectedProjectIndex];
+        this.projectItems[selectedProject].splice(index2, 1);
+      },
+      handleUpdate(index2, updatedItem) {
+        formatAppLog("log", "at pages/PayBill/index.vue:100", "更新索引：", index2, "更新数据：", updatedItem);
+        const selectedProject = this.projects[this.selectedProjectIndex];
+        this.$set(this.projectItems[selectedProject], index2, updatedItem);
+      },
+      handleAdd() {
+        const selectedProject = this.projects[this.selectedProjectIndex];
+        const newItem = {
+          id: this.nextId++,
+          name: `新商品${this.nextId - 1}`,
+          cnt: 1,
+          price: 0
+        };
+        this.projectItems[selectedProject].unshift(newItem);
+      },
+      addProject() {
+        const newProjectName = `项目${String.fromCharCode(65 + this.projects.length)}`;
+        this.projects.push(newProjectName);
+        this.projectItems[newProjectName] = [];
+        formatAppLog("log", "at pages/PayBill/index.vue:126", "添加新项目:", newProjectName);
+      },
       handleSettle() {
-        formatAppLog("log", "at pages/PayBill/index.vue:101", "结算功能触发！");
-      },
-      // 切换弹窗显示状态
-      toggleSelectModal() {
-        this.showSelectModal = !this.showSelectModal;
-      },
-      // 选择记账项目
-      selectProject(project) {
-        this.selectedProject = project;
-        this.toggleSelectModal();
+        formatAppLog("log", "at pages/PayBill/index.vue:129", "当前项目的结算数据:", this.currentItems);
       }
     }
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_GoodItem = resolveEasycom(vue.resolveDynamicComponent("GoodItem"), __easycom_0);
     return vue.openBlock(), vue.createElementBlock("view", { class: "main-container" }, [
-      vue.createCommentVNode(" 顶部选择框 "),
-      vue.createElementVNode("view", {
-        class: "select-container",
-        onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleSelectModal && $options.toggleSelectModal(...args))
-      }, [
+      vue.createCommentVNode(" 顶部选择框和添加按钮 "),
+      vue.createElementVNode("view", { class: "select-container" }, [
+        vue.createElementVNode("picker", {
+          value: $data.selectedProjectIndex,
+          range: $data.projects,
+          onChange: _cache[0] || (_cache[0] = (...args) => $options.handleProjectChange && $options.handleProjectChange(...args))
+        }, [
+          vue.createElementVNode(
+            "view",
+            { class: "picker" },
+            " 当前项目：" + vue.toDisplayString($data.projects[$data.selectedProjectIndex]),
+            1
+            /* TEXT */
+          )
+        ], 40, ["value", "range"]),
+        vue.createElementVNode("button", {
+          class: "add-project-button",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.addProject && $options.addProject(...args))
+        }, "添加项目")
+      ]),
+      vue.createElementVNode("view", { class: "total-price" }, [
+        vue.createElementVNode("view", null, " 总价： "),
         vue.createElementVNode(
-          "text",
+          "view",
           null,
-          vue.toDisplayString($data.selectedProject || "请选择记账项目"),
+          vue.toDisplayString($options.totalPrice),
           1
           /* TEXT */
         )
       ]),
       vue.createCommentVNode(" 列表 "),
-      vue.createVNode(_component_GoodItem, { class: "item" }),
-      vue.createVNode(_component_GoodItem, { class: "item" }),
-      vue.createVNode(_component_GoodItem, { class: "item" }),
-      vue.createVNode(_component_GoodItem, { class: "item" }),
-      vue.createVNode(_component_GoodItem, { class: "item" }),
-      vue.createVNode(_component_GoodItem, { class: "item" }),
-      vue.createVNode(_component_GoodItem, { class: "item" }),
-      vue.createVNode(_component_GoodItem, { class: "item" }),
-      vue.createVNode(_component_GoodItem, { class: "item" }),
+      vue.createElementVNode("view", { class: "item-container" }, [
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($options.currentItems, (item, idx) => {
+            return vue.openBlock(), vue.createBlock(_component_GoodItem, {
+              key: item.id,
+              index: idx,
+              showData: item,
+              onDeleteItem: $options.handleDelete,
+              onUpdateItem: $options.handleUpdate
+            }, null, 8, ["index", "showData", "onDeleteItem", "onUpdateItem"]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ]),
       vue.createCommentVNode(" 底部固定按钮 "),
-      vue.createElementVNode("view", {
-        class: "fixed-button",
-        onClick: _cache[1] || (_cache[1] = (...args) => $options.handleSettle && $options.handleSettle(...args))
-      }, " 结算 "),
-      vue.createCommentVNode(" 弹窗选择 "),
-      $data.showSelectModal ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 0,
-        class: "modal-overlay"
-      }, [
-        vue.createElementVNode("view", { class: "modal-content" }, [
-          vue.createElementVNode("text", { class: "modal-title" }, "选择记账项目"),
-          (vue.openBlock(true), vue.createElementBlock(
-            vue.Fragment,
-            null,
-            vue.renderList($data.projects, (project, idx) => {
-              return vue.openBlock(), vue.createElementBlock("view", {
-                class: "modal-item",
-                key: idx,
-                onClick: ($event) => $options.selectProject(project)
-              }, vue.toDisplayString(project), 9, ["onClick"]);
-            }),
-            128
-            /* KEYED_FRAGMENT */
-          )),
-          vue.createElementVNode("button", {
-            class: "close-button",
-            onClick: _cache[2] || (_cache[2] = (...args) => $options.toggleSelectModal && $options.toggleSelectModal(...args))
-          }, "关闭")
-        ])
-      ])) : vue.createCommentVNode("v-if", true)
+      vue.createElementVNode("view", { class: "fixed-button-container" }, [
+        vue.createElementVNode("view", {
+          class: "add-button",
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.handleAdd && $options.handleAdd(...args))
+        }, "添加"),
+        vue.createElementVNode("view", {
+          class: "fixed-button",
+          onClick: _cache[3] || (_cache[3] = (...args) => $options.handleSettle && $options.handleSettle(...args))
+        }, "结算")
+      ])
     ]);
   }
-  const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
+  const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-1fc7d2ef"], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
+  const _sfc_main$1 = {
+    data() {
+      return {
+        // odb:'',
+        dbName: "dianji_chat",
+        dbPath: "_doc/dianji_chat.db",
+        dbTable: "dianji_chat",
+        dbIsOpen: false,
+        chatText: {
+          id: 1,
+          fromId: "123",
+          toId: "321",
+          content: "你好!",
+          flag: 1
+        },
+        chatText1: [
+          {
+            id: 11,
+            fromId: "123",
+            toId: "321",
+            content: "你好!",
+            flag: 1
+          },
+          {
+            id: 12,
+            fromId: "123",
+            toId: "321",
+            content: "你好!",
+            flag: 1
+          }
+        ]
+      };
+    },
+    onLoad() {
+    },
+    methods: {
+      // async open(){
+      // 	let odb=await Sqlite.openSqlite();
+      // 	this.odb=odb;
+      // 	__f__('log','at pages/sql/sql.vue:62','打开数据库成功：',odb)
+      // },
+      createChatTable() {
+        let sql = "CREATE TABLE if not exists " + this.dbTable + ' ( "id" varchar(32) NOT NULL,"content" varchar(1024),"fromId" varchar(32), "toId" varchar(32), "flag" varchar(2), PRIMARY KEY ("id"));';
+        this.executeSql(sql);
+      },
+      openDatabase() {
+        plus.sqlite.openDatabase({
+          name: this.dbName,
+          path: this.dbPath,
+          success: function(e) {
+            formatAppLog("log", "at pages/sql/sql.vue:74", "打开数据库成功");
+          },
+          fail: function(e) {
+            formatAppLog("log", "at pages/sql/sql.vue:77", e, "打开数据库失败");
+          }
+        });
+      },
+      isOpenDatabase() {
+        let res = plus.sqlite.isOpenDatabase({
+          name: this.dbName,
+          path: this.dbPath
+        });
+        if (res) {
+          formatAppLog("log", "at pages/sql/sql.vue:87", res, "数据库已打开");
+        } else {
+          formatAppLog("log", "at pages/sql/sql.vue:89", res, "数据库未打开");
+        }
+      },
+      closeDatabase() {
+        plus.sqlite.closeDatabase({
+          name: this.dbName,
+          success: function(e) {
+            formatAppLog("log", "at pages/sql/sql.vue:96", JSON.stringify(e), "closeDatabase dianji_chat success!");
+          },
+          fail: function(e) {
+            formatAppLog("log", "at pages/sql/sql.vue:99", "closeDatabase failed: " + JSON.stringify(e));
+          }
+        });
+      },
+      insertChatRow() {
+        let data = this.chatText;
+        data.id++;
+        let sql = "insert into " + this.dbTable + " values('" + data.id + "','" + data.content + "','" + data.fromId + "','" + data.toId + "'," + data.flag + ")";
+        this.executeSql(sql);
+      },
+      insertListChatRow() {
+        let data = this.chatText1;
+        let sql = "";
+        for (let i = 0; i < data.length; i++) {
+          sql = "insert into " + this.dbTable + " values('" + data[i].id + "','" + data[i].content + "','" + data[i].fromId + "','" + data[i].toId + "'," + data[i].flag + ")";
+          this.executeSql(sql);
+        }
+      },
+      deleteChatRow() {
+        let sql = "delete from " + this.dbTable;
+        this.executeSql(sql);
+      },
+      selectSql() {
+        let curPage = 1;
+        let pageSize = 20;
+        let fromId = "123";
+        let sql = "select * from " + this.dbTable + " where fromId=" + fromId + " limit " + pageSize + " offset " + (curPage - 1) * pageSize;
+        this.executeSql(sql);
+      },
+      dropTable() {
+        let sql = "DROP TABLE " + this.dbTable + ";";
+        plus.sqlite.executeSql({
+          name: this.dbName,
+          sql,
+          success: function(e) {
+            formatAppLog("log", "at pages/sql/sql.vue:137", "删除数据表成功");
+          },
+          fail: function(e) {
+            formatAppLog("log", "at pages/sql/sql.vue:140", "executeSql failed: " + JSON.stringify(e));
+          }
+        });
+      },
+      transaction() {
+        plus.sqlite.transaction({
+          name: this.dbName,
+          operation: "begin",
+          success: function(e) {
+            formatAppLog("log", "at pages/sql/sql.vue:149", "transaction success!");
+          },
+          fail: function(e) {
+            formatAppLog("log", "at pages/sql/sql.vue:152", "transaction failed: " + JSON.stringify(e));
+          }
+        });
+      },
+      executeSql(sql) {
+        plus.sqlite.selectSql({
+          name: this.dbName,
+          sql,
+          success: function(data) {
+            formatAppLog("log", "at pages/sql/sql.vue:161", data, "---------------");
+          },
+          fail: function(e) {
+            formatAppLog("log", "at pages/sql/sql.vue:164", "selectSql failed: " + JSON.stringify(e));
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "" }, [
+      vue.createCommentVNode(" <div>{{odb}}</div> "),
+      vue.createElementVNode("div", null, [
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.isOpenDatabase && $options.isOpenDatabase(...args))
+        }, "判断数据库是否打开"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.openDatabase && $options.openDatabase(...args))
+        }, "打开数据库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.closeDatabase && $options.closeDatabase(...args))
+        }, "关闭数据库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[3] || (_cache[3] = (...args) => $options.createChatTable && $options.createChatTable(...args))
+        }, "创建表"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[4] || (_cache[4] = (...args) => $options.dropTable && $options.dropTable(...args))
+        }, "删除表"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[5] || (_cache[5] = (...args) => $options.transaction && $options.transaction(...args))
+        }, "执行事务"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[6] || (_cache[6] = (...args) => $options.insertChatRow && $options.insertChatRow(...args))
+        }, "新增数据"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[7] || (_cache[7] = (...args) => $options.insertListChatRow && $options.insertListChatRow(...args))
+        }, "批量新增数据"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[8] || (_cache[8] = (...args) => $options.deleteChatRow && $options.deleteChatRow(...args))
+        }, "删除所有数据"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[9] || (_cache[9] = (...args) => $options.selectSql && $options.selectSql(...args))
+        }, "查询数据")
+      ])
+    ]);
+  }
+  const PagesSqlSql = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/uni/travel-new/pages/sql/sql.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/PayBill/index", PagesPayBillIndex);
+  __definePage("pages/sql/sql", PagesSqlSql);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");

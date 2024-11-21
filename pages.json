@@ -20,6 +20,12 @@
 			"style": {
 				"navigationBarTitleText": "分账啦"
 			}
+		},
+		{
+			"path": "pages/sql/sql",
+			"style": {
+				"navigationBarTitleText": "你好"
+			}
 		}
 	],
 
@@ -33,6 +39,13 @@
 			{
 				"pagePath": "pages/PayBill/index",
 				"text": "分账",
+				"iconPath": "static/paylist.png",
+				"selectedIconPath": "static/paylistSelected.png"
+
+			},
+			{
+				"pagePath": "pages/sql/sql",
+				"text": "sql-test",
 				"iconPath": "static/paylist.png",
 				"selectedIconPath": "static/paylistSelected.png"
 

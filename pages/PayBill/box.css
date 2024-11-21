@@ -1,0 +1,118 @@
+/* 顶部选择框 */
+.select-container {
+	position: fixed;
+
+	z-index: 1000;
+	/* margin: 10rpx auto; */
+	padding: 10rpx;
+	background-color: #ffffff;
+	border: 1px solid #ccc;
+	border-radius: 5rpx;
+	text-align: center;
+	font-size: 30rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	background-color: #f8f8f8;
+	padding: 10rpx 20rpx;
+	box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 中间 Item 列表 */
+.item-container {
+	flex: 1;
+	padding: 150rpx;
+	overflow-y: auto;
+}
+
+/* 底部固定按钮 */
+
+
+.fixed-button {
+	position: fixed;
+	bottom: 0rpx;
+	left: 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	padding: 10rpx 0;
+	background-color: #ffffff;
+	box-shadow: 0 -2rpx 5rpx rgba(0, 0, 0, 0.1);
+	border: 1px solid #000000;
+
+}
+
+.add-button {
+	position: fixed;
+	bottom: 62rpx;
+	left: 0;
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	padding: 10rpx 0;
+	background-color: #ffffff;
+	box-shadow: 0 -2rpx 5rpx rgba(0, 0, 0, 0.1);
+	border: 1px solid #000000;
+
+}
+
+.calc-button {
+	width: 40%;
+	padding: 10rpx 0;
+	background-color: #ffffff;
+	border: 1px solid #000000;
+	text-align: center;
+	font-size: 30rpx;
+	border-radius: 10rpx;
+}
+
+/* 弹窗样式 */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 999;
+}
+
+.modal-content {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 80%;
+	background-color: #ffffff;
+	border-radius: 10rpx;
+	padding: 20rpx;
+	z-index: 1000;
+	text-align: center;
+}
+
+.modal-title {
+	font-size: 32rpx;
+	margin-bottom: 20rpx;
+}
+
+.modal-item {
+	font-size: 28rpx;
+	margin-bottom: 10rpx;
+	padding: 10rpx;
+	background-color: #f8f8f8;
+	border-radius: 5rpx;
+	cursor: pointer;
+}
+
+.close-button {
+	margin-top: 20rpx;
+	width: 100%;
+	padding: 10rpx 0;
+	background-color: #007aff;
+
+	border: none;
+	border-radius: 5rpx;
+	font-size: 28rpx;
+	cursor: pointer;
+}
