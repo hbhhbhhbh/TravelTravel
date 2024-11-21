@@ -41,8 +41,8 @@ if (uni.restoreGlobal) {
   function resolveEasycom(component, easycom) {
     return typeof component === "string" ? easycom : component;
   }
-  const _imports_0 = "/static/GoodItem/edit.png";
-  const _imports_1 = "/static/GoodItem/delete.png";
+  const _imports_0$1 = "/static/GoodItem/edit.png";
+  const _imports_0 = "/static/GoodItem/delete.png";
   const _export_sfc = (sfc, props2) => {
     const target = sfc.__vccOpts || sfc;
     for (const [key, val] of props2) {
@@ -50,7 +50,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$4 = {
+  const _sfc_main$b = {
     name: "GoodItem",
     props: {
       index: {
@@ -79,19 +79,19 @@ if (uni.restoreGlobal) {
         this.showModal = !this.showModal;
       },
       submitForm() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:75", "提交的表单数据:", this.formData);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:77", "提交的表单数据:", this.formData);
         this.$emit("update-item", this.index, {
           ...this.formData
         });
         this.toggleModal();
       },
       deleteSelf() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:88", this.index);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:90", this.index);
         this.$emit("delete-item", this.index);
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       vue.Fragment,
       null,
@@ -104,7 +104,7 @@ if (uni.restoreGlobal) {
               vue.createElementVNode("view", { style: { "font-size": "25rpx", "width": "120rpx" } }, "价格"),
               vue.createElementVNode("image", {
                 onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleModal && $options.toggleModal(...args)),
-                src: _imports_0,
+                src: _imports_0$1,
                 class: "set-info"
               })
             ]),
@@ -141,12 +141,13 @@ if (uni.restoreGlobal) {
               ),
               vue.createElementVNode("image", {
                 onClick: _cache[1] || (_cache[1] = (...args) => $options.deleteSelf && $options.deleteSelf(...args)),
-                src: _imports_1,
+                src: _imports_0,
                 class: "set-info"
               })
             ])
           ])
         ]),
+        vue.createCommentVNode(" 弹窗编辑部分 "),
         $data.showModal ? (vue.openBlock(), vue.createElementBlock("view", {
           key: 0,
           class: "modal"
@@ -230,24 +231,24 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
-  const _sfc_main$3 = {
+  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
+  const _sfc_main$a = {
     __name: "index",
     setup(__props, { expose: __expose }) {
       __expose();
       const show = vue.ref(true);
-      const __returned__ = { show, ref: vue.ref, GoodItem: __easycom_0 };
+      const __returned__ = { show, ref: vue.ref, GoodItem: __easycom_0$2 };
       Object.defineProperty(__returned__, "__isScriptSetup", { enumerable: false, value: true });
       return __returned__;
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { style: { "display": "flex", "justify-content": "center" } });
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
-  const _sfc_main$2 = {
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
+  const _sfc_main$9 = {
     components: {
-      GoodItem: __easycom_0
+      GoodItem: __easycom_0$2
     },
     data() {
       return {
@@ -336,8 +337,8 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_GoodItem = resolveEasycom(vue.resolveDynamicComponent("GoodItem"), __easycom_0);
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_GoodItem = resolveEasycom(vue.resolveDynamicComponent("GoodItem"), __easycom_0$2);
     return vue.openBlock(), vue.createElementBlock("view", { class: "main-container" }, [
       vue.createCommentVNode(" 顶部选择框和添加按钮 "),
       vue.createElementVNode("view", { class: "select-container" }, [
@@ -400,14 +401,245 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-1fc7d2ef"], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
-  const _sfc_main$1 = {
+  const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-1fc7d2ef"], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
+  function openSqlite() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.openDatabase({
+        name: "travel",
+        //数据库名称
+        path: "_doc/travel.db",
+        //数据库地址，uniapp推荐以下划线为开头
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function CreateBillSQL() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        //表格创建或者打开，后面为表格结构
+        sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"billid" INTEGER,"project" TEXT,"name" TEXT, "cnt" INTEGER, "price" INTEGER )',
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function CreateBillUserSQL() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        //表格创建或者打开，后面为表格结构
+        sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"userid" INTEGER,"Billid" INTEGER )',
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function CreateUserSQL() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        //表格创建或者打开，后面为表格结构
+        sql: 'create table if not exists user("id" INTEGER PRIMARY KEY ,"userid" INTEGER ,"name" TEXT)',
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function userInfoSQL() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "pop",
+        //表格创建或者打开，后面为表格结构
+        sql: 'create table if not exists userInfo("list" INTEGER PRIMARY KEY AUTOINCREMENT,"id" TEXT,"name" TEXT,"gender" TEXT,"avatar" TEXT)',
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function addUser(obj) {
+    if (obj !== void 0) {
+      var b = JSON.stringify(obj) == "{}";
+      if (!b) {
+        var id = obj.id || null;
+        var name = obj.name || null;
+        return new Promise((resolve, reject) => {
+          plus.sqlite.executeSql({
+            name: "travel",
+            sql: 'insert into user(userid,name) values("' + id + '","' + name + '")',
+            success(e) {
+              resolve(e);
+            },
+            fail(e) {
+              reject(e);
+            }
+          });
+        });
+      } else {
+        return new Promise((resolve, reject) => {
+          reject("错误添加");
+        });
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误添加");
+      });
+    }
+  }
+  function selectInformationType(name, aa, bb, cc, dd) {
+    if (name !== void 0) {
+      if (aa !== void 0 && cc !== void 0) {
+        var sql = "select * from " + name + " where " + aa + " like " + bb + " and " + cc + " like " + dd;
+      }
+      if (aa !== void 0 && cc == void 0) {
+        var sql = "select * from " + name + " where " + aa + " like " + bb;
+      }
+      if (aa == void 0) {
+        var sql = "select * from " + name;
+      }
+      formatAppLog("log", "at common/util/operateSqlite.js:146", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.selectSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误查询");
+      });
+    }
+  }
+  function deleteInformationType(name, sol, qq, ww, ee) {
+    if (name !== void 0 && sol !== void 0) {
+      if (ww !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
+      } else {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
+      }
+      formatAppLog("log", "at common/util/operateSqlite.js:179", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.executeSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误删除");
+      });
+    }
+  }
+  function modifyInformation(listName, name, cont, use, sel) {
+    var sql;
+    if (use == void 0) {
+      sql = "update " + listName + " set " + name + '="' + cont + '"';
+    } else {
+      sql = "update " + listName + " set " + name + '="' + cont + '" where ' + use + '="' + sel + '"';
+    }
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "pop",
+        sql,
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function closeSQL(name) {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.closeDatabase({
+        name: "pop",
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function isOpen(name, path) {
+    var ss = name || "travel";
+    var qq = path || "_doc/travel.db";
+    var open = plus.sqlite.isOpenDatabase({
+      name: ss,
+      path: qq
+    });
+    return open;
+  }
+  function pullSQL(id, num) {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.selectSql({
+        name: "pop",
+        sql: "select * from " + id + " order by list desc limit 15 offset " + num,
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  const util = {
+    CreateUserSQL,
+    CreateBillUserSQL,
+    CreateBillSQL,
+    openSqlite,
+    userInfoSQL,
+    addUser,
+    selectInformationType,
+    deleteInformationType,
+    pullSQL,
+    isOpen,
+    closeSQL,
+    modifyInformation
+  };
+  const _sfc_main$8 = {
     data() {
       return {
         // odb:'',
-        dbName: "dianji_chat",
-        dbPath: "_doc/dianji_chat.db",
-        dbTable: "dianji_chat",
+        dbName: "travel",
+        dbPath: "_doc/travel.db",
+        dbTable: "user",
         dbIsOpen: false,
         chatText: {
           id: 1,
@@ -415,455 +647,338 @@ if (uni.restoreGlobal) {
           toId: "321",
           content: "你好!",
           flag: 1
-        },
-        chatText1: [
-          {
-            id: 11,
-            fromId: "123",
-            toId: "321",
-            content: "你好!",
-            flag: 1
-          },
-          {
-            id: 12,
-            fromId: "123",
-            toId: "321",
-            content: "你好!",
-            flag: 1
-          }
-        ]
+        }
       };
     },
     onLoad() {
     },
     methods: {
-      // async open(){
-      // 	let odb=await Sqlite.openSqlite();
-      // 	this.odb=odb;
-      // 	__f__('log','at pages/sql/sql.vue:62','打开数据库成功：',odb)
-      // },
-      createChatTable() {
-        let sql = "CREATE TABLE if not exists " + this.dbTable + ' ( "id" varchar(32) NOT NULL,"content" varchar(1024),"fromId" varchar(32), "toId" varchar(32), "flag" varchar(2), PRIMARY KEY ("id"));';
-        this.executeSql(sql);
-      },
-      openDatabase() {
-        plus.sqlite.openDatabase({
-          name: this.dbName,
-          path: this.dbPath,
-          success: function(e) {
-            formatAppLog("log", "at pages/sql/sql.vue:74", "打开数据库成功");
-          },
-          fail: function(e) {
-            formatAppLog("log", "at pages/sql/sql.vue:77", e, "打开数据库失败");
-          }
+      isopenDB() {
+        util.openSqlite().then((result) => {
+          uni.showToast({
+            title: "数据库打开成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:47", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "数据库打开失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:55", "表格创建失败：", error2);
         });
       },
-      isOpenDatabase() {
-        let res = plus.sqlite.isOpenDatabase({
-          name: this.dbName,
-          path: this.dbPath
+      createBillTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
         });
-        if (res) {
-          formatAppLog("log", "at pages/sql/sql.vue:87", res, "数据库已打开");
-        } else {
-          formatAppLog("log", "at pages/sql/sql.vue:89", res, "数据库未打开");
-        }
-      },
-      closeDatabase() {
-        plus.sqlite.closeDatabase({
-          name: this.dbName,
-          success: function(e) {
-            formatAppLog("log", "at pages/sql/sql.vue:96", JSON.stringify(e), "closeDatabase dianji_chat success!");
-          },
-          fail: function(e) {
-            formatAppLog("log", "at pages/sql/sql.vue:99", "closeDatabase failed: " + JSON.stringify(e));
-          }
-        });
-      },
-      insertChatRow() {
-        let data = this.chatText;
-        data.id++;
-        let sql = "insert into " + this.dbTable + " values('" + data.id + "','" + data.content + "','" + data.fromId + "','" + data.toId + "'," + data.flag + ")";
-        this.executeSql(sql);
-      },
-      insertListChatRow() {
-        let data = this.chatText1;
-        let sql = "";
-        for (let i = 0; i < data.length; i++) {
-          sql = "insert into " + this.dbTable + " values('" + data[i].id + "','" + data[i].content + "','" + data[i].fromId + "','" + data[i].toId + "'," + data[i].flag + ")";
-          this.executeSql(sql);
-        }
-      },
-      deleteChatRow() {
-        let sql = "delete from " + this.dbTable;
-        this.executeSql(sql);
-      },
-      selectSql() {
-        let curPage = 1;
-        let pageSize = 20;
-        let fromId = "123";
-        let sql = "select * from " + this.dbTable + " where fromId=" + fromId + " limit " + pageSize + " offset " + (curPage - 1) * pageSize;
-        this.executeSql(sql);
-      },
-      dropTable() {
-        let sql = "DROP TABLE " + this.dbTable + ";";
-        plus.sqlite.executeSql({
-          name: this.dbName,
-          sql,
-          success: function(e) {
-            formatAppLog("log", "at pages/sql/sql.vue:137", "删除数据表成功");
-          },
-          fail: function(e) {
-            formatAppLog("log", "at pages/sql/sql.vue:140", "executeSql failed: " + JSON.stringify(e));
-          }
+        util.CreateBillSQL().then((result) => {
+          uni.showToast({
+            title: "表格创建成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:71", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:79", "表格创建失败：", error2);
         });
       },
-      transaction() {
-        plus.sqlite.transaction({
-          name: this.dbName,
-          operation: "begin",
-          success: function(e) {
-            formatAppLog("log", "at pages/sql/sql.vue:149", "transaction success!");
-          },
-          fail: function(e) {
-            formatAppLog("log", "at pages/sql/sql.vue:152", "transaction failed: " + JSON.stringify(e));
-          }
+      createBillUserTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
+        });
+        util.CreateBillUserSQL().then((result) => {
+          uni.showToast({
+            title: "BillUser表格创建成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:95", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:103", "表格创建失败：", error2);
         });
       },
-      executeSql(sql) {
-        plus.sqlite.selectSql({
-          name: this.dbName,
-          sql,
-          success: function(data) {
-            formatAppLog("log", "at pages/sql/sql.vue:161", data, "---------------");
-          },
-          fail: function(e) {
-            formatAppLog("log", "at pages/sql/sql.vue:164", "selectSql failed: " + JSON.stringify(e));
-          }
+      createUserTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
+        });
+        util.CreateUserSQL().then((result) => {
+          uni.showToast({
+            title: "BillUser表格创建成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:119", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:127", "表格创建失败：", error2);
         });
       }
     }
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "" }, [
       vue.createCommentVNode(" <div>{{odb}}</div> "),
       vue.createElementVNode("div", null, [
         vue.createElementVNode("button", {
           type: "default",
-          onClick: _cache[0] || (_cache[0] = (...args) => $options.isOpenDatabase && $options.isOpenDatabase(...args))
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.createBillTable && $options.createBillTable(...args))
+        }, "新建Bill库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.isopenDB && $options.isopenDB(...args))
         }, "判断数据库是否打开"),
         vue.createElementVNode("button", {
           type: "default",
-          onClick: _cache[1] || (_cache[1] = (...args) => $options.openDatabase && $options.openDatabase(...args))
-        }, "打开数据库"),
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.createBillUserTable && $options.createBillUserTable(...args))
+        }, "新建BillUser库"),
         vue.createElementVNode("button", {
           type: "default",
-          onClick: _cache[2] || (_cache[2] = (...args) => $options.closeDatabase && $options.closeDatabase(...args))
-        }, "关闭数据库"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[3] || (_cache[3] = (...args) => $options.createChatTable && $options.createChatTable(...args))
-        }, "创建表"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[4] || (_cache[4] = (...args) => $options.dropTable && $options.dropTable(...args))
-        }, "删除表"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[5] || (_cache[5] = (...args) => $options.transaction && $options.transaction(...args))
-        }, "执行事务"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[6] || (_cache[6] = (...args) => $options.insertChatRow && $options.insertChatRow(...args))
-        }, "新增数据"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[7] || (_cache[7] = (...args) => $options.insertListChatRow && $options.insertListChatRow(...args))
-        }, "批量新增数据"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[8] || (_cache[8] = (...args) => $options.deleteChatRow && $options.deleteChatRow(...args))
-        }, "删除所有数据"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[9] || (_cache[9] = (...args) => $options.selectSql && $options.selectSql(...args))
-        }, "查询数据")
+          onClick: _cache[3] || (_cache[3] = (...args) => $options.createUserTable && $options.createUserTable(...args))
+        }, "新建User库")
       ])
     ]);
   }
-  const PagesSqlSql = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "D:/uni/travel-new/pages/sql/sql.vue"]]);
-  __definePage("pages/index/index", PagesIndexIndex);
-  __definePage("pages/PayBill/index", PagesPayBillIndex);
-  __definePage("pages/sql/sql", PagesSqlSql);
-  const _sfc_main = {
-    onLaunch: function() {
-      formatAppLog("log", "at App.vue:4", "App Launch");
-    },
-    onShow: function() {
-      formatAppLog("log", "at App.vue:7", "App Show");
-    },
-    onHide: function() {
-      formatAppLog("log", "at App.vue:10", "App Hide");
-    }
+  const PagesSqlSql = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "D:/uni/travel-new/pages/sql/sql.vue"]]);
+  const icons = {
+    "uicon-level": "",
+    "uicon-column-line": "",
+    "uicon-checkbox-mark": "",
+    "uicon-folder": "",
+    "uicon-movie": "",
+    "uicon-star-fill": "",
+    "uicon-star": "",
+    "uicon-phone-fill": "",
+    "uicon-phone": "",
+    "uicon-apple-fill": "",
+    "uicon-chrome-circle-fill": "",
+    "uicon-backspace": "",
+    "uicon-attach": "",
+    "uicon-cut": "",
+    "uicon-empty-car": "",
+    "uicon-empty-coupon": "",
+    "uicon-empty-address": "",
+    "uicon-empty-favor": "",
+    "uicon-empty-permission": "",
+    "uicon-empty-news": "",
+    "uicon-empty-search": "",
+    "uicon-github-circle-fill": "",
+    "uicon-rmb": "",
+    "uicon-person-delete-fill": "",
+    "uicon-reload": "",
+    "uicon-order": "",
+    "uicon-server-man": "",
+    "uicon-search": "",
+    "uicon-fingerprint": "",
+    "uicon-more-dot-fill": "",
+    "uicon-scan": "",
+    "uicon-share-square": "",
+    "uicon-map": "",
+    "uicon-map-fill": "",
+    "uicon-tags": "",
+    "uicon-tags-fill": "",
+    "uicon-bookmark-fill": "",
+    "uicon-bookmark": "",
+    "uicon-eye": "",
+    "uicon-eye-fill": "",
+    "uicon-mic": "",
+    "uicon-mic-off": "",
+    "uicon-calendar": "",
+    "uicon-calendar-fill": "",
+    "uicon-trash": "",
+    "uicon-trash-fill": "",
+    "uicon-play-left": "",
+    "uicon-play-right": "",
+    "uicon-minus": "",
+    "uicon-plus": "",
+    "uicon-info": "",
+    "uicon-info-circle": "",
+    "uicon-info-circle-fill": "",
+    "uicon-question": "",
+    "uicon-error": "",
+    "uicon-close": "",
+    "uicon-checkmark": "",
+    "uicon-android-circle-fill": "",
+    "uicon-android-fill": "",
+    "uicon-ie": "",
+    "uicon-IE-circle-fill": "",
+    "uicon-google": "",
+    "uicon-google-circle-fill": "",
+    "uicon-setting-fill": "",
+    "uicon-setting": "",
+    "uicon-minus-square-fill": "",
+    "uicon-plus-square-fill": "",
+    "uicon-heart": "",
+    "uicon-heart-fill": "",
+    "uicon-camera": "",
+    "uicon-camera-fill": "",
+    "uicon-more-circle": "",
+    "uicon-more-circle-fill": "",
+    "uicon-chat": "",
+    "uicon-chat-fill": "",
+    "uicon-bag-fill": "",
+    "uicon-bag": "",
+    "uicon-error-circle-fill": "",
+    "uicon-error-circle": "",
+    "uicon-close-circle": "",
+    "uicon-close-circle-fill": "",
+    "uicon-checkmark-circle": "",
+    "uicon-checkmark-circle-fill": "",
+    "uicon-question-circle-fill": "",
+    "uicon-question-circle": "",
+    "uicon-share": "",
+    "uicon-share-fill": "",
+    "uicon-shopping-cart": "",
+    "uicon-shopping-cart-fill": "",
+    "uicon-bell": "",
+    "uicon-bell-fill": "",
+    "uicon-list": "",
+    "uicon-list-dot": "",
+    "uicon-zhihu": "",
+    "uicon-zhihu-circle-fill": "",
+    "uicon-zhifubao": "",
+    "uicon-zhifubao-circle-fill": "",
+    "uicon-weixin-circle-fill": "",
+    "uicon-weixin-fill": "",
+    "uicon-twitter-circle-fill": "",
+    "uicon-twitter": "",
+    "uicon-taobao-circle-fill": "",
+    "uicon-taobao": "",
+    "uicon-weibo-circle-fill": "",
+    "uicon-weibo": "",
+    "uicon-qq-fill": "",
+    "uicon-qq-circle-fill": "",
+    "uicon-moments-circel-fill": "",
+    "uicon-moments": "",
+    "uicon-qzone": "",
+    "uicon-qzone-circle-fill": "",
+    "uicon-baidu-circle-fill": "",
+    "uicon-baidu": "",
+    "uicon-facebook-circle-fill": "",
+    "uicon-facebook": "",
+    "uicon-car": "",
+    "uicon-car-fill": "",
+    "uicon-warning-fill": "",
+    "uicon-warning": "",
+    "uicon-clock-fill": "",
+    "uicon-clock": "",
+    "uicon-edit-pen": "",
+    "uicon-edit-pen-fill": "",
+    "uicon-email": "",
+    "uicon-email-fill": "",
+    "uicon-minus-circle": "",
+    "uicon-minus-circle-fill": "",
+    "uicon-plus-circle": "",
+    "uicon-plus-circle-fill": "",
+    "uicon-file-text": "",
+    "uicon-file-text-fill": "",
+    "uicon-pushpin": "",
+    "uicon-pushpin-fill": "",
+    "uicon-grid": "",
+    "uicon-grid-fill": "",
+    "uicon-play-circle": "",
+    "uicon-play-circle-fill": "",
+    "uicon-pause-circle-fill": "",
+    "uicon-pause": "",
+    "uicon-pause-circle": "",
+    "uicon-eye-off": "",
+    "uicon-eye-off-outline": "",
+    "uicon-gift-fill": "",
+    "uicon-gift": "",
+    "uicon-rmb-circle-fill": "",
+    "uicon-rmb-circle": "",
+    "uicon-kefu-ermai": "",
+    "uicon-server-fill": "",
+    "uicon-coupon-fill": "",
+    "uicon-coupon": "",
+    "uicon-integral": "",
+    "uicon-integral-fill": "",
+    "uicon-home-fill": "",
+    "uicon-home": "",
+    "uicon-hourglass-half-fill": "",
+    "uicon-hourglass": "",
+    "uicon-account": "",
+    "uicon-plus-people-fill": "",
+    "uicon-minus-people-fill": "",
+    "uicon-account-fill": "",
+    "uicon-thumb-down-fill": "",
+    "uicon-thumb-down": "",
+    "uicon-thumb-up": "",
+    "uicon-thumb-up-fill": "",
+    "uicon-lock-fill": "",
+    "uicon-lock-open": "",
+    "uicon-lock-opened-fill": "",
+    "uicon-lock": "",
+    "uicon-red-packet-fill": "",
+    "uicon-photo-fill": "",
+    "uicon-photo": "",
+    "uicon-volume-off-fill": "",
+    "uicon-volume-off": "",
+    "uicon-volume-fill": "",
+    "uicon-volume": "",
+    "uicon-red-packet": "",
+    "uicon-download": "",
+    "uicon-arrow-up-fill": "",
+    "uicon-arrow-down-fill": "",
+    "uicon-play-left-fill": "",
+    "uicon-play-right-fill": "",
+    "uicon-rewind-left-fill": "",
+    "uicon-rewind-right-fill": "",
+    "uicon-arrow-downward": "",
+    "uicon-arrow-leftward": "",
+    "uicon-arrow-rightward": "",
+    "uicon-arrow-upward": "",
+    "uicon-arrow-down": "",
+    "uicon-arrow-right": "",
+    "uicon-arrow-left": "",
+    "uicon-arrow-up": "",
+    "uicon-skip-back-left": "",
+    "uicon-skip-forward-right": "",
+    "uicon-rewind-right": "",
+    "uicon-rewind-left": "",
+    "uicon-arrow-right-double": "",
+    "uicon-arrow-left-double": "",
+    "uicon-wifi-off": "",
+    "uicon-wifi": "",
+    "uicon-empty-data": "",
+    "uicon-empty-history": "",
+    "uicon-empty-list": "",
+    "uicon-empty-page": "",
+    "uicon-empty-order": "",
+    "uicon-man": "",
+    "uicon-woman": "",
+    "uicon-man-add": "",
+    "uicon-man-add-fill": "",
+    "uicon-man-delete": "",
+    "uicon-man-delete-fill": "",
+    "uicon-zh": "",
+    "uicon-en": ""
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "D:/uni/travel-new/App.vue"]]);
   const defineMixin = (options) => {
     return options;
   };
-  function email(value) {
-    return /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test(value);
-  }
-  function mobile(value) {
-    return /^1[23456789]\d{9}$/.test(value);
-  }
-  function url(value) {
-    return /^((https|http|ftp|rtsp|mms):\/\/)(([0-9a-zA-Z_!~*'().&=+$%-]+: )?[0-9a-zA-Z_!~*'().&=+$%-]+@)?(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z].[a-zA-Z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-zA-Z_!~*'().;?:@&=+$,%#-]+)+\/?)$/.test(value);
-  }
-  function date(value) {
-    if (!value)
-      return false;
-    if (typeof value === "number") {
-      if (value.toString().length !== 10 && value.toString().length !== 13) {
-        return false;
-      }
-      return !isNaN(new Date(value).getTime());
-    }
-    if (typeof value === "string") {
-      const numV = Number(value);
-      if (!isNaN(numV)) {
-        if (numV.toString().length === 10 || numV.toString().length === 13) {
-          return !isNaN(new Date(numV).getTime());
-        }
-      }
-      if (value.length < 10 || value.length > 19) {
-        return false;
-      }
-      const dateRegex = /^\d{4}[-\/]\d{2}[-\/]\d{2}( \d{1,2}:\d{2}(:\d{2})?)?$/;
-      if (!dateRegex.test(value)) {
-        return false;
-      }
-      const dateValue = new Date(value);
-      return !isNaN(dateValue.getTime());
-    }
-    return false;
-  }
-  function dateISO(value) {
-    return /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(value);
-  }
-  function number(value) {
-    return /^[\+-]?(\d+\.?\d*|\.\d+|\d\.\d+e\+\d+)$/.test(value);
-  }
-  function string(value) {
-    return typeof value === "string";
-  }
-  function digits(value) {
-    return /^\d+$/.test(value);
-  }
-  function idCard(value) {
-    return /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test(
-      value
-    );
-  }
-  function carNo(value) {
-    const xreg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))/;
-    const creg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1}$/;
-    if (value.length === 7) {
-      return creg.test(value);
-    }
-    if (value.length === 8) {
-      return xreg.test(value);
-    }
-    return false;
-  }
-  function amount(value) {
-    return /^[1-9]\d*(,\d{3})*(\.\d{1,2})?$|^0\.\d{1,2}$/.test(value);
-  }
-  function chinese(value) {
-    const reg = /^[\u4e00-\u9fa5]+$/gi;
-    return reg.test(value);
-  }
-  function letter(value) {
-    return /^[a-zA-Z]*$/.test(value);
-  }
-  function enOrNum(value) {
-    const reg = /^[0-9a-zA-Z]*$/g;
-    return reg.test(value);
-  }
-  function contains(value, param) {
-    return value.indexOf(param) >= 0;
-  }
-  function range$1(value, param) {
-    return value >= param[0] && value <= param[1];
-  }
-  function rangeLength(value, param) {
-    return value.length >= param[0] && value.length <= param[1];
-  }
-  function landline(value) {
-    const reg = /^\d{3,4}-\d{7,8}(-\d{3,4})?$/;
-    return reg.test(value);
-  }
-  function empty(value) {
-    switch (typeof value) {
-      case "undefined":
-        return true;
-      case "string":
-        if (value.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, "").length == 0)
-          return true;
-        break;
-      case "boolean":
-        if (!value)
-          return true;
-        break;
-      case "number":
-        if (value === 0 || isNaN(value))
-          return true;
-        break;
-      case "object":
-        if (value === null || value.length === 0)
-          return true;
-        for (const i in value) {
-          return false;
-        }
-        return true;
-    }
-    return false;
-  }
-  function jsonString(value) {
-    if (typeof value === "string") {
-      try {
-        const obj = JSON.parse(value);
-        if (typeof obj === "object" && obj) {
-          return true;
-        }
-        return false;
-      } catch (e) {
-        return false;
-      }
-    }
-    return false;
-  }
-  function array(value) {
-    if (typeof Array.isArray === "function") {
-      return Array.isArray(value);
-    }
-    return Object.prototype.toString.call(value) === "[object Array]";
-  }
-  function object(value) {
-    return Object.prototype.toString.call(value) === "[object Object]";
-  }
-  function code(value, len = 6) {
-    return new RegExp(`^\\d{${len}}$`).test(value);
-  }
-  function func(value) {
-    return typeof value === "function";
-  }
-  function promise(value) {
-    return object(value) && func(value.then) && func(value.catch);
-  }
-  function image(value) {
-    const newValue = value.split("?")[0];
-    const IMAGE_REGEXP = /\.(jpeg|jpg|gif|png|svg|webp|jfif|bmp|dpg)/i;
-    return IMAGE_REGEXP.test(newValue);
-  }
-  function video(value) {
-    const VIDEO_REGEXP = /\.(mp4|mpg|mpeg|dat|asf|avi|rm|rmvb|mov|wmv|flv|mkv|m3u8)/i;
-    return VIDEO_REGEXP.test(value);
-  }
-  function regExp(o) {
-    return o && Object.prototype.toString.call(o) === "[object RegExp]";
-  }
-  const test = {
-    email,
-    mobile,
-    url,
-    date,
-    dateISO,
-    number,
-    digits,
-    idCard,
-    carNo,
-    amount,
-    chinese,
-    letter,
-    enOrNum,
-    contains,
-    range: range$1,
-    rangeLength,
-    empty,
-    isEmpty: empty,
-    jsonString,
-    landline,
-    object,
-    array,
-    code,
-    func,
-    promise,
-    video,
-    image,
-    regExp,
-    string
-  };
-  function strip(num, precision = 15) {
-    return +parseFloat(Number(num).toPrecision(precision));
-  }
-  function digitLength(num) {
-    const eSplit = num.toString().split(/[eE]/);
-    const len = (eSplit[0].split(".")[1] || "").length - +(eSplit[1] || 0);
-    return len > 0 ? len : 0;
-  }
-  function float2Fixed(num) {
-    if (num.toString().indexOf("e") === -1) {
-      return Number(num.toString().replace(".", ""));
-    }
-    const dLen = digitLength(num);
-    return dLen > 0 ? strip(Number(num) * Math.pow(10, dLen)) : Number(num);
-  }
-  function checkBoundary(num) {
-    {
-      if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
-        formatAppLog("warn", "at node_modules/uview-plus/libs/function/digit.js:45", `${num} 超出了精度限制，结果可能不正确`);
-      }
-    }
-  }
-  function iteratorOperation(arr, operation) {
-    const [num1, num2, ...others] = arr;
-    let res = operation(num1, num2);
-    others.forEach((num) => {
-      res = operation(res, num);
-    });
-    return res;
-  }
-  function times(...nums) {
-    if (nums.length > 2) {
-      return iteratorOperation(nums, times);
-    }
-    const [num1, num2] = nums;
-    const num1Changed = float2Fixed(num1);
-    const num2Changed = float2Fixed(num2);
-    const baseNum = digitLength(num1) + digitLength(num2);
-    const leftValue = num1Changed * num2Changed;
-    checkBoundary(leftValue);
-    return leftValue / Math.pow(10, baseNum);
-  }
-  function divide(...nums) {
-    if (nums.length > 2) {
-      return iteratorOperation(nums, divide);
-    }
-    const [num1, num2] = nums;
-    const num1Changed = float2Fixed(num1);
-    const num2Changed = float2Fixed(num2);
-    checkBoundary(num1Changed);
-    checkBoundary(num2Changed);
-    return times(num1Changed / num2Changed, strip(Math.pow(10, digitLength(num2) - digitLength(num1))));
-  }
-  function round(num, ratio) {
-    const base = Math.pow(10, ratio);
-    let result = divide(Math.round(Math.abs(times(num, base))), base);
-    if (num < 0 && result !== 0) {
-      result = times(result, -1);
-    }
-    return result;
-  }
   const version = "3";
   {
     formatAppLog("log", "at node_modules/uview-plus/libs/config/config.js:5", `
@@ -906,1458 +1021,6 @@ if (uni.restoreGlobal) {
     // 默认单位，可以通过配置为rpx，那么在用于传入组件大小参数为数值时，就默认为rpx
     unit: "px"
   };
-  function range(min = 0, max = 0, value = 0) {
-    return Math.max(min, Math.min(max, Number(value)));
-  }
-  function getPx(value, unit = false) {
-    if (number(value)) {
-      return unit ? `${value}px` : Number(value);
-    }
-    if (/(rpx|upx)$/.test(value)) {
-      return unit ? `${uni.upx2px(parseInt(value))}px` : Number(uni.upx2px(parseInt(value)));
-    }
-    return unit ? `${parseInt(value)}px` : parseInt(value);
-  }
-  function sleep(value = 30) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, value);
-    });
-  }
-  function os() {
-    return uni.getSystemInfoSync().platform.toLowerCase();
-  }
-  function sys() {
-    return uni.getSystemInfoSync();
-  }
-  function random(min, max) {
-    if (min >= 0 && max > 0 && max >= min) {
-      const gab = max - min + 1;
-      return Math.floor(Math.random() * gab + min);
-    }
-    return 0;
-  }
-  function guid(len = 32, firstU = true, radix = null) {
-    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split("");
-    const uuid = [];
-    radix = radix || chars.length;
-    if (len) {
-      for (let i = 0; i < len; i++)
-        uuid[i] = chars[0 | Math.random() * radix];
-    } else {
-      let r;
-      uuid[8] = uuid[13] = uuid[18] = uuid[23] = "-";
-      uuid[14] = "4";
-      for (let i = 0; i < 36; i++) {
-        if (!uuid[i]) {
-          r = 0 | Math.random() * 16;
-          uuid[i] = chars[i == 19 ? r & 3 | 8 : r];
-        }
-      }
-    }
-    if (firstU) {
-      uuid.shift();
-      return `u${uuid.join("")}`;
-    }
-    return uuid.join("");
-  }
-  function $parent(name = void 0) {
-    let parent = this.$parent;
-    while (parent) {
-      name = name.replace(/up-([a-zA-Z0-9-_]+)/g, "u-$1");
-      if (parent.$options && parent.$options.name !== name) {
-        parent = parent.$parent;
-      } else {
-        return parent;
-      }
-    }
-    return false;
-  }
-  function addStyle(customStyle, target = "object") {
-    if (empty(customStyle) || typeof customStyle === "object" && target === "object" || target === "string" && typeof customStyle === "string") {
-      return customStyle;
-    }
-    if (target === "object") {
-      customStyle = trim(customStyle);
-      const styleArray = customStyle.split(";");
-      const style = {};
-      for (let i = 0; i < styleArray.length; i++) {
-        if (styleArray[i]) {
-          const item = styleArray[i].split(":");
-          style[trim(item[0])] = trim(item[1]);
-        }
-      }
-      return style;
-    }
-    let string2 = "";
-    if (typeof customStyle === "object") {
-      customStyle.forEach((val, i) => {
-        const key = i.replace(/([A-Z])/g, "-$1").toLowerCase();
-        string2 += `${key}:${val};`;
-      });
-    }
-    return trim(string2);
-  }
-  function addUnit(value = "auto", unit = "") {
-    if (!unit) {
-      unit = config.unit || "px";
-    }
-    if (unit == "rpx" && number(String(value))) {
-      value = value * 2;
-    }
-    value = String(value);
-    return number(value) ? `${value}${unit}` : value;
-  }
-  function deepClone(obj) {
-    if ([null, void 0, NaN, false].includes(obj))
-      return obj;
-    if (typeof obj !== "object" && typeof obj !== "function") {
-      return obj;
-    }
-    const o = array(obj) ? [] : {};
-    for (const i in obj) {
-      if (obj.hasOwnProperty(i)) {
-        o[i] = typeof obj[i] === "object" ? deepClone(obj[i]) : obj[i];
-      }
-    }
-    return o;
-  }
-  function deepMerge$1(targetOrigin = {}, source = {}) {
-    let target = deepClone(targetOrigin);
-    if (typeof target !== "object" || typeof source !== "object")
-      return false;
-    for (const prop in source) {
-      if (!source.hasOwnProperty(prop))
-        continue;
-      if (prop in target) {
-        if (source[prop] == null) {
-          target[prop] = source[prop];
-        } else if (typeof target[prop] !== "object") {
-          target[prop] = source[prop];
-        } else if (typeof source[prop] !== "object") {
-          target[prop] = source[prop];
-        } else if (target[prop].concat && source[prop].concat) {
-          target[prop] = target[prop].concat(source[prop]);
-        } else {
-          target[prop] = deepMerge$1(target[prop], source[prop]);
-        }
-      } else {
-        target[prop] = source[prop];
-      }
-    }
-    return target;
-  }
-  function shallowMerge(target, source = {}) {
-    if (typeof target !== "object" || typeof source !== "object")
-      return false;
-    for (const prop in source) {
-      if (!source.hasOwnProperty(prop))
-        continue;
-      if (prop in target) {
-        if (source[prop] == null) {
-          target[prop] = source[prop];
-        } else if (typeof target[prop] !== "object") {
-          target[prop] = source[prop];
-        } else if (typeof source[prop] !== "object") {
-          target[prop] = source[prop];
-        } else if (target[prop].concat && source[prop].concat) {
-          target[prop] = target[prop].concat(source[prop]);
-        } else {
-          target[prop] = shallowMerge(target[prop], source[prop]);
-        }
-      } else {
-        target[prop] = source[prop];
-      }
-    }
-    return target;
-  }
-  function error(err) {
-    {
-      formatAppLog("error", "at node_modules/uview-plus/libs/function/index.js:279", `uView提示：${err}`);
-    }
-  }
-  function randomArray(array2 = []) {
-    return array2.sort(() => Math.random() - 0.5);
-  }
-  if (!String.prototype.padStart) {
-    String.prototype.padStart = function(maxLength, fillString = " ") {
-      if (Object.prototype.toString.call(fillString) !== "[object String]") {
-        throw new TypeError(
-          "fillString must be String"
-        );
-      }
-      const str = this;
-      if (str.length >= maxLength)
-        return String(str);
-      const fillLength = maxLength - str.length;
-      let times2 = Math.ceil(fillLength / fillString.length);
-      while (times2 >>= 1) {
-        fillString += fillString;
-        if (times2 === 1) {
-          fillString += fillString;
-        }
-      }
-      return fillString.slice(0, fillLength) + str;
-    };
-  }
-  function timeFormat(dateTime = null, formatStr = "yyyy-mm-dd") {
-    let date2;
-    if (!dateTime) {
-      date2 = /* @__PURE__ */ new Date();
-    } else if (/^\d{10}$/.test(dateTime.toString().trim())) {
-      date2 = new Date(dateTime * 1e3);
-    } else if (typeof dateTime === "string" && /^\d+$/.test(dateTime.trim())) {
-      date2 = new Date(Number(dateTime));
-    } else {
-      date2 = new Date(
-        typeof dateTime === "string" ? dateTime.replace(/-/g, "/") : dateTime
-      );
-    }
-    const timeSource = {
-      "y": date2.getFullYear().toString(),
-      // 年
-      "m": (date2.getMonth() + 1).toString().padStart(2, "0"),
-      // 月
-      "d": date2.getDate().toString().padStart(2, "0"),
-      // 日
-      "h": date2.getHours().toString().padStart(2, "0"),
-      // 时
-      "M": date2.getMinutes().toString().padStart(2, "0"),
-      // 分
-      "s": date2.getSeconds().toString().padStart(2, "0")
-      // 秒
-      // 有其他格式化字符需求可以继续添加，必须转化成字符串
-    };
-    for (const key in timeSource) {
-      const [ret] = new RegExp(`${key}+`).exec(formatStr) || [];
-      if (ret) {
-        const beginIndex = key === "y" && ret.length === 2 ? 2 : 0;
-        formatStr = formatStr.replace(ret, timeSource[key].slice(beginIndex));
-      }
-    }
-    return formatStr;
-  }
-  function timeFrom(timestamp = null, format = "yyyy-mm-dd") {
-    if (timestamp == null)
-      timestamp = Number(/* @__PURE__ */ new Date());
-    timestamp = parseInt(timestamp);
-    if (timestamp.toString().length == 10)
-      timestamp *= 1e3;
-    let timer = (/* @__PURE__ */ new Date()).getTime() - timestamp;
-    timer = parseInt(timer / 1e3);
-    let tips = "";
-    switch (true) {
-      case timer < 300:
-        tips = "刚刚";
-        break;
-      case (timer >= 300 && timer < 3600):
-        tips = `${parseInt(timer / 60)}分钟前`;
-        break;
-      case (timer >= 3600 && timer < 86400):
-        tips = `${parseInt(timer / 3600)}小时前`;
-        break;
-      case (timer >= 86400 && timer < 2592e3):
-        tips = `${parseInt(timer / 86400)}天前`;
-        break;
-      default:
-        if (format === false) {
-          if (timer >= 2592e3 && timer < 365 * 86400) {
-            tips = `${parseInt(timer / (86400 * 30))}个月前`;
-          } else {
-            tips = `${parseInt(timer / (86400 * 365))}年前`;
-          }
-        } else {
-          tips = timeFormat(timestamp, format);
-        }
-    }
-    return tips;
-  }
-  function trim(str, pos = "both") {
-    str = String(str);
-    if (pos == "both") {
-      return str.replace(/^\s+|\s+$/g, "");
-    }
-    if (pos == "left") {
-      return str.replace(/^\s*/, "");
-    }
-    if (pos == "right") {
-      return str.replace(/(\s*$)/g, "");
-    }
-    if (pos == "all") {
-      return str.replace(/\s+/g, "");
-    }
-    return str;
-  }
-  function queryParams(data = {}, isPrefix = true, arrayFormat = "brackets") {
-    const prefix = isPrefix ? "?" : "";
-    const _result = [];
-    if (["indices", "brackets", "repeat", "comma"].indexOf(arrayFormat) == -1)
-      arrayFormat = "brackets";
-    for (const key in data) {
-      const value = data[key];
-      if (["", void 0, null].indexOf(value) >= 0) {
-        continue;
-      }
-      if (value.constructor === Array) {
-        switch (arrayFormat) {
-          case "indices":
-            for (let i = 0; i < value.length; i++) {
-              _result.push(`${key}[${i}]=${value[i]}`);
-            }
-            break;
-          case "brackets":
-            value.forEach((_value) => {
-              _result.push(`${key}[]=${_value}`);
-            });
-            break;
-          case "repeat":
-            value.forEach((_value) => {
-              _result.push(`${key}=${_value}`);
-            });
-            break;
-          case "comma":
-            let commaStr = "";
-            value.forEach((_value) => {
-              commaStr += (commaStr ? "," : "") + _value;
-            });
-            _result.push(`${key}=${commaStr}`);
-            break;
-          default:
-            value.forEach((_value) => {
-              _result.push(`${key}[]=${_value}`);
-            });
-        }
-      } else {
-        _result.push(`${key}=${value}`);
-      }
-    }
-    return _result.length ? prefix + _result.join("&") : "";
-  }
-  function toast(title, duration = 2e3) {
-    uni.showToast({
-      title: String(title),
-      icon: "none",
-      duration
-    });
-  }
-  function type2icon(type = "success", fill = false) {
-    if (["primary", "info", "error", "warning", "success"].indexOf(type) == -1)
-      type = "success";
-    let iconName = "";
-    switch (type) {
-      case "primary":
-        iconName = "info-circle";
-        break;
-      case "info":
-        iconName = "info-circle";
-        break;
-      case "error":
-        iconName = "close-circle";
-        break;
-      case "warning":
-        iconName = "error-circle";
-        break;
-      case "success":
-        iconName = "checkmark-circle";
-        break;
-      default:
-        iconName = "checkmark-circle";
-    }
-    if (fill)
-      iconName += "-fill";
-    return iconName;
-  }
-  function priceFormat(number2, decimals = 0, decimalPoint = ".", thousandsSeparator = ",") {
-    number2 = `${number2}`.replace(/[^0-9+-Ee.]/g, "");
-    const n = !isFinite(+number2) ? 0 : +number2;
-    const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
-    const sep = typeof thousandsSeparator === "undefined" ? "," : thousandsSeparator;
-    const dec = typeof decimalPoint === "undefined" ? "." : decimalPoint;
-    let s = "";
-    s = (prec ? round(n, prec) + "" : `${Math.round(n)}`).split(".");
-    const re = /(-?\d+)(\d{3})/;
-    while (re.test(s[0])) {
-      s[0] = s[0].replace(re, `$1${sep}$2`);
-    }
-    if ((s[1] || "").length < prec) {
-      s[1] = s[1] || "";
-      s[1] += new Array(prec - s[1].length + 1).join("0");
-    }
-    return s.join(dec);
-  }
-  function getDuration(value, unit = true) {
-    const valueNum = parseInt(value);
-    if (unit) {
-      if (/s$/.test(value))
-        return value;
-      return value > 30 ? `${value}ms` : `${value}s`;
-    }
-    if (/ms$/.test(value))
-      return valueNum;
-    if (/s$/.test(value))
-      return valueNum > 30 ? valueNum : valueNum * 1e3;
-    return valueNum;
-  }
-  function padZero(value) {
-    return `00${value}`.slice(-2);
-  }
-  function formValidate(instance, event) {
-    const formItem = $parent.call(instance, "u-form-item");
-    const form = $parent.call(instance, "u-form");
-    if (formItem && form) {
-      form.validateField(formItem.prop, () => {
-      }, event);
-    }
-  }
-  function getProperty(obj, key) {
-    if (typeof obj !== "object" || null == obj) {
-      return "";
-    }
-    if (typeof key !== "string" || key === "") {
-      return "";
-    }
-    if (key.indexOf(".") !== -1) {
-      const keys = key.split(".");
-      let firstObj = obj[keys[0]] || {};
-      for (let i = 1; i < keys.length; i++) {
-        if (firstObj) {
-          firstObj = firstObj[keys[i]];
-        }
-      }
-      return firstObj;
-    }
-    return obj[key];
-  }
-  function setProperty(obj, key, value) {
-    if (typeof obj !== "object" || null == obj) {
-      return;
-    }
-    const inFn = function(_obj, keys, v) {
-      if (keys.length === 1) {
-        _obj[keys[0]] = v;
-        return;
-      }
-      while (keys.length > 1) {
-        const k = keys[0];
-        if (!_obj[k] || typeof _obj[k] !== "object") {
-          _obj[k] = {};
-        }
-        keys.shift();
-        inFn(_obj[k], keys, v);
-      }
-    };
-    if (typeof key !== "string" || key === "")
-      ;
-    else if (key.indexOf(".") !== -1) {
-      const keys = key.split(".");
-      inFn(obj, keys, value);
-    } else {
-      obj[key] = value;
-    }
-  }
-  function page() {
-    const pages2 = getCurrentPages();
-    return `/${pages2[pages2.length - 1].route || ""}`;
-  }
-  function pages() {
-    const pages2 = getCurrentPages();
-    return pages2;
-  }
-  function getValueByPath(obj, path) {
-    const pathArr = path.split(".");
-    return pathArr.reduce((acc, curr) => {
-      return acc && acc[curr] !== void 0 ? acc[curr] : void 0;
-    }, obj);
-  }
-  const index = {
-    range,
-    getPx,
-    sleep,
-    os,
-    sys,
-    random,
-    guid,
-    $parent,
-    addStyle,
-    addUnit,
-    deepClone,
-    deepMerge: deepMerge$1,
-    shallowMerge,
-    error,
-    randomArray,
-    timeFormat,
-    timeFrom,
-    trim,
-    queryParams,
-    toast,
-    type2icon,
-    priceFormat,
-    getDuration,
-    padZero,
-    formValidate,
-    getProperty,
-    setProperty,
-    page,
-    pages,
-    getValueByPath
-    // setConfig
-  };
-  class Router {
-    constructor() {
-      this.config = {
-        type: "navigateTo",
-        url: "",
-        delta: 1,
-        // navigateBack页面后退时,回退的层数
-        params: {},
-        // 传递的参数
-        animationType: "pop-in",
-        // 窗口动画,只在APP有效
-        animationDuration: 300,
-        // 窗口动画持续时间,单位毫秒,只在APP有效
-        intercept: false
-        // 是否需要拦截
-      };
-      this.route = this.route.bind(this);
-    }
-    // 判断url前面是否有"/"，如果没有则加上，否则无法跳转
-    addRootPath(url2) {
-      return url2[0] === "/" ? url2 : `/${url2}`;
-    }
-    // 整合路由参数
-    mixinParam(url2, params) {
-      url2 = url2 && this.addRootPath(url2);
-      let query = "";
-      if (/.*\/.*\?.*=.*/.test(url2)) {
-        query = queryParams(params, false);
-        return url2 += `&${query}`;
-      }
-      query = queryParams(params);
-      return url2 += query;
-    }
-    // 对外的方法名称
-    async route(options = {}, params = {}) {
-      let mergeConfig2 = {};
-      if (typeof options === "string") {
-        mergeConfig2.url = this.mixinParam(options, params);
-        mergeConfig2.type = "navigateTo";
-      } else {
-        mergeConfig2 = deepMerge$1(this.config, options);
-        mergeConfig2.url = this.mixinParam(options.url, options.params);
-      }
-      if (mergeConfig2.url === page())
-        return;
-      if (params.intercept) {
-        this.config.intercept = params.intercept;
-      }
-      mergeConfig2.params = params;
-      mergeConfig2 = deepMerge$1(this.config, mergeConfig2);
-      if (typeof uni.$u.routeIntercept === "function") {
-        const isNext = await new Promise((resolve, reject) => {
-          uni.$u.routeIntercept(mergeConfig2, resolve);
-        });
-        isNext && this.openPage(mergeConfig2);
-      } else {
-        this.openPage(mergeConfig2);
-      }
-    }
-    // 执行路由跳转
-    openPage(config2) {
-      const {
-        url: url2,
-        type,
-        delta,
-        animationType,
-        animationDuration
-      } = config2;
-      if (config2.type == "navigateTo" || config2.type == "to") {
-        uni.navigateTo({
-          url: url2,
-          animationType,
-          animationDuration
-        });
-      }
-      if (config2.type == "redirectTo" || config2.type == "redirect") {
-        uni.redirectTo({
-          url: url2
-        });
-      }
-      if (config2.type == "switchTab" || config2.type == "tab") {
-        uni.switchTab({
-          url: url2
-        });
-      }
-      if (config2.type == "reLaunch" || config2.type == "launch") {
-        uni.reLaunch({
-          url: url2
-        });
-      }
-      if (config2.type == "navigateBack" || config2.type == "back") {
-        uni.navigateBack({
-          delta
-        });
-      }
-    }
-  }
-  const route = new Router().route;
-  const mixin = defineMixin({
-    // 定义每个组件都可能需要用到的外部样式以及类名
-    props: {
-      // 每个组件都有的父组件传递的样式，可以为字符串或者对象形式
-      customStyle: {
-        type: [Object, String],
-        default: () => ({})
-      },
-      customClass: {
-        type: String,
-        default: ""
-      },
-      // 跳转的页面路径
-      url: {
-        type: String,
-        default: ""
-      },
-      // 页面跳转的类型
-      linkType: {
-        type: String,
-        default: "navigateTo"
-      }
-    },
-    data() {
-      return {};
-    },
-    onLoad() {
-      this.$u.getRect = this.$uGetRect;
-    },
-    created() {
-      this.$u.getRect = this.$uGetRect;
-    },
-    computed: {
-      // 在2.x版本中，将会把$u挂载到uni对象下，导致在模板中无法使用uni.$u.xxx形式
-      // 所以这里通过computed计算属性将其附加到this.$u上，就可以在模板或者js中使用uni.$u.xxx
-      // 只在nvue环境通过此方式引入完整的$u，其他平台会出现性能问题，非nvue则按需引入（主要原因是props过大）
-      $u() {
-        return deepMerge$1(uni.$u, {
-          props: void 0,
-          http: void 0,
-          mixin: void 0
-        });
-      },
-      /**
-       * 生成bem规则类名
-       * 由于微信小程序，H5，nvue之间绑定class的差异，无法通过:class="[bem()]"的形式进行同用
-       * 故采用如下折中做法，最后返回的是数组（一般平台）或字符串（支付宝和字节跳动平台），类似['a', 'b', 'c']或'a b c'的形式
-       * @param {String} name 组件名称
-       * @param {Array} fixed 一直会存在的类名
-       * @param {Array} change 会根据变量值为true或者false而出现或者隐藏的类名
-       * @returns {Array|string}
-       */
-      bem() {
-        return function(name, fixed, change) {
-          const prefix = `u-${name}--`;
-          const classes = {};
-          if (fixed) {
-            fixed.map((item) => {
-              classes[prefix + this[item]] = true;
-            });
-          }
-          if (change) {
-            change.map((item) => {
-              this[item] ? classes[prefix + item] = this[item] : delete classes[prefix + item];
-            });
-          }
-          return Object.keys(classes);
-        };
-      }
-    },
-    methods: {
-      // 跳转某一个页面
-      openPage(urlKey = "url") {
-        const url2 = this[urlKey];
-        if (url2) {
-          route({ type: this.linkType, url: url2 });
-        }
-      },
-      navTo(url2 = "", linkType = "navigateTo") {
-        route({ type: this.linkType, url: url2 });
-      },
-      // 查询节点信息
-      // 目前此方法在支付宝小程序中无法获取组件跟接点的尺寸，为支付宝的bug(2020-07-21)
-      // 解决办法为在组件根部再套一个没有任何作用的view元素
-      $uGetRect(selector, all) {
-        return new Promise((resolve) => {
-          uni.createSelectorQuery().in(this)[all ? "selectAll" : "select"](selector).boundingClientRect((rect) => {
-            if (all && Array.isArray(rect) && rect.length) {
-              resolve(rect);
-            }
-            if (!all && rect) {
-              resolve(rect);
-            }
-          }).exec();
-        });
-      },
-      getParentData(parentName = "") {
-        if (!this.parent)
-          this.parent = {};
-        this.parent = $parent.call(this, parentName);
-        if (this.parent.children) {
-          this.parent.children.indexOf(this) === -1 && this.parent.children.push(this);
-        }
-        if (this.parent && this.parentData) {
-          Object.keys(this.parentData).map((key) => {
-            this.parentData[key] = this.parent[key];
-          });
-        }
-      },
-      // 阻止事件冒泡
-      preventEvent(e) {
-        e && typeof e.stopPropagation === "function" && e.stopPropagation();
-      },
-      // 空操作
-      noop(e) {
-        this.preventEvent(e);
-      }
-    },
-    onReachBottom() {
-      uni.$emit("uOnReachBottom");
-    },
-    beforeUnmount() {
-      if (this.parent && test.array(this.parent.children)) {
-        const childrenList = this.parent.children;
-        childrenList.map((child, index2) => {
-          if (child === this) {
-            childrenList.splice(index2, 1);
-          }
-        });
-      }
-    }
-  });
-  const mpMixin = defineMixin({});
-  const { toString } = Object.prototype;
-  function isArray(val) {
-    return toString.call(val) === "[object Array]";
-  }
-  function isObject(val) {
-    return val !== null && typeof val === "object";
-  }
-  function isDate(val) {
-    return toString.call(val) === "[object Date]";
-  }
-  function isURLSearchParams(val) {
-    return typeof URLSearchParams !== "undefined" && val instanceof URLSearchParams;
-  }
-  function forEach(obj, fn) {
-    if (obj === null || typeof obj === "undefined") {
-      return;
-    }
-    if (typeof obj !== "object") {
-      obj = [obj];
-    }
-    if (isArray(obj)) {
-      for (let i = 0, l = obj.length; i < l; i++) {
-        fn.call(null, obj[i], i, obj);
-      }
-    } else {
-      for (const key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          fn.call(null, obj[key], key, obj);
-        }
-      }
-    }
-  }
-  function isPlainObject(obj) {
-    return Object.prototype.toString.call(obj) === "[object Object]";
-  }
-  function deepMerge() {
-    const result = {};
-    function assignValue(val, key) {
-      if (typeof result[key] === "object" && typeof val === "object") {
-        result[key] = deepMerge(result[key], val);
-      } else if (typeof val === "object") {
-        result[key] = deepMerge({}, val);
-      } else {
-        result[key] = val;
-      }
-    }
-    for (let i = 0, l = arguments.length; i < l; i++) {
-      forEach(arguments[i], assignValue);
-    }
-    return result;
-  }
-  function isUndefined(val) {
-    return typeof val === "undefined";
-  }
-  function encode(val) {
-    return encodeURIComponent(val).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
-  }
-  function buildURL(url2, params) {
-    if (!params) {
-      return url2;
-    }
-    let serializedParams;
-    if (isURLSearchParams(params)) {
-      serializedParams = params.toString();
-    } else {
-      const parts = [];
-      forEach(params, (val, key) => {
-        if (val === null || typeof val === "undefined") {
-          return;
-        }
-        if (isArray(val)) {
-          key = `${key}[]`;
-        } else {
-          val = [val];
-        }
-        forEach(val, (v) => {
-          if (isDate(v)) {
-            v = v.toISOString();
-          } else if (isObject(v)) {
-            v = JSON.stringify(v);
-          }
-          parts.push(`${encode(key)}=${encode(v)}`);
-        });
-      });
-      serializedParams = parts.join("&");
-    }
-    if (serializedParams) {
-      const hashmarkIndex = url2.indexOf("#");
-      if (hashmarkIndex !== -1) {
-        url2 = url2.slice(0, hashmarkIndex);
-      }
-      url2 += (url2.indexOf("?") === -1 ? "?" : "&") + serializedParams;
-    }
-    return url2;
-  }
-  function isAbsoluteURL(url2) {
-    return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url2);
-  }
-  function combineURLs(baseURL, relativeURL) {
-    return relativeURL ? `${baseURL.replace(/\/+$/, "")}/${relativeURL.replace(/^\/+/, "")}` : baseURL;
-  }
-  function buildFullPath(baseURL, requestedURL) {
-    if (baseURL && !isAbsoluteURL(requestedURL)) {
-      return combineURLs(baseURL, requestedURL);
-    }
-    return requestedURL;
-  }
-  function settle(resolve, reject, response) {
-    const { validateStatus } = response.config;
-    const status = response.statusCode;
-    if (status && (!validateStatus || validateStatus(status))) {
-      resolve(response);
-    } else {
-      reject(response);
-    }
-  }
-  const mergeKeys$1 = (keys, config2) => {
-    const config3 = {};
-    keys.forEach((prop) => {
-      if (!isUndefined(config2[prop])) {
-        config3[prop] = config2[prop];
-      }
-    });
-    return config3;
-  };
-  const adapter = (config2) => new Promise((resolve, reject) => {
-    const fullPath = buildURL(buildFullPath(config2.baseURL, config2.url), config2.params);
-    const _config = {
-      url: fullPath,
-      header: config2.header,
-      complete: (response) => {
-        config2.fullPath = fullPath;
-        response.config = config2;
-        try {
-          if (typeof response.data === "string") {
-            response.data = JSON.parse(response.data);
-          }
-        } catch (e) {
-        }
-        settle(resolve, reject, response);
-      }
-    };
-    let requestTask;
-    if (config2.method === "UPLOAD") {
-      delete _config.header["content-type"];
-      delete _config.header["Content-Type"];
-      const otherConfig = {
-        filePath: config2.filePath,
-        name: config2.name
-      };
-      const optionalKeys = [
-        "files",
-        "timeout",
-        "formData"
-      ];
-      requestTask = uni.uploadFile({ ..._config, ...otherConfig, ...mergeKeys$1(optionalKeys, config2) });
-    } else if (config2.method === "DOWNLOAD") {
-      if (!isUndefined(config2.timeout)) {
-        _config.timeout = config2.timeout;
-      }
-      requestTask = uni.downloadFile(_config);
-    } else {
-      const optionalKeys = [
-        "data",
-        "method",
-        "timeout",
-        "dataType",
-        "responseType",
-        "sslVerify",
-        "firstIpv4"
-      ];
-      requestTask = uni.request({ ..._config, ...mergeKeys$1(optionalKeys, config2) });
-    }
-    if (config2.getTask) {
-      config2.getTask(requestTask, config2);
-    }
-  });
-  const dispatchRequest = (config2) => adapter(config2);
-  function InterceptorManager() {
-    this.handlers = [];
-  }
-  InterceptorManager.prototype.use = function use(fulfilled, rejected) {
-    this.handlers.push({
-      fulfilled,
-      rejected
-    });
-    return this.handlers.length - 1;
-  };
-  InterceptorManager.prototype.eject = function eject(id) {
-    if (this.handlers[id]) {
-      this.handlers[id] = null;
-    }
-  };
-  InterceptorManager.prototype.forEach = function forEach2(fn) {
-    this.handlers.forEach((h) => {
-      if (h !== null) {
-        fn(h);
-      }
-    });
-  };
-  const mergeKeys = (keys, globalsConfig, config2) => {
-    const config3 = {};
-    keys.forEach((prop) => {
-      if (!isUndefined(config2[prop])) {
-        config3[prop] = config2[prop];
-      } else if (!isUndefined(globalsConfig[prop])) {
-        config3[prop] = globalsConfig[prop];
-      }
-    });
-    return config3;
-  };
-  const mergeConfig = (globalsConfig, config2 = {}) => {
-    const method = config2.method || globalsConfig.method || "GET";
-    let config3 = {
-      baseURL: globalsConfig.baseURL || "",
-      method,
-      url: config2.url || "",
-      params: config2.params || {},
-      custom: { ...globalsConfig.custom || {}, ...config2.custom || {} },
-      header: deepMerge(globalsConfig.header || {}, config2.header || {})
-    };
-    const defaultToConfig2Keys = ["getTask", "validateStatus"];
-    config3 = { ...config3, ...mergeKeys(defaultToConfig2Keys, globalsConfig, config2) };
-    if (method === "DOWNLOAD") {
-      if (!isUndefined(config2.timeout)) {
-        config3.timeout = config2.timeout;
-      } else if (!isUndefined(globalsConfig.timeout)) {
-        config3.timeout = globalsConfig.timeout;
-      }
-    } else if (method === "UPLOAD") {
-      delete config3.header["content-type"];
-      delete config3.header["Content-Type"];
-      const uploadKeys = [
-        "files",
-        "filePath",
-        "name",
-        "timeout",
-        "formData"
-      ];
-      uploadKeys.forEach((prop) => {
-        if (!isUndefined(config2[prop])) {
-          config3[prop] = config2[prop];
-        }
-      });
-      if (isUndefined(config3.timeout) && !isUndefined(globalsConfig.timeout)) {
-        config3.timeout = globalsConfig.timeout;
-      }
-    } else {
-      const defaultsKeys = [
-        "data",
-        "timeout",
-        "dataType",
-        "responseType",
-        "sslVerify",
-        "firstIpv4"
-      ];
-      config3 = { ...config3, ...mergeKeys(defaultsKeys, globalsConfig, config2) };
-    }
-    return config3;
-  };
-  const defaults = {
-    baseURL: "",
-    header: {},
-    method: "GET",
-    dataType: "json",
-    responseType: "text",
-    custom: {},
-    timeout: 6e4,
-    sslVerify: true,
-    firstIpv4: false,
-    validateStatus: function validateStatus(status) {
-      return status >= 200 && status < 300;
-    }
-  };
-  var clone = function() {
-    function _instanceof(obj, type) {
-      return type != null && obj instanceof type;
-    }
-    var nativeMap;
-    try {
-      nativeMap = Map;
-    } catch (_) {
-      nativeMap = function() {
-      };
-    }
-    var nativeSet;
-    try {
-      nativeSet = Set;
-    } catch (_) {
-      nativeSet = function() {
-      };
-    }
-    var nativePromise;
-    try {
-      nativePromise = Promise;
-    } catch (_) {
-      nativePromise = function() {
-      };
-    }
-    function clone2(parent, circular, depth, prototype, includeNonEnumerable) {
-      if (typeof circular === "object") {
-        depth = circular.depth;
-        prototype = circular.prototype;
-        includeNonEnumerable = circular.includeNonEnumerable;
-        circular = circular.circular;
-      }
-      var allParents = [];
-      var allChildren = [];
-      var useBuffer = typeof Buffer != "undefined";
-      if (typeof circular == "undefined")
-        circular = true;
-      if (typeof depth == "undefined")
-        depth = Infinity;
-      function _clone(parent2, depth2) {
-        if (parent2 === null)
-          return null;
-        if (depth2 === 0)
-          return parent2;
-        var child;
-        var proto;
-        if (typeof parent2 != "object") {
-          return parent2;
-        }
-        if (_instanceof(parent2, nativeMap)) {
-          child = new nativeMap();
-        } else if (_instanceof(parent2, nativeSet)) {
-          child = new nativeSet();
-        } else if (_instanceof(parent2, nativePromise)) {
-          child = new nativePromise(function(resolve, reject) {
-            parent2.then(function(value) {
-              resolve(_clone(value, depth2 - 1));
-            }, function(err) {
-              reject(_clone(err, depth2 - 1));
-            });
-          });
-        } else if (clone2.__isArray(parent2)) {
-          child = [];
-        } else if (clone2.__isRegExp(parent2)) {
-          child = new RegExp(parent2.source, __getRegExpFlags(parent2));
-          if (parent2.lastIndex)
-            child.lastIndex = parent2.lastIndex;
-        } else if (clone2.__isDate(parent2)) {
-          child = new Date(parent2.getTime());
-        } else if (useBuffer && Buffer.isBuffer(parent2)) {
-          if (Buffer.from) {
-            child = Buffer.from(parent2);
-          } else {
-            child = new Buffer(parent2.length);
-            parent2.copy(child);
-          }
-          return child;
-        } else if (_instanceof(parent2, Error)) {
-          child = Object.create(parent2);
-        } else {
-          if (typeof prototype == "undefined") {
-            proto = Object.getPrototypeOf(parent2);
-            child = Object.create(proto);
-          } else {
-            child = Object.create(prototype);
-            proto = prototype;
-          }
-        }
-        if (circular) {
-          var index2 = allParents.indexOf(parent2);
-          if (index2 != -1) {
-            return allChildren[index2];
-          }
-          allParents.push(parent2);
-          allChildren.push(child);
-        }
-        if (_instanceof(parent2, nativeMap)) {
-          parent2.forEach(function(value, key) {
-            var keyChild = _clone(key, depth2 - 1);
-            var valueChild = _clone(value, depth2 - 1);
-            child.set(keyChild, valueChild);
-          });
-        }
-        if (_instanceof(parent2, nativeSet)) {
-          parent2.forEach(function(value) {
-            var entryChild = _clone(value, depth2 - 1);
-            child.add(entryChild);
-          });
-        }
-        for (var i in parent2) {
-          var attrs = Object.getOwnPropertyDescriptor(parent2, i);
-          if (attrs) {
-            child[i] = _clone(parent2[i], depth2 - 1);
-          }
-          try {
-            var objProperty = Object.getOwnPropertyDescriptor(parent2, i);
-            if (objProperty.set === "undefined") {
-              continue;
-            }
-            child[i] = _clone(parent2[i], depth2 - 1);
-          } catch (e) {
-            if (e instanceof TypeError) {
-              continue;
-            } else if (e instanceof ReferenceError) {
-              continue;
-            }
-          }
-        }
-        if (Object.getOwnPropertySymbols) {
-          var symbols = Object.getOwnPropertySymbols(parent2);
-          for (var i = 0; i < symbols.length; i++) {
-            var symbol = symbols[i];
-            var descriptor = Object.getOwnPropertyDescriptor(parent2, symbol);
-            if (descriptor && !descriptor.enumerable && !includeNonEnumerable) {
-              continue;
-            }
-            child[symbol] = _clone(parent2[symbol], depth2 - 1);
-            Object.defineProperty(child, symbol, descriptor);
-          }
-        }
-        if (includeNonEnumerable) {
-          var allPropertyNames = Object.getOwnPropertyNames(parent2);
-          for (var i = 0; i < allPropertyNames.length; i++) {
-            var propertyName = allPropertyNames[i];
-            var descriptor = Object.getOwnPropertyDescriptor(parent2, propertyName);
-            if (descriptor && descriptor.enumerable) {
-              continue;
-            }
-            child[propertyName] = _clone(parent2[propertyName], depth2 - 1);
-            Object.defineProperty(child, propertyName, descriptor);
-          }
-        }
-        return child;
-      }
-      return _clone(parent, depth);
-    }
-    clone2.clonePrototype = function clonePrototype(parent) {
-      if (parent === null)
-        return null;
-      var c = function() {
-      };
-      c.prototype = parent;
-      return new c();
-    };
-    function __objToStr(o) {
-      return Object.prototype.toString.call(o);
-    }
-    clone2.__objToStr = __objToStr;
-    function __isDate(o) {
-      return typeof o === "object" && __objToStr(o) === "[object Date]";
-    }
-    clone2.__isDate = __isDate;
-    function __isArray(o) {
-      return typeof o === "object" && __objToStr(o) === "[object Array]";
-    }
-    clone2.__isArray = __isArray;
-    function __isRegExp(o) {
-      return typeof o === "object" && __objToStr(o) === "[object RegExp]";
-    }
-    clone2.__isRegExp = __isRegExp;
-    function __getRegExpFlags(re) {
-      var flags = "";
-      if (re.global)
-        flags += "g";
-      if (re.ignoreCase)
-        flags += "i";
-      if (re.multiline)
-        flags += "m";
-      return flags;
-    }
-    clone2.__getRegExpFlags = __getRegExpFlags;
-    return clone2;
-  }();
-  class Request {
-    /**
-    * @param {Object} arg - 全局配置
-    * @param {String} arg.baseURL - 全局根路径
-    * @param {Object} arg.header - 全局header
-    * @param {String} arg.method = [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE] - 全局默认请求方式
-    * @param {String} arg.dataType = [json] - 全局默认的dataType
-    * @param {String} arg.responseType = [text|arraybuffer] - 全局默认的responseType。支付宝小程序不支持
-    * @param {Object} arg.custom - 全局默认的自定义参数
-    * @param {Number} arg.timeout - 全局默认的超时时间，单位 ms。默认60000。H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
-    * @param {Boolean} arg.sslVerify - 全局默认的是否验证 ssl 证书。默认true.仅App安卓端支持（HBuilderX 2.3.3+）
-    * @param {Boolean} arg.withCredentials - 全局默认的跨域请求时是否携带凭证（cookies）。默认false。仅H5支持（HBuilderX 2.6.15+）
-    * @param {Boolean} arg.firstIpv4 - 全DNS解析时优先使用ipv4。默认false。仅 App-Android 支持 (HBuilderX 2.8.0+)
-    * @param {Function(statusCode):Boolean} arg.validateStatus - 全局默认的自定义验证器。默认statusCode >= 200 && statusCode < 300
-    */
-    constructor(arg = {}) {
-      if (!isPlainObject(arg)) {
-        arg = {};
-        formatAppLog("warn", "at node_modules/uview-plus/libs/luch-request/core/Request.js:39", "设置全局参数必须接收一个Object");
-      }
-      this.config = clone({ ...defaults, ...arg });
-      this.interceptors = {
-        request: new InterceptorManager(),
-        response: new InterceptorManager()
-      };
-    }
-    /**
-    * @Function
-    * @param {Request~setConfigCallback} f - 设置全局默认配置
-    */
-    setConfig(f) {
-      this.config = f(this.config);
-    }
-    middleware(config2) {
-      config2 = mergeConfig(this.config, config2);
-      const chain = [dispatchRequest, void 0];
-      let promise2 = Promise.resolve(config2);
-      this.interceptors.request.forEach((interceptor) => {
-        chain.unshift(interceptor.fulfilled, interceptor.rejected);
-      });
-      this.interceptors.response.forEach((interceptor) => {
-        chain.push(interceptor.fulfilled, interceptor.rejected);
-      });
-      while (chain.length) {
-        promise2 = promise2.then(chain.shift(), chain.shift());
-      }
-      return promise2;
-    }
-    /**
-    * @Function
-    * @param {Object} config - 请求配置项
-    * @prop {String} options.url - 请求路径
-    * @prop {Object} options.data - 请求参数
-    * @prop {Object} [options.responseType = config.responseType] [text|arraybuffer] - 响应的数据类型
-    * @prop {Object} [options.dataType = config.dataType] - 如果设为 json，会尝试对返回的数据做一次 JSON.parse
-    * @prop {Object} [options.header = config.header] - 请求header
-    * @prop {Object} [options.method = config.method] - 请求方法
-    * @returns {Promise<unknown>}
-    */
-    request(config2 = {}) {
-      return this.middleware(config2);
-    }
-    get(url2, options = {}) {
-      return this.middleware({
-        url: url2,
-        method: "GET",
-        ...options
-      });
-    }
-    post(url2, data, options = {}) {
-      return this.middleware({
-        url: url2,
-        data,
-        method: "POST",
-        ...options
-      });
-    }
-    put(url2, data, options = {}) {
-      return this.middleware({
-        url: url2,
-        data,
-        method: "PUT",
-        ...options
-      });
-    }
-    delete(url2, data, options = {}) {
-      return this.middleware({
-        url: url2,
-        data,
-        method: "DELETE",
-        ...options
-      });
-    }
-    options(url2, data, options = {}) {
-      return this.middleware({
-        url: url2,
-        data,
-        method: "OPTIONS",
-        ...options
-      });
-    }
-    upload(url2, config2 = {}) {
-      config2.url = url2;
-      config2.method = "UPLOAD";
-      return this.middleware(config2);
-    }
-    download(url2, config2 = {}) {
-      config2.url = url2;
-      config2.method = "DOWNLOAD";
-      return this.middleware(config2);
-    }
-  }
-  function colorGradient(startColor = "rgb(0, 0, 0)", endColor = "rgb(255, 255, 255)", step = 10) {
-    const startRGB = hexToRgb(startColor, false);
-    const startR = startRGB[0];
-    const startG = startRGB[1];
-    const startB = startRGB[2];
-    const endRGB = hexToRgb(endColor, false);
-    const endR = endRGB[0];
-    const endG = endRGB[1];
-    const endB = endRGB[2];
-    const sR = (endR - startR) / step;
-    const sG = (endG - startG) / step;
-    const sB = (endB - startB) / step;
-    const colorArr = [];
-    for (let i = 0; i < step; i++) {
-      let hex = rgbToHex(`rgb(${Math.round(sR * i + startR)},${Math.round(sG * i + startG)},${Math.round(sB * i + startB)})`);
-      if (i === 0)
-        hex = rgbToHex(startColor);
-      if (i === step - 1)
-        hex = rgbToHex(endColor);
-      colorArr.push(hex);
-    }
-    return colorArr;
-  }
-  function hexToRgb(sColor, str = true) {
-    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-    sColor = String(sColor).toLowerCase();
-    if (sColor && reg.test(sColor)) {
-      if (sColor.length === 4) {
-        let sColorNew = "#";
-        for (let i = 1; i < 4; i += 1) {
-          sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
-        }
-        sColor = sColorNew;
-      }
-      const sColorChange = [];
-      for (let i = 1; i < 7; i += 2) {
-        sColorChange.push(parseInt(`0x${sColor.slice(i, i + 2)}`));
-      }
-      if (!str) {
-        return sColorChange;
-      }
-      return `rgb(${sColorChange[0]},${sColorChange[1]},${sColorChange[2]})`;
-    }
-    if (/^(rgb|RGB)/.test(sColor)) {
-      const arr = sColor.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
-      return arr.map((val) => Number(val));
-    }
-    return sColor;
-  }
-  function rgbToHex(rgb) {
-    const _this = rgb;
-    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-    if (/^(rgb|RGB)/.test(_this)) {
-      const aColor = _this.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
-      let strHex = "#";
-      for (let i = 0; i < aColor.length; i++) {
-        let hex = Number(aColor[i]).toString(16);
-        hex = String(hex).length == 1 ? `${0}${hex}` : hex;
-        if (hex === "0") {
-          hex += hex;
-        }
-        strHex += hex;
-      }
-      if (strHex.length !== 7) {
-        strHex = _this;
-      }
-      return strHex;
-    }
-    if (reg.test(_this)) {
-      const aNum = _this.replace(/#/, "").split("");
-      if (aNum.length === 6) {
-        return _this;
-      }
-      if (aNum.length === 3) {
-        let numHex = "#";
-        for (let i = 0; i < aNum.length; i += 1) {
-          numHex += aNum[i] + aNum[i];
-        }
-        return numHex;
-      }
-    } else {
-      return _this;
-    }
-  }
-  function colorToRgba(color2, alpha) {
-    color2 = rgbToHex(color2);
-    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-    let sColor = String(color2).toLowerCase();
-    if (sColor && reg.test(sColor)) {
-      if (sColor.length === 4) {
-        let sColorNew = "#";
-        for (let i = 1; i < 4; i += 1) {
-          sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
-        }
-        sColor = sColorNew;
-      }
-      const sColorChange = [];
-      for (let i = 1; i < 7; i += 2) {
-        sColorChange.push(parseInt(`0x${sColor.slice(i, i + 2)}`));
-      }
-      return `rgba(${sColorChange.join(",")},${alpha})`;
-    }
-    return sColor;
-  }
-  const colorGradient$1 = {
-    colorGradient,
-    hexToRgb,
-    rgbToHex,
-    colorToRgba
-  };
-  let timeout = null;
-  function debounce(func2, wait = 500, immediate = false) {
-    if (timeout !== null)
-      clearTimeout(timeout);
-    if (immediate) {
-      const callNow = !timeout;
-      timeout = setTimeout(() => {
-        timeout = null;
-      }, wait);
-      if (callNow)
-        typeof func2 === "function" && func2();
-    } else {
-      timeout = setTimeout(() => {
-        typeof func2 === "function" && func2();
-      }, wait);
-    }
-  }
-  let flag;
-  function throttle(func2, wait = 500, immediate = true) {
-    if (immediate) {
-      if (!flag) {
-        flag = true;
-        typeof func2 === "function" && func2();
-        setTimeout(() => {
-          flag = false;
-        }, wait);
-      }
-    } else if (!flag) {
-      flag = true;
-      setTimeout(() => {
-        flag = false;
-        typeof func2 === "function" && func2();
-      }, wait);
-    }
-  }
   const ActionSheet = {
     // action-sheet组件
     actionSheet: {
@@ -3792,7 +2455,7 @@ if (uni.restoreGlobal) {
       previewImage: true
     }
   };
-  const props = {
+  const props$6 = {
     ...ActionSheet,
     ...Album,
     ...Alert,
@@ -3882,6 +2545,3109 @@ if (uni.restoreGlobal) {
     ...Transition,
     ...Upload
   };
+  const props$5 = defineMixin({
+    props: {
+      // 图标类名
+      name: {
+        type: String,
+        default: () => props$6.icon.name
+      },
+      // 图标颜色，可接受主题色
+      color: {
+        type: String,
+        default: () => props$6.icon.color
+      },
+      // 字体大小，单位px
+      size: {
+        type: [String, Number],
+        default: () => props$6.icon.size
+      },
+      // 是否显示粗体
+      bold: {
+        type: Boolean,
+        default: () => props$6.icon.bold
+      },
+      // 点击图标的时候传递事件出去的index（用于区分点击了哪一个）
+      index: {
+        type: [String, Number],
+        default: () => props$6.icon.index
+      },
+      // 触摸图标时的类名
+      hoverClass: {
+        type: String,
+        default: () => props$6.icon.hoverClass
+      },
+      // 自定义扩展前缀，方便用户扩展自己的图标库
+      customPrefix: {
+        type: String,
+        default: () => props$6.icon.customPrefix
+      },
+      // 图标右边或者下面的文字
+      label: {
+        type: [String, Number],
+        default: () => props$6.icon.label
+      },
+      // label的位置，只能右边或者下边
+      labelPos: {
+        type: String,
+        default: () => props$6.icon.labelPos
+      },
+      // label的大小
+      labelSize: {
+        type: [String, Number],
+        default: () => props$6.icon.labelSize
+      },
+      // label的颜色
+      labelColor: {
+        type: String,
+        default: () => props$6.icon.labelColor
+      },
+      // label与图标的距离
+      space: {
+        type: [String, Number],
+        default: () => props$6.icon.space
+      },
+      // 图片的mode
+      imgMode: {
+        type: String,
+        default: () => props$6.icon.imgMode
+      },
+      // 用于显示图片小图标时，图片的宽度
+      width: {
+        type: [String, Number],
+        default: () => props$6.icon.width
+      },
+      // 用于显示图片小图标时，图片的高度
+      height: {
+        type: [String, Number],
+        default: () => props$6.icon.height
+      },
+      // 用于解决某些情况下，让图标垂直居中的用途
+      top: {
+        type: [String, Number],
+        default: () => props$6.icon.top
+      },
+      // 是否阻止事件传播
+      stop: {
+        type: Boolean,
+        default: () => props$6.icon.stop
+      }
+    }
+  });
+  const mpMixin = defineMixin({});
+  function email(value) {
+    return /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test(value);
+  }
+  function mobile(value) {
+    return /^1[23456789]\d{9}$/.test(value);
+  }
+  function url(value) {
+    return /^((https|http|ftp|rtsp|mms):\/\/)(([0-9a-zA-Z_!~*'().&=+$%-]+: )?[0-9a-zA-Z_!~*'().&=+$%-]+@)?(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-zA-Z_!~*'()-]+.)*([0-9a-zA-Z][0-9a-zA-Z-]{0,61})?[0-9a-zA-Z].[a-zA-Z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-zA-Z_!~*'().;?:@&=+$,%#-]+)+\/?)$/.test(value);
+  }
+  function date(value) {
+    if (!value)
+      return false;
+    if (typeof value === "number") {
+      if (value.toString().length !== 10 && value.toString().length !== 13) {
+        return false;
+      }
+      return !isNaN(new Date(value).getTime());
+    }
+    if (typeof value === "string") {
+      const numV = Number(value);
+      if (!isNaN(numV)) {
+        if (numV.toString().length === 10 || numV.toString().length === 13) {
+          return !isNaN(new Date(numV).getTime());
+        }
+      }
+      if (value.length < 10 || value.length > 19) {
+        return false;
+      }
+      const dateRegex = /^\d{4}[-\/]\d{2}[-\/]\d{2}( \d{1,2}:\d{2}(:\d{2})?)?$/;
+      if (!dateRegex.test(value)) {
+        return false;
+      }
+      const dateValue = new Date(value);
+      return !isNaN(dateValue.getTime());
+    }
+    return false;
+  }
+  function dateISO(value) {
+    return /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/.test(value);
+  }
+  function number(value) {
+    return /^[\+-]?(\d+\.?\d*|\.\d+|\d\.\d+e\+\d+)$/.test(value);
+  }
+  function string(value) {
+    return typeof value === "string";
+  }
+  function digits(value) {
+    return /^\d+$/.test(value);
+  }
+  function idCard(value) {
+    return /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test(
+      value
+    );
+  }
+  function carNo(value) {
+    const xreg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))/;
+    const creg = /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1}$/;
+    if (value.length === 7) {
+      return creg.test(value);
+    }
+    if (value.length === 8) {
+      return xreg.test(value);
+    }
+    return false;
+  }
+  function amount(value) {
+    return /^[1-9]\d*(,\d{3})*(\.\d{1,2})?$|^0\.\d{1,2}$/.test(value);
+  }
+  function chinese(value) {
+    const reg = /^[\u4e00-\u9fa5]+$/gi;
+    return reg.test(value);
+  }
+  function letter(value) {
+    return /^[a-zA-Z]*$/.test(value);
+  }
+  function enOrNum(value) {
+    const reg = /^[0-9a-zA-Z]*$/g;
+    return reg.test(value);
+  }
+  function contains(value, param) {
+    return value.indexOf(param) >= 0;
+  }
+  function range$1(value, param) {
+    return value >= param[0] && value <= param[1];
+  }
+  function rangeLength(value, param) {
+    return value.length >= param[0] && value.length <= param[1];
+  }
+  function landline(value) {
+    const reg = /^\d{3,4}-\d{7,8}(-\d{3,4})?$/;
+    return reg.test(value);
+  }
+  function empty(value) {
+    switch (typeof value) {
+      case "undefined":
+        return true;
+      case "string":
+        if (value.replace(/(^[ \t\n\r]*)|([ \t\n\r]*$)/g, "").length == 0)
+          return true;
+        break;
+      case "boolean":
+        if (!value)
+          return true;
+        break;
+      case "number":
+        if (value === 0 || isNaN(value))
+          return true;
+        break;
+      case "object":
+        if (value === null || value.length === 0)
+          return true;
+        for (const i in value) {
+          return false;
+        }
+        return true;
+    }
+    return false;
+  }
+  function jsonString(value) {
+    if (typeof value === "string") {
+      try {
+        const obj = JSON.parse(value);
+        if (typeof obj === "object" && obj) {
+          return true;
+        }
+        return false;
+      } catch (e) {
+        return false;
+      }
+    }
+    return false;
+  }
+  function array(value) {
+    if (typeof Array.isArray === "function") {
+      return Array.isArray(value);
+    }
+    return Object.prototype.toString.call(value) === "[object Array]";
+  }
+  function object(value) {
+    return Object.prototype.toString.call(value) === "[object Object]";
+  }
+  function code(value, len = 6) {
+    return new RegExp(`^\\d{${len}}$`).test(value);
+  }
+  function func(value) {
+    return typeof value === "function";
+  }
+  function promise(value) {
+    return object(value) && func(value.then) && func(value.catch);
+  }
+  function image(value) {
+    const newValue = value.split("?")[0];
+    const IMAGE_REGEXP = /\.(jpeg|jpg|gif|png|svg|webp|jfif|bmp|dpg)/i;
+    return IMAGE_REGEXP.test(newValue);
+  }
+  function video(value) {
+    const VIDEO_REGEXP = /\.(mp4|mpg|mpeg|dat|asf|avi|rm|rmvb|mov|wmv|flv|mkv|m3u8)/i;
+    return VIDEO_REGEXP.test(value);
+  }
+  function regExp(o) {
+    return o && Object.prototype.toString.call(o) === "[object RegExp]";
+  }
+  const test = {
+    email,
+    mobile,
+    url,
+    date,
+    dateISO,
+    number,
+    digits,
+    idCard,
+    carNo,
+    amount,
+    chinese,
+    letter,
+    enOrNum,
+    contains,
+    range: range$1,
+    rangeLength,
+    empty,
+    isEmpty: empty,
+    jsonString,
+    landline,
+    object,
+    array,
+    code,
+    func,
+    promise,
+    video,
+    image,
+    regExp,
+    string
+  };
+  function strip(num, precision = 15) {
+    return +parseFloat(Number(num).toPrecision(precision));
+  }
+  function digitLength(num) {
+    const eSplit = num.toString().split(/[eE]/);
+    const len = (eSplit[0].split(".")[1] || "").length - +(eSplit[1] || 0);
+    return len > 0 ? len : 0;
+  }
+  function float2Fixed(num) {
+    if (num.toString().indexOf("e") === -1) {
+      return Number(num.toString().replace(".", ""));
+    }
+    const dLen = digitLength(num);
+    return dLen > 0 ? strip(Number(num) * Math.pow(10, dLen)) : Number(num);
+  }
+  function checkBoundary(num) {
+    {
+      if (num > Number.MAX_SAFE_INTEGER || num < Number.MIN_SAFE_INTEGER) {
+        formatAppLog("warn", "at node_modules/uview-plus/libs/function/digit.js:45", `${num} 超出了精度限制，结果可能不正确`);
+      }
+    }
+  }
+  function iteratorOperation(arr, operation) {
+    const [num1, num2, ...others] = arr;
+    let res = operation(num1, num2);
+    others.forEach((num) => {
+      res = operation(res, num);
+    });
+    return res;
+  }
+  function times(...nums) {
+    if (nums.length > 2) {
+      return iteratorOperation(nums, times);
+    }
+    const [num1, num2] = nums;
+    const num1Changed = float2Fixed(num1);
+    const num2Changed = float2Fixed(num2);
+    const baseNum = digitLength(num1) + digitLength(num2);
+    const leftValue = num1Changed * num2Changed;
+    checkBoundary(leftValue);
+    return leftValue / Math.pow(10, baseNum);
+  }
+  function divide(...nums) {
+    if (nums.length > 2) {
+      return iteratorOperation(nums, divide);
+    }
+    const [num1, num2] = nums;
+    const num1Changed = float2Fixed(num1);
+    const num2Changed = float2Fixed(num2);
+    checkBoundary(num1Changed);
+    checkBoundary(num2Changed);
+    return times(num1Changed / num2Changed, strip(Math.pow(10, digitLength(num2) - digitLength(num1))));
+  }
+  function round(num, ratio) {
+    const base = Math.pow(10, ratio);
+    let result = divide(Math.round(Math.abs(times(num, base))), base);
+    if (num < 0 && result !== 0) {
+      result = times(result, -1);
+    }
+    return result;
+  }
+  function range(min = 0, max = 0, value = 0) {
+    return Math.max(min, Math.min(max, Number(value)));
+  }
+  function getPx(value, unit = false) {
+    if (number(value)) {
+      return unit ? `${value}px` : Number(value);
+    }
+    if (/(rpx|upx)$/.test(value)) {
+      return unit ? `${uni.upx2px(parseInt(value))}px` : Number(uni.upx2px(parseInt(value)));
+    }
+    return unit ? `${parseInt(value)}px` : parseInt(value);
+  }
+  function sleep(value = 30) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, value);
+    });
+  }
+  function os() {
+    return uni.getSystemInfoSync().platform.toLowerCase();
+  }
+  function sys() {
+    return uni.getSystemInfoSync();
+  }
+  function random(min, max) {
+    if (min >= 0 && max > 0 && max >= min) {
+      const gab = max - min + 1;
+      return Math.floor(Math.random() * gab + min);
+    }
+    return 0;
+  }
+  function guid(len = 32, firstU = true, radix = null) {
+    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split("");
+    const uuid = [];
+    radix = radix || chars.length;
+    if (len) {
+      for (let i = 0; i < len; i++)
+        uuid[i] = chars[0 | Math.random() * radix];
+    } else {
+      let r;
+      uuid[8] = uuid[13] = uuid[18] = uuid[23] = "-";
+      uuid[14] = "4";
+      for (let i = 0; i < 36; i++) {
+        if (!uuid[i]) {
+          r = 0 | Math.random() * 16;
+          uuid[i] = chars[i == 19 ? r & 3 | 8 : r];
+        }
+      }
+    }
+    if (firstU) {
+      uuid.shift();
+      return `u${uuid.join("")}`;
+    }
+    return uuid.join("");
+  }
+  function $parent(name = void 0) {
+    let parent = this.$parent;
+    while (parent) {
+      name = name.replace(/up-([a-zA-Z0-9-_]+)/g, "u-$1");
+      if (parent.$options && parent.$options.name !== name) {
+        parent = parent.$parent;
+      } else {
+        return parent;
+      }
+    }
+    return false;
+  }
+  function addStyle(customStyle, target = "object") {
+    if (empty(customStyle) || typeof customStyle === "object" && target === "object" || target === "string" && typeof customStyle === "string") {
+      return customStyle;
+    }
+    if (target === "object") {
+      customStyle = trim(customStyle);
+      const styleArray = customStyle.split(";");
+      const style = {};
+      for (let i = 0; i < styleArray.length; i++) {
+        if (styleArray[i]) {
+          const item = styleArray[i].split(":");
+          style[trim(item[0])] = trim(item[1]);
+        }
+      }
+      return style;
+    }
+    let string2 = "";
+    if (typeof customStyle === "object") {
+      customStyle.forEach((val, i) => {
+        const key = i.replace(/([A-Z])/g, "-$1").toLowerCase();
+        string2 += `${key}:${val};`;
+      });
+    }
+    return trim(string2);
+  }
+  function addUnit(value = "auto", unit = "") {
+    if (!unit) {
+      unit = config.unit || "px";
+    }
+    if (unit == "rpx" && number(String(value))) {
+      value = value * 2;
+    }
+    value = String(value);
+    return number(value) ? `${value}${unit}` : value;
+  }
+  function deepClone(obj) {
+    if ([null, void 0, NaN, false].includes(obj))
+      return obj;
+    if (typeof obj !== "object" && typeof obj !== "function") {
+      return obj;
+    }
+    const o = array(obj) ? [] : {};
+    for (const i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        o[i] = typeof obj[i] === "object" ? deepClone(obj[i]) : obj[i];
+      }
+    }
+    return o;
+  }
+  function deepMerge$1(targetOrigin = {}, source = {}) {
+    let target = deepClone(targetOrigin);
+    if (typeof target !== "object" || typeof source !== "object")
+      return false;
+    for (const prop in source) {
+      if (!source.hasOwnProperty(prop))
+        continue;
+      if (prop in target) {
+        if (source[prop] == null) {
+          target[prop] = source[prop];
+        } else if (typeof target[prop] !== "object") {
+          target[prop] = source[prop];
+        } else if (typeof source[prop] !== "object") {
+          target[prop] = source[prop];
+        } else if (target[prop].concat && source[prop].concat) {
+          target[prop] = target[prop].concat(source[prop]);
+        } else {
+          target[prop] = deepMerge$1(target[prop], source[prop]);
+        }
+      } else {
+        target[prop] = source[prop];
+      }
+    }
+    return target;
+  }
+  function shallowMerge(target, source = {}) {
+    if (typeof target !== "object" || typeof source !== "object")
+      return false;
+    for (const prop in source) {
+      if (!source.hasOwnProperty(prop))
+        continue;
+      if (prop in target) {
+        if (source[prop] == null) {
+          target[prop] = source[prop];
+        } else if (typeof target[prop] !== "object") {
+          target[prop] = source[prop];
+        } else if (typeof source[prop] !== "object") {
+          target[prop] = source[prop];
+        } else if (target[prop].concat && source[prop].concat) {
+          target[prop] = target[prop].concat(source[prop]);
+        } else {
+          target[prop] = shallowMerge(target[prop], source[prop]);
+        }
+      } else {
+        target[prop] = source[prop];
+      }
+    }
+    return target;
+  }
+  function error(err) {
+    {
+      formatAppLog("error", "at node_modules/uview-plus/libs/function/index.js:279", `uView提示：${err}`);
+    }
+  }
+  function randomArray(array2 = []) {
+    return array2.sort(() => Math.random() - 0.5);
+  }
+  if (!String.prototype.padStart) {
+    String.prototype.padStart = function(maxLength, fillString = " ") {
+      if (Object.prototype.toString.call(fillString) !== "[object String]") {
+        throw new TypeError(
+          "fillString must be String"
+        );
+      }
+      const str = this;
+      if (str.length >= maxLength)
+        return String(str);
+      const fillLength = maxLength - str.length;
+      let times2 = Math.ceil(fillLength / fillString.length);
+      while (times2 >>= 1) {
+        fillString += fillString;
+        if (times2 === 1) {
+          fillString += fillString;
+        }
+      }
+      return fillString.slice(0, fillLength) + str;
+    };
+  }
+  function timeFormat(dateTime = null, formatStr = "yyyy-mm-dd") {
+    let date2;
+    if (!dateTime) {
+      date2 = /* @__PURE__ */ new Date();
+    } else if (/^\d{10}$/.test(dateTime.toString().trim())) {
+      date2 = new Date(dateTime * 1e3);
+    } else if (typeof dateTime === "string" && /^\d+$/.test(dateTime.trim())) {
+      date2 = new Date(Number(dateTime));
+    } else {
+      date2 = new Date(
+        typeof dateTime === "string" ? dateTime.replace(/-/g, "/") : dateTime
+      );
+    }
+    const timeSource = {
+      "y": date2.getFullYear().toString(),
+      // 年
+      "m": (date2.getMonth() + 1).toString().padStart(2, "0"),
+      // 月
+      "d": date2.getDate().toString().padStart(2, "0"),
+      // 日
+      "h": date2.getHours().toString().padStart(2, "0"),
+      // 时
+      "M": date2.getMinutes().toString().padStart(2, "0"),
+      // 分
+      "s": date2.getSeconds().toString().padStart(2, "0")
+      // 秒
+      // 有其他格式化字符需求可以继续添加，必须转化成字符串
+    };
+    for (const key in timeSource) {
+      const [ret] = new RegExp(`${key}+`).exec(formatStr) || [];
+      if (ret) {
+        const beginIndex = key === "y" && ret.length === 2 ? 2 : 0;
+        formatStr = formatStr.replace(ret, timeSource[key].slice(beginIndex));
+      }
+    }
+    return formatStr;
+  }
+  function timeFrom(timestamp = null, format = "yyyy-mm-dd") {
+    if (timestamp == null)
+      timestamp = Number(/* @__PURE__ */ new Date());
+    timestamp = parseInt(timestamp);
+    if (timestamp.toString().length == 10)
+      timestamp *= 1e3;
+    let timer = (/* @__PURE__ */ new Date()).getTime() - timestamp;
+    timer = parseInt(timer / 1e3);
+    let tips = "";
+    switch (true) {
+      case timer < 300:
+        tips = "刚刚";
+        break;
+      case (timer >= 300 && timer < 3600):
+        tips = `${parseInt(timer / 60)}分钟前`;
+        break;
+      case (timer >= 3600 && timer < 86400):
+        tips = `${parseInt(timer / 3600)}小时前`;
+        break;
+      case (timer >= 86400 && timer < 2592e3):
+        tips = `${parseInt(timer / 86400)}天前`;
+        break;
+      default:
+        if (format === false) {
+          if (timer >= 2592e3 && timer < 365 * 86400) {
+            tips = `${parseInt(timer / (86400 * 30))}个月前`;
+          } else {
+            tips = `${parseInt(timer / (86400 * 365))}年前`;
+          }
+        } else {
+          tips = timeFormat(timestamp, format);
+        }
+    }
+    return tips;
+  }
+  function trim(str, pos = "both") {
+    str = String(str);
+    if (pos == "both") {
+      return str.replace(/^\s+|\s+$/g, "");
+    }
+    if (pos == "left") {
+      return str.replace(/^\s*/, "");
+    }
+    if (pos == "right") {
+      return str.replace(/(\s*$)/g, "");
+    }
+    if (pos == "all") {
+      return str.replace(/\s+/g, "");
+    }
+    return str;
+  }
+  function queryParams(data = {}, isPrefix = true, arrayFormat = "brackets") {
+    const prefix = isPrefix ? "?" : "";
+    const _result = [];
+    if (["indices", "brackets", "repeat", "comma"].indexOf(arrayFormat) == -1)
+      arrayFormat = "brackets";
+    for (const key in data) {
+      const value = data[key];
+      if (["", void 0, null].indexOf(value) >= 0) {
+        continue;
+      }
+      if (value.constructor === Array) {
+        switch (arrayFormat) {
+          case "indices":
+            for (let i = 0; i < value.length; i++) {
+              _result.push(`${key}[${i}]=${value[i]}`);
+            }
+            break;
+          case "brackets":
+            value.forEach((_value) => {
+              _result.push(`${key}[]=${_value}`);
+            });
+            break;
+          case "repeat":
+            value.forEach((_value) => {
+              _result.push(`${key}=${_value}`);
+            });
+            break;
+          case "comma":
+            let commaStr = "";
+            value.forEach((_value) => {
+              commaStr += (commaStr ? "," : "") + _value;
+            });
+            _result.push(`${key}=${commaStr}`);
+            break;
+          default:
+            value.forEach((_value) => {
+              _result.push(`${key}[]=${_value}`);
+            });
+        }
+      } else {
+        _result.push(`${key}=${value}`);
+      }
+    }
+    return _result.length ? prefix + _result.join("&") : "";
+  }
+  function toast(title, duration = 2e3) {
+    uni.showToast({
+      title: String(title),
+      icon: "none",
+      duration
+    });
+  }
+  function type2icon(type = "success", fill = false) {
+    if (["primary", "info", "error", "warning", "success"].indexOf(type) == -1)
+      type = "success";
+    let iconName = "";
+    switch (type) {
+      case "primary":
+        iconName = "info-circle";
+        break;
+      case "info":
+        iconName = "info-circle";
+        break;
+      case "error":
+        iconName = "close-circle";
+        break;
+      case "warning":
+        iconName = "error-circle";
+        break;
+      case "success":
+        iconName = "checkmark-circle";
+        break;
+      default:
+        iconName = "checkmark-circle";
+    }
+    if (fill)
+      iconName += "-fill";
+    return iconName;
+  }
+  function priceFormat(number2, decimals = 0, decimalPoint = ".", thousandsSeparator = ",") {
+    number2 = `${number2}`.replace(/[^0-9+-Ee.]/g, "");
+    const n = !isFinite(+number2) ? 0 : +number2;
+    const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+    const sep = typeof thousandsSeparator === "undefined" ? "," : thousandsSeparator;
+    const dec = typeof decimalPoint === "undefined" ? "." : decimalPoint;
+    let s = "";
+    s = (prec ? round(n, prec) + "" : `${Math.round(n)}`).split(".");
+    const re = /(-?\d+)(\d{3})/;
+    while (re.test(s[0])) {
+      s[0] = s[0].replace(re, `$1${sep}$2`);
+    }
+    if ((s[1] || "").length < prec) {
+      s[1] = s[1] || "";
+      s[1] += new Array(prec - s[1].length + 1).join("0");
+    }
+    return s.join(dec);
+  }
+  function getDuration(value, unit = true) {
+    const valueNum = parseInt(value);
+    if (unit) {
+      if (/s$/.test(value))
+        return value;
+      return value > 30 ? `${value}ms` : `${value}s`;
+    }
+    if (/ms$/.test(value))
+      return valueNum;
+    if (/s$/.test(value))
+      return valueNum > 30 ? valueNum : valueNum * 1e3;
+    return valueNum;
+  }
+  function padZero(value) {
+    return `00${value}`.slice(-2);
+  }
+  function formValidate(instance, event) {
+    const formItem = $parent.call(instance, "u-form-item");
+    const form = $parent.call(instance, "u-form");
+    if (formItem && form) {
+      form.validateField(formItem.prop, () => {
+      }, event);
+    }
+  }
+  function getProperty(obj, key) {
+    if (typeof obj !== "object" || null == obj) {
+      return "";
+    }
+    if (typeof key !== "string" || key === "") {
+      return "";
+    }
+    if (key.indexOf(".") !== -1) {
+      const keys = key.split(".");
+      let firstObj = obj[keys[0]] || {};
+      for (let i = 1; i < keys.length; i++) {
+        if (firstObj) {
+          firstObj = firstObj[keys[i]];
+        }
+      }
+      return firstObj;
+    }
+    return obj[key];
+  }
+  function setProperty(obj, key, value) {
+    if (typeof obj !== "object" || null == obj) {
+      return;
+    }
+    const inFn = function(_obj, keys, v) {
+      if (keys.length === 1) {
+        _obj[keys[0]] = v;
+        return;
+      }
+      while (keys.length > 1) {
+        const k = keys[0];
+        if (!_obj[k] || typeof _obj[k] !== "object") {
+          _obj[k] = {};
+        }
+        keys.shift();
+        inFn(_obj[k], keys, v);
+      }
+    };
+    if (typeof key !== "string" || key === "")
+      ;
+    else if (key.indexOf(".") !== -1) {
+      const keys = key.split(".");
+      inFn(obj, keys, value);
+    } else {
+      obj[key] = value;
+    }
+  }
+  function page() {
+    const pages2 = getCurrentPages();
+    return `/${pages2[pages2.length - 1].route || ""}`;
+  }
+  function pages() {
+    const pages2 = getCurrentPages();
+    return pages2;
+  }
+  function getValueByPath(obj, path) {
+    const pathArr = path.split(".");
+    return pathArr.reduce((acc, curr) => {
+      return acc && acc[curr] !== void 0 ? acc[curr] : void 0;
+    }, obj);
+  }
+  const index = {
+    range,
+    getPx,
+    sleep,
+    os,
+    sys,
+    random,
+    guid,
+    $parent,
+    addStyle,
+    addUnit,
+    deepClone,
+    deepMerge: deepMerge$1,
+    shallowMerge,
+    error,
+    randomArray,
+    timeFormat,
+    timeFrom,
+    trim,
+    queryParams,
+    toast,
+    type2icon,
+    priceFormat,
+    getDuration,
+    padZero,
+    formValidate,
+    getProperty,
+    setProperty,
+    page,
+    pages,
+    getValueByPath
+    // setConfig
+  };
+  class Router {
+    constructor() {
+      this.config = {
+        type: "navigateTo",
+        url: "",
+        delta: 1,
+        // navigateBack页面后退时,回退的层数
+        params: {},
+        // 传递的参数
+        animationType: "pop-in",
+        // 窗口动画,只在APP有效
+        animationDuration: 300,
+        // 窗口动画持续时间,单位毫秒,只在APP有效
+        intercept: false
+        // 是否需要拦截
+      };
+      this.route = this.route.bind(this);
+    }
+    // 判断url前面是否有"/"，如果没有则加上，否则无法跳转
+    addRootPath(url2) {
+      return url2[0] === "/" ? url2 : `/${url2}`;
+    }
+    // 整合路由参数
+    mixinParam(url2, params) {
+      url2 = url2 && this.addRootPath(url2);
+      let query = "";
+      if (/.*\/.*\?.*=.*/.test(url2)) {
+        query = queryParams(params, false);
+        return url2 += `&${query}`;
+      }
+      query = queryParams(params);
+      return url2 += query;
+    }
+    // 对外的方法名称
+    async route(options = {}, params = {}) {
+      let mergeConfig2 = {};
+      if (typeof options === "string") {
+        mergeConfig2.url = this.mixinParam(options, params);
+        mergeConfig2.type = "navigateTo";
+      } else {
+        mergeConfig2 = deepMerge$1(this.config, options);
+        mergeConfig2.url = this.mixinParam(options.url, options.params);
+      }
+      if (mergeConfig2.url === page())
+        return;
+      if (params.intercept) {
+        this.config.intercept = params.intercept;
+      }
+      mergeConfig2.params = params;
+      mergeConfig2 = deepMerge$1(this.config, mergeConfig2);
+      if (typeof uni.$u.routeIntercept === "function") {
+        const isNext = await new Promise((resolve, reject) => {
+          uni.$u.routeIntercept(mergeConfig2, resolve);
+        });
+        isNext && this.openPage(mergeConfig2);
+      } else {
+        this.openPage(mergeConfig2);
+      }
+    }
+    // 执行路由跳转
+    openPage(config2) {
+      const {
+        url: url2,
+        type,
+        delta,
+        animationType,
+        animationDuration
+      } = config2;
+      if (config2.type == "navigateTo" || config2.type == "to") {
+        uni.navigateTo({
+          url: url2,
+          animationType,
+          animationDuration
+        });
+      }
+      if (config2.type == "redirectTo" || config2.type == "redirect") {
+        uni.redirectTo({
+          url: url2
+        });
+      }
+      if (config2.type == "switchTab" || config2.type == "tab") {
+        uni.switchTab({
+          url: url2
+        });
+      }
+      if (config2.type == "reLaunch" || config2.type == "launch") {
+        uni.reLaunch({
+          url: url2
+        });
+      }
+      if (config2.type == "navigateBack" || config2.type == "back") {
+        uni.navigateBack({
+          delta
+        });
+      }
+    }
+  }
+  const route = new Router().route;
+  const mixin = defineMixin({
+    // 定义每个组件都可能需要用到的外部样式以及类名
+    props: {
+      // 每个组件都有的父组件传递的样式，可以为字符串或者对象形式
+      customStyle: {
+        type: [Object, String],
+        default: () => ({})
+      },
+      customClass: {
+        type: String,
+        default: ""
+      },
+      // 跳转的页面路径
+      url: {
+        type: String,
+        default: ""
+      },
+      // 页面跳转的类型
+      linkType: {
+        type: String,
+        default: "navigateTo"
+      }
+    },
+    data() {
+      return {};
+    },
+    onLoad() {
+      this.$u.getRect = this.$uGetRect;
+    },
+    created() {
+      this.$u.getRect = this.$uGetRect;
+    },
+    computed: {
+      // 在2.x版本中，将会把$u挂载到uni对象下，导致在模板中无法使用uni.$u.xxx形式
+      // 所以这里通过computed计算属性将其附加到this.$u上，就可以在模板或者js中使用uni.$u.xxx
+      // 只在nvue环境通过此方式引入完整的$u，其他平台会出现性能问题，非nvue则按需引入（主要原因是props过大）
+      $u() {
+        return deepMerge$1(uni.$u, {
+          props: void 0,
+          http: void 0,
+          mixin: void 0
+        });
+      },
+      /**
+       * 生成bem规则类名
+       * 由于微信小程序，H5，nvue之间绑定class的差异，无法通过:class="[bem()]"的形式进行同用
+       * 故采用如下折中做法，最后返回的是数组（一般平台）或字符串（支付宝和字节跳动平台），类似['a', 'b', 'c']或'a b c'的形式
+       * @param {String} name 组件名称
+       * @param {Array} fixed 一直会存在的类名
+       * @param {Array} change 会根据变量值为true或者false而出现或者隐藏的类名
+       * @returns {Array|string}
+       */
+      bem() {
+        return function(name, fixed, change) {
+          const prefix = `u-${name}--`;
+          const classes = {};
+          if (fixed) {
+            fixed.map((item) => {
+              classes[prefix + this[item]] = true;
+            });
+          }
+          if (change) {
+            change.map((item) => {
+              this[item] ? classes[prefix + item] = this[item] : delete classes[prefix + item];
+            });
+          }
+          return Object.keys(classes);
+        };
+      }
+    },
+    methods: {
+      // 跳转某一个页面
+      openPage(urlKey = "url") {
+        const url2 = this[urlKey];
+        if (url2) {
+          route({ type: this.linkType, url: url2 });
+        }
+      },
+      navTo(url2 = "", linkType = "navigateTo") {
+        route({ type: this.linkType, url: url2 });
+      },
+      // 查询节点信息
+      // 目前此方法在支付宝小程序中无法获取组件跟接点的尺寸，为支付宝的bug(2020-07-21)
+      // 解决办法为在组件根部再套一个没有任何作用的view元素
+      $uGetRect(selector, all) {
+        return new Promise((resolve) => {
+          uni.createSelectorQuery().in(this)[all ? "selectAll" : "select"](selector).boundingClientRect((rect) => {
+            if (all && Array.isArray(rect) && rect.length) {
+              resolve(rect);
+            }
+            if (!all && rect) {
+              resolve(rect);
+            }
+          }).exec();
+        });
+      },
+      getParentData(parentName = "") {
+        if (!this.parent)
+          this.parent = {};
+        this.parent = $parent.call(this, parentName);
+        if (this.parent.children) {
+          this.parent.children.indexOf(this) === -1 && this.parent.children.push(this);
+        }
+        if (this.parent && this.parentData) {
+          Object.keys(this.parentData).map((key) => {
+            this.parentData[key] = this.parent[key];
+          });
+        }
+      },
+      // 阻止事件冒泡
+      preventEvent(e) {
+        e && typeof e.stopPropagation === "function" && e.stopPropagation();
+      },
+      // 空操作
+      noop(e) {
+        this.preventEvent(e);
+      }
+    },
+    onReachBottom() {
+      uni.$emit("uOnReachBottom");
+    },
+    beforeUnmount() {
+      if (this.parent && test.array(this.parent.children)) {
+        const childrenList = this.parent.children;
+        childrenList.map((child, index2) => {
+          if (child === this) {
+            childrenList.splice(index2, 1);
+          }
+        });
+      }
+    }
+  });
+  const _sfc_main$7 = {
+    name: "u-icon",
+    data() {
+      return {};
+    },
+    emits: ["click"],
+    mixins: [mpMixin, mixin, props$5],
+    computed: {
+      uClasses() {
+        let classes = [];
+        classes.push(this.customPrefix + "-" + this.name);
+        if (this.customPrefix == "uicon") {
+          classes.push("u-iconfont");
+        } else {
+          classes.push(this.customPrefix);
+        }
+        if (this.color && config.type.includes(this.color))
+          classes.push("u-icon__icon--" + this.color);
+        return classes;
+      },
+      iconStyle() {
+        let style = {};
+        style = {
+          fontSize: addUnit(this.size),
+          lineHeight: addUnit(this.size),
+          fontWeight: this.bold ? "bold" : "normal",
+          // 某些特殊情况需要设置一个到顶部的距离，才能更好的垂直居中
+          top: addUnit(this.top)
+        };
+        if (this.color && !config.type.includes(this.color))
+          style.color = this.color;
+        return style;
+      },
+      // 判断传入的name属性，是否图片路径，只要带有"/"均认为是图片形式
+      isImg() {
+        return this.name.indexOf("/") !== -1;
+      },
+      imgStyle() {
+        let style = {};
+        style.width = this.width ? addUnit(this.width) : addUnit(this.size);
+        style.height = this.height ? addUnit(this.height) : addUnit(this.size);
+        return style;
+      },
+      // 通过图标名，查找对应的图标
+      icon() {
+        if (this.customPrefix !== "uicon")
+          return "";
+        return icons["uicon-" + this.name] || this.name;
+      }
+    },
+    methods: {
+      addStyle,
+      addUnit,
+      clickHandler(e) {
+        this.$emit("click", this.index);
+        this.stop && this.preventEvent(e);
+      }
+    }
+  };
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: vue.normalizeClass(["u-icon", ["u-icon--" + _ctx.labelPos]]),
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.clickHandler && $options.clickHandler(...args))
+      },
+      [
+        $options.isImg ? (vue.openBlock(), vue.createElementBlock("image", {
+          key: 0,
+          class: "u-icon__img",
+          src: _ctx.name,
+          mode: _ctx.imgMode,
+          style: vue.normalizeStyle([$options.imgStyle, $options.addStyle(_ctx.customStyle)])
+        }, null, 12, ["src", "mode"])) : (vue.openBlock(), vue.createElementBlock("text", {
+          key: 1,
+          class: vue.normalizeClass(["u-icon__icon", $options.uClasses]),
+          style: vue.normalizeStyle([$options.iconStyle, $options.addStyle(_ctx.customStyle)]),
+          "hover-class": _ctx.hoverClass
+        }, vue.toDisplayString($options.icon), 15, ["hover-class"])),
+        vue.createCommentVNode(' 这里进行空字符串判断，如果仅仅是v-if="label"，可能会出现传递0的时候，结果也无法显示 '),
+        _ctx.label !== "" ? (vue.openBlock(), vue.createElementBlock(
+          "text",
+          {
+            key: 2,
+            class: "u-icon__label",
+            style: vue.normalizeStyle({
+              color: _ctx.labelColor,
+              fontSize: $options.addUnit(_ctx.labelSize),
+              marginLeft: _ctx.labelPos == "right" ? $options.addUnit(_ctx.space) : 0,
+              marginTop: _ctx.labelPos == "bottom" ? $options.addUnit(_ctx.space) : 0,
+              marginRight: _ctx.labelPos == "left" ? $options.addUnit(_ctx.space) : 0,
+              marginBottom: _ctx.labelPos == "top" ? $options.addUnit(_ctx.space) : 0
+            })
+          },
+          vue.toDisplayString(_ctx.label),
+          5
+          /* TEXT, STYLE */
+        )) : vue.createCommentVNode("v-if", true)
+      ],
+      2
+      /* CLASS */
+    );
+  }
+  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-1c933a9a"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-icon/u-icon.vue"]]);
+  const props$4 = defineMixin({
+    props: {
+      // 搜索框形状，round-圆形，square-方形
+      shape: {
+        type: String,
+        default: () => props$6.search.shape
+      },
+      // 搜索框背景色，默认值#f2f2f2
+      bgColor: {
+        type: String,
+        default: () => props$6.search.bgColor
+      },
+      // 占位提示文字
+      placeholder: {
+        type: String,
+        default: () => props$6.search.placeholder
+      },
+      // 是否启用清除控件
+      clearabled: {
+        type: Boolean,
+        default: () => props$6.search.clearabled
+      },
+      // 是否自动聚焦
+      focus: {
+        type: Boolean,
+        default: () => props$6.search.focus
+      },
+      // 是否在搜索框右侧显示取消按钮
+      showAction: {
+        type: Boolean,
+        default: () => props$6.search.showAction
+      },
+      // 右边控件的样式
+      actionStyle: {
+        type: Object,
+        default: () => props$6.search.actionStyle
+      },
+      // 取消按钮文字
+      actionText: {
+        type: String,
+        default: () => props$6.search.actionText
+      },
+      // 输入框内容对齐方式，可选值为 left|center|right
+      inputAlign: {
+        type: String,
+        default: () => props$6.search.inputAlign
+      },
+      // input输入框的样式，可以定义文字颜色，大小等，对象形式
+      inputStyle: {
+        type: Object,
+        default: () => props$6.search.inputStyle
+      },
+      // 是否启用输入框
+      disabled: {
+        type: Boolean,
+        default: () => props$6.search.disabled
+      },
+      // 边框颜色
+      borderColor: {
+        type: String,
+        default: () => props$6.search.borderColor
+      },
+      // 搜索图标的颜色，默认同输入框字体颜色
+      searchIconColor: {
+        type: String,
+        default: () => props$6.search.searchIconColor
+      },
+      // 输入框字体颜色
+      color: {
+        type: String,
+        default: () => props$6.search.color
+      },
+      // placeholder的颜色
+      placeholderColor: {
+        type: String,
+        default: () => props$6.search.placeholderColor
+      },
+      // 左边输入框的图标，可以为uView图标名称或图片路径
+      searchIcon: {
+        type: String,
+        default: () => props$6.search.searchIcon
+      },
+      searchIconSize: {
+        type: [Number, String],
+        default: () => props$6.search.searchIconSize
+      },
+      // 组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"、"30px 20px"等写法
+      margin: {
+        type: String,
+        default: () => props$6.search.margin
+      },
+      // 开启showAction时，是否在input获取焦点时才显示
+      animation: {
+        type: Boolean,
+        default: () => props$6.search.animation
+      },
+      // 输入框的初始化内容
+      modelValue: {
+        type: String,
+        default: () => props$6.search.value
+      },
+      value: {
+        type: String,
+        default: () => props$6.search.value
+      },
+      // 输入框最大能输入的长度，-1为不限制长度(来自uniapp文档)
+      maxlength: {
+        type: [String, Number],
+        default: () => props$6.search.maxlength
+      },
+      // 搜索框高度，单位px
+      height: {
+        type: [String, Number],
+        default: () => props$6.search.height
+      },
+      // 搜索框左侧文本
+      label: {
+        type: [String, Number, null],
+        default: () => props$6.search.label
+      },
+      // 键盘弹起时，是否自动上推页面	
+      adjustPosition: {
+        type: Boolean,
+        default: () => true
+      },
+      // 键盘收起时，是否自动失去焦点	
+      autoBlur: {
+        type: Boolean,
+        default: () => false
+      }
+    }
+  });
+  const _sfc_main$6 = {
+    name: "u-search",
+    mixins: [mpMixin, mixin, props$4],
+    data() {
+      return {
+        keyword: "",
+        showClear: false,
+        // 是否显示右边的清除图标
+        show: false,
+        // 标记input当前状态是否处于聚焦中，如果是，才会显示右侧的清除控件
+        focused: this.focus
+        // 绑定输入框的值
+        // inputValue: this.value
+      };
+    },
+    watch: {
+      keyword(nVal) {
+        this.$emit("update:modelValue", nVal);
+        this.$emit("change", nVal);
+      },
+      modelValue: {
+        immediate: true,
+        handler(nVal) {
+          this.keyword = nVal;
+        }
+      }
+    },
+    computed: {
+      showActionBtn() {
+        return !this.animation && this.showAction;
+      }
+    },
+    emits: ["clear", "search", "custom", "focus", "blur", "click", "clickIcon", "update:modelValue", "change"],
+    methods: {
+      addStyle,
+      addUnit,
+      // 目前HX2.6.9 v-model双向绑定无效，故监听input事件获取输入框内容的变化
+      inputChange(e) {
+        this.keyword = e.detail.value;
+      },
+      // 清空输入
+      // 也可以作为用户通过this.$refs形式调用清空输入框内容
+      clear() {
+        this.keyword = "";
+        this.$nextTick(() => {
+          this.$emit("clear");
+        });
+      },
+      // 确定搜索
+      search(e) {
+        this.$emit("search", e.detail.value);
+        try {
+          uni.hideKeyboard();
+        } catch (e2) {
+        }
+      },
+      // 点击右边自定义按钮的事件
+      custom() {
+        this.$emit("custom", this.keyword);
+        try {
+          uni.hideKeyboard();
+        } catch (e) {
+        }
+      },
+      // 获取焦点
+      getFocus() {
+        this.focused = true;
+        if (this.animation && this.showAction)
+          this.show = true;
+        this.$emit("focus", this.keyword);
+      },
+      // 失去焦点
+      blur() {
+        setTimeout(() => {
+          this.focused = false;
+        }, 100);
+        this.show = false;
+        this.$emit("blur", this.keyword);
+      },
+      // 点击搜索框，只有disabled=true时才发出事件，因为禁止了输入，意味着是想跳转真正的搜索页
+      clickHandler() {
+        if (this.disabled)
+          this.$emit("click");
+      },
+      // 点击左边图标
+      clickIcon(e) {
+        this.$emit("clickIcon", this.keyword);
+        try {
+          uni.hideKeyboard();
+        } catch (e2) {
+        }
+      }
+    }
+  };
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_u_icon = resolveEasycom(vue.resolveDynamicComponent("u-icon"), __easycom_0$1);
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: "u-search",
+        onClick: _cache[6] || (_cache[6] = (...args) => $options.clickHandler && $options.clickHandler(...args)),
+        style: vue.normalizeStyle([{
+          margin: _ctx.margin
+        }, $options.addStyle(_ctx.customStyle)])
+      },
+      [
+        vue.createElementVNode(
+          "view",
+          {
+            class: "u-search__content",
+            style: vue.normalizeStyle({
+              backgroundColor: _ctx.bgColor,
+              borderRadius: _ctx.shape == "round" ? "100px" : "4px",
+              borderColor: _ctx.borderColor
+            })
+          },
+          [
+            _ctx.$slots.label || _ctx.label !== null ? vue.renderSlot(_ctx.$slots, "label", { key: 0 }, () => [
+              vue.createElementVNode(
+                "text",
+                { class: "u-search__content__label" },
+                vue.toDisplayString(_ctx.label),
+                1
+                /* TEXT */
+              )
+            ], true) : vue.createCommentVNode("v-if", true),
+            vue.createElementVNode("view", { class: "u-search__content__icon" }, [
+              vue.createVNode(_component_u_icon, {
+                onClick: $options.clickIcon,
+                size: _ctx.searchIconSize,
+                name: _ctx.searchIcon,
+                color: _ctx.searchIconColor ? _ctx.searchIconColor : _ctx.color
+              }, null, 8, ["onClick", "size", "name", "color"])
+            ]),
+            vue.createElementVNode("input", {
+              "confirm-type": "search",
+              onBlur: _cache[0] || (_cache[0] = (...args) => $options.blur && $options.blur(...args)),
+              value: $data.keyword,
+              onConfirm: _cache[1] || (_cache[1] = (...args) => $options.search && $options.search(...args)),
+              onInput: _cache[2] || (_cache[2] = (...args) => $options.inputChange && $options.inputChange(...args)),
+              disabled: _ctx.disabled,
+              onFocus: _cache[3] || (_cache[3] = (...args) => $options.getFocus && $options.getFocus(...args)),
+              focus: _ctx.focus,
+              maxlength: _ctx.maxlength,
+              "adjust-position": _ctx.adjustPosition,
+              "auto-blur": _ctx.autoBlur,
+              "placeholder-class": "u-search__content__input--placeholder",
+              placeholder: _ctx.placeholder,
+              "placeholder-style": `color: ${_ctx.placeholderColor}`,
+              class: "u-search__content__input",
+              type: "text",
+              style: vue.normalizeStyle([{
+                textAlign: _ctx.inputAlign,
+                color: _ctx.color,
+                backgroundColor: _ctx.bgColor,
+                height: $options.addUnit(_ctx.height)
+              }, _ctx.inputStyle])
+            }, null, 44, ["value", "disabled", "focus", "maxlength", "adjust-position", "auto-blur", "placeholder", "placeholder-style"]),
+            $data.keyword && _ctx.clearabled && $data.focused ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 1,
+              class: "u-search__content__icon u-search__content__close",
+              onClick: _cache[4] || (_cache[4] = (...args) => $options.clear && $options.clear(...args))
+            }, [
+              vue.createVNode(_component_u_icon, {
+                name: "close",
+                size: "11",
+                color: "#ffffff",
+                customStyle: "line-height: 12px"
+              })
+            ])) : vue.createCommentVNode("v-if", true)
+          ],
+          4
+          /* STYLE */
+        ),
+        vue.createElementVNode(
+          "text",
+          {
+            style: vue.normalizeStyle([_ctx.actionStyle]),
+            class: vue.normalizeClass(["u-search__action", [($options.showActionBtn || $data.show) && "u-search__action--active"]]),
+            onClick: _cache[5] || (_cache[5] = vue.withModifiers((...args) => $options.custom && $options.custom(...args), ["stop", "prevent"]))
+          },
+          vue.toDisplayString(_ctx.actionText),
+          7
+          /* TEXT, CLASS, STYLE */
+        )
+      ],
+      4
+      /* STYLE */
+    );
+  }
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-ed789780"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-search/u-search.vue"]]);
+  const props$3 = defineMixin({
+    props: {
+      color: {
+        type: String,
+        default: () => props$6.line.color
+      },
+      // 长度，竖向时表现为高度，横向时表现为长度，可以为百分比，带px单位的值等
+      length: {
+        type: [String, Number],
+        default: () => props$6.line.length
+      },
+      // 线条方向，col-竖向，row-横向
+      direction: {
+        type: String,
+        default: () => props$6.line.direction
+      },
+      // 是否显示细边框
+      hairline: {
+        type: Boolean,
+        default: () => props$6.line.hairline
+      },
+      // 线条与上下左右元素的间距，字符串形式，如"30px"、"20px 30px"
+      margin: {
+        type: [String, Number],
+        default: () => props$6.line.margin
+      },
+      // 是否虚线，true-虚线，false-实线
+      dashed: {
+        type: Boolean,
+        default: () => props$6.line.dashed
+      }
+    }
+  });
+  const _sfc_main$5 = {
+    name: "u-line",
+    mixins: [mpMixin, mixin, props$3],
+    computed: {
+      lineStyle() {
+        const style = {};
+        style.margin = this.margin;
+        if (this.direction === "row") {
+          style.borderBottomWidth = "1px";
+          style.borderBottomStyle = this.dashed ? "dashed" : "solid";
+          style.width = addUnit(this.length);
+          if (this.hairline)
+            style.transform = "scaleY(0.5)";
+        } else {
+          style.borderLeftWidth = "1px";
+          style.borderLeftStyle = this.dashed ? "dashed" : "solid";
+          style.height = addUnit(this.length);
+          if (this.hairline)
+            style.transform = "scaleX(0.5)";
+        }
+        style.borderColor = this.color;
+        return deepMerge$1(style, addStyle(this.customStyle));
+      }
+    }
+  };
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: "u-line",
+        style: vue.normalizeStyle([$options.lineStyle])
+      },
+      null,
+      4
+      /* STYLE */
+    );
+  }
+  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-bbd9963c"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-line/u-line.vue"]]);
+  const props$2 = defineMixin({
+    props: {
+      // 标题
+      title: {
+        type: [String, Number],
+        default: () => props$6.cell.title
+      },
+      // 标题下方的描述信息
+      label: {
+        type: [String, Number],
+        default: () => props$6.cell.label
+      },
+      // 右侧的内容
+      value: {
+        type: [String, Number],
+        default: () => props$6.cell.value
+      },
+      // 左侧图标名称，或者图片链接(本地文件建议使用绝对地址)
+      icon: {
+        type: String,
+        default: () => props$6.cell.icon
+      },
+      // 是否禁用cell
+      disabled: {
+        type: Boolean,
+        default: () => props$6.cell.disabled
+      },
+      // 是否显示下边框
+      border: {
+        type: Boolean,
+        default: () => props$6.cell.border
+      },
+      // 内容是否垂直居中(主要是针对右侧的value部分)
+      center: {
+        type: Boolean,
+        default: () => props$6.cell.center
+      },
+      // 点击后跳转的URL地址
+      url: {
+        type: String,
+        default: () => props$6.cell.url
+      },
+      // 链接跳转的方式，内部使用的是uView封装的route方法，可能会进行拦截操作
+      linkType: {
+        type: String,
+        default: () => props$6.cell.linkType
+      },
+      // 是否开启点击反馈(表现为点击时加上灰色背景)
+      clickable: {
+        type: Boolean,
+        default: () => props$6.cell.clickable
+      },
+      // 是否展示右侧箭头并开启点击反馈
+      isLink: {
+        type: Boolean,
+        default: () => props$6.cell.isLink
+      },
+      // 是否显示表单状态下的必填星号(此组件可能会内嵌入input组件)
+      required: {
+        type: Boolean,
+        default: () => props$6.cell.required
+      },
+      // 右侧的图标箭头
+      rightIcon: {
+        type: String,
+        default: () => props$6.cell.rightIcon
+      },
+      // 右侧箭头的方向，可选值为：left，up，down
+      arrowDirection: {
+        type: String,
+        default: () => props$6.cell.arrowDirection
+      },
+      // 左侧图标样式
+      iconStyle: {
+        type: [Object, String],
+        default: () => {
+          return props$6.cell.iconStyle;
+        }
+      },
+      // 右侧箭头图标的样式
+      rightIconStyle: {
+        type: [Object, String],
+        default: () => {
+          return props$6.cell.rightIconStyle;
+        }
+      },
+      // 标题的样式
+      titleStyle: {
+        type: [Object, String],
+        default: () => {
+          return props$6.cell.titleStyle;
+        }
+      },
+      // 单位元的大小，可选值为large
+      size: {
+        type: String,
+        default: () => props$6.cell.size
+      },
+      // 点击cell是否阻止事件传播
+      stop: {
+        type: Boolean,
+        default: () => props$6.cell.stop
+      },
+      // 标识符，cell被点击时返回
+      name: {
+        type: [Number, String],
+        default: () => props$6.cell.name
+      }
+    }
+  });
+  const _sfc_main$4 = {
+    name: "u-cell",
+    data() {
+      return {};
+    },
+    mixins: [mpMixin, mixin, props$2],
+    computed: {
+      titleTextStyle() {
+        return addStyle(this.titleStyle);
+      }
+    },
+    emits: ["click"],
+    methods: {
+      addStyle,
+      testEmpty: test.empty,
+      // 点击cell
+      clickHandler(e) {
+        if (this.disabled)
+          return;
+        this.$emit("click", {
+          name: this.name
+        });
+        this.openPage();
+        this.stop && this.preventEvent(e);
+      }
+    }
+  };
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_u_icon = resolveEasycom(vue.resolveDynamicComponent("u-icon"), __easycom_0$1);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$1);
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: vue.normalizeClass(["u-cell", [_ctx.customClass]]),
+      style: vue.normalizeStyle([$options.addStyle(_ctx.customStyle)]),
+      "hover-class": !_ctx.disabled && (_ctx.clickable || _ctx.isLink) ? "u-cell--clickable" : "",
+      "hover-stay-time": 250,
+      onClick: _cache[0] || (_cache[0] = (...args) => $options.clickHandler && $options.clickHandler(...args))
+    }, [
+      vue.createElementVNode(
+        "view",
+        {
+          class: vue.normalizeClass(["u-cell__body", [_ctx.center && "u-cell--center", _ctx.size === "large" && "u-cell__body--large"]])
+        },
+        [
+          vue.createElementVNode("view", { class: "u-cell__body__content" }, [
+            _ctx.$slots.icon || _ctx.icon ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "u-cell__left-icon-wrap"
+            }, [
+              _ctx.$slots.icon ? vue.renderSlot(_ctx.$slots, "icon", { key: 0 }, void 0, true) : (vue.openBlock(), vue.createBlock(_component_u_icon, {
+                key: 1,
+                name: _ctx.icon,
+                "custom-style": _ctx.iconStyle,
+                size: _ctx.size === "large" ? 22 : 18
+              }, null, 8, ["name", "custom-style", "size"]))
+            ])) : vue.createCommentVNode("v-if", true),
+            vue.createElementVNode("view", { class: "u-cell__title" }, [
+              vue.createCommentVNode(" 将slot与默认内容用if/else分开主要是因为微信小程序不支持slot嵌套传递，这样才能解决collapse组件的slot不失效问题，label暂时未用到。 "),
+              _ctx.$slots.title || !_ctx.title ? vue.renderSlot(_ctx.$slots, "title", { key: 0 }, void 0, true) : (vue.openBlock(), vue.createElementBlock(
+                "text",
+                {
+                  key: 1,
+                  class: vue.normalizeClass(["u-cell__title-text", [_ctx.required && "u-cell--required", _ctx.disabled && "u-cell--disabled", _ctx.size === "large" && "u-cell__title-text--large"]]),
+                  style: vue.normalizeStyle([$options.titleTextStyle])
+                },
+                vue.toDisplayString(_ctx.title),
+                7
+                /* TEXT, CLASS, STYLE */
+              )),
+              vue.renderSlot(_ctx.$slots, "label", {}, () => [
+                _ctx.label ? (vue.openBlock(), vue.createElementBlock(
+                  "text",
+                  {
+                    key: 0,
+                    class: vue.normalizeClass(["u-cell__label", [_ctx.disabled && "u-cell--disabled", _ctx.size === "large" && "u-cell__label--large"]])
+                  },
+                  vue.toDisplayString(_ctx.label),
+                  3
+                  /* TEXT, CLASS */
+                )) : vue.createCommentVNode("v-if", true)
+              ], true)
+            ])
+          ]),
+          vue.renderSlot(_ctx.$slots, "value", {}, () => [
+            !$options.testEmpty(_ctx.value) ? (vue.openBlock(), vue.createElementBlock(
+              "text",
+              {
+                key: 0,
+                class: vue.normalizeClass(["u-cell__value", [_ctx.disabled && "u-cell--disabled", _ctx.size === "large" && "u-cell__value--large"]])
+              },
+              vue.toDisplayString(_ctx.value),
+              3
+              /* TEXT, CLASS */
+            )) : vue.createCommentVNode("v-if", true)
+          ], true),
+          _ctx.$slots["right-icon"] || _ctx.isLink ? (vue.openBlock(), vue.createElementBlock(
+            "view",
+            {
+              key: 0,
+              class: vue.normalizeClass(["u-cell__right-icon-wrap", [`u-cell__right-icon-wrap--${_ctx.arrowDirection}`]])
+            },
+            [
+              _ctx.rightIcon && !_ctx.$slots["right-icon"] ? (vue.openBlock(), vue.createBlock(_component_u_icon, {
+                key: 0,
+                name: _ctx.rightIcon,
+                "custom-style": _ctx.rightIconStyle,
+                color: _ctx.disabled ? "#c8c9cc" : "info",
+                size: _ctx.size === "large" ? 18 : 16
+              }, null, 8, ["name", "custom-style", "color", "size"])) : vue.renderSlot(_ctx.$slots, "right-icon", { key: 1 }, void 0, true)
+            ],
+            2
+            /* CLASS */
+          )) : vue.createCommentVNode("v-if", true),
+          _ctx.$slots["righticon"] ? (vue.openBlock(), vue.createElementBlock(
+            "view",
+            {
+              key: 1,
+              class: vue.normalizeClass(["u-cell__right-icon-wrap", [`u-cell__right-icon-wrap--${_ctx.arrowDirection}`]])
+            },
+            [
+              vue.renderSlot(_ctx.$slots, "righticon", {}, void 0, true)
+            ],
+            2
+            /* CLASS */
+          )) : vue.createCommentVNode("v-if", true)
+        ],
+        2
+        /* CLASS */
+      ),
+      _ctx.border ? (vue.openBlock(), vue.createBlock(_component_u_line, { key: 0 })) : vue.createCommentVNode("v-if", true)
+    ], 14, ["hover-class"]);
+  }
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-b4243719"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-cell/u-cell.vue"]]);
+  const props$1 = defineMixin({
+    props: {
+      // 用于滚动到指定item
+      anchor: {
+        type: [String, Number],
+        default: () => props$6.listItem.anchor
+      }
+    }
+  });
+  const _sfc_main$3 = {
+    name: "u-list-item",
+    mixins: [mpMixin, mixin, props$1],
+    data() {
+      return {
+        // 节点信息
+        rect: {},
+        index: 0,
+        show: true,
+        sys: sys()
+      };
+    },
+    computed: {},
+    inject: ["uList"],
+    watch: {
+      "uList.innerScrollTop"(n) {
+        const preLoadScreen = this.uList.preLoadScreen;
+        const windowHeight = this.sys.windowHeight;
+        if (n <= windowHeight * preLoadScreen) {
+          this.parent.updateOffsetFromChild(0);
+        } else if (this.rect.top <= n - windowHeight * preLoadScreen) {
+          this.parent.updateOffsetFromChild(this.rect.top);
+        }
+      }
+    },
+    created() {
+      this.parent = {};
+    },
+    mounted() {
+      this.init();
+    },
+    methods: {
+      init() {
+        this.updateParentData();
+        this.index = this.parent.children.indexOf(this);
+        this.resize();
+      },
+      updateParentData() {
+        this.getParentData("u-list");
+      },
+      resize() {
+        this.queryRect(`u-list-item-${this.anchor}`).then((size) => {
+          const lastChild = this.parent.children[this.index - 1];
+          this.rect = size;
+          const preLoadScreen = this.uList.preLoadScreen;
+          const windowHeight = this.sys.windowHeight;
+          if (lastChild) {
+            this.rect.top = lastChild.rect.top + lastChild.rect.height;
+          }
+          if (size.top >= this.uList.innerScrollTop + (1 + preLoadScreen) * windowHeight)
+            this.show = false;
+        });
+      },
+      // 查询元素尺寸
+      queryRect(el) {
+        return new Promise((resolve) => {
+          this.$uGetRect(`.${el}`).then((size) => {
+            resolve(size);
+          });
+        });
+      }
+    }
+  };
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: vue.normalizeClass(["u-list-item", [`u-list-item-${_ctx.anchor}`]]),
+      ref: `u-list-item-${_ctx.anchor}`,
+      anchor: `u-list-item-${_ctx.anchor}`
+    }, [
+      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+    ], 10, ["anchor"]);
+  }
+  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-32197ac9"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list-item/u-list-item.vue"]]);
+  const props = defineMixin({
+    props: {
+      // 控制是否出现滚动条，仅nvue有效
+      showScrollbar: {
+        type: Boolean,
+        default: () => props$6.list.showScrollbar
+      },
+      // 距底部多少时触发scrolltolower事件
+      lowerThreshold: {
+        type: [String, Number],
+        default: () => props$6.list.lowerThreshold
+      },
+      // 距顶部多少时触发scrolltoupper事件，非nvue有效
+      upperThreshold: {
+        type: [String, Number],
+        default: () => props$6.list.upperThreshold
+      },
+      // 设置竖向滚动条位置
+      scrollTop: {
+        type: [String, Number],
+        default: () => props$6.list.scrollTop
+      },
+      // 控制 onscroll 事件触发的频率，仅nvue有效
+      offsetAccuracy: {
+        type: [String, Number],
+        default: () => props$6.list.offsetAccuracy
+      },
+      // 启用 flexbox 布局。开启后，当前节点声明了display: flex就会成为flex container，并作用于其孩子节点，仅微信小程序有效
+      enableFlex: {
+        type: Boolean,
+        default: () => props$6.list.enableFlex
+      },
+      // 是否按分页模式显示List，默认值false
+      pagingEnabled: {
+        type: Boolean,
+        default: () => props$6.list.pagingEnabled
+      },
+      // 是否允许List滚动
+      scrollable: {
+        type: Boolean,
+        default: () => props$6.list.scrollable
+      },
+      // 值应为某子元素id（id不能以数字开头）
+      scrollIntoView: {
+        type: String,
+        default: () => props$6.list.scrollIntoView
+      },
+      // 在设置滚动条位置时使用动画过渡
+      scrollWithAnimation: {
+        type: Boolean,
+        default: () => props$6.list.scrollWithAnimation
+      },
+      // iOS点击顶部状态栏、安卓双击标题栏时，滚动条返回顶部，只对微信小程序有效
+      enableBackToTop: {
+        type: Boolean,
+        default: () => props$6.list.enableBackToTop
+      },
+      // 列表的高度
+      height: {
+        type: [String, Number],
+        default: () => props$6.list.height
+      },
+      // 列表宽度
+      width: {
+        type: [String, Number],
+        default: () => props$6.list.width
+      },
+      // 列表前后预渲染的屏数，1代表一个屏幕的高度，1.5代表1个半屏幕高度
+      preLoadScreen: {
+        type: [String, Number],
+        default: () => props$6.list.preLoadScreen
+      },
+      // 开启自定义下拉刷新
+      refresherEnabled: {
+        type: Boolean,
+        default: () => false
+      },
+      // 设置自定义下拉刷新阈值	
+      refresherThreshold: {
+        type: Number,
+        default: () => 45
+      },
+      // 设置自定义下拉刷新默认样式，支持设置 black，white，none，none 表示不使用默认样式
+      refresherDefaultStyle: {
+        type: String,
+        default: () => "black"
+      },
+      // 设置自定义下拉刷新区域背景颜色
+      refresherBackground: {
+        type: String,
+        default: () => "#FFF"
+      },
+      // 设置当前下拉刷新状态，true 表示下拉刷新已经被触发，false 表示下拉刷新未被触发
+      refresherTriggered: {
+        type: Boolean,
+        default: () => false
+      }
+    }
+  });
+  const _sfc_main$2 = {
+    name: "u-list",
+    mixins: [mpMixin, mixin, props],
+    watch: {
+      scrollIntoView(n) {
+        this.scrollIntoViewById(n);
+      }
+    },
+    data() {
+      return {
+        // 记录内部滚动的距离
+        innerScrollTop: 0,
+        // vue下，scroll-view在上拉加载时的偏移值
+        offset: 0,
+        sys: sys()
+      };
+    },
+    computed: {
+      listStyle() {
+        const style = {};
+        if (this.width != 0)
+          style.width = addUnit(this.width);
+        if (this.height != 0)
+          style.height = addUnit(this.height);
+        if (!style.height)
+          style.height = addUnit(this.sys.windowHeight, "px");
+        return deepMerge$1(style, addStyle(this.customStyle));
+      }
+    },
+    provide() {
+      return {
+        uList: this
+      };
+    },
+    created() {
+      this.refs = [];
+      this.children = [];
+      this.anchors = [];
+    },
+    mounted() {
+    },
+    emits: [
+      "scroll",
+      "scrolltolower",
+      "scrolltoupper",
+      "refresherpulling",
+      "refresherrefresh",
+      "refresherrestore",
+      "refresherabort"
+    ],
+    methods: {
+      updateOffsetFromChild(top) {
+        this.offset = top;
+      },
+      onScroll(e) {
+        let scrollTop = 0;
+        scrollTop = e.detail.scrollTop;
+        this.innerScrollTop = scrollTop;
+        this.$emit("scroll", scrollTop);
+      },
+      scrollIntoViewById(id) {
+      },
+      // 滚动到底部触发事件
+      scrolltolower(e) {
+        sleep(30).then(() => {
+          this.$emit("scrolltolower");
+        });
+      },
+      // 滚动到底部时触发，非nvue有效
+      scrolltoupper(e) {
+        sleep(30).then(() => {
+          this.$emit("scrolltoupper");
+          this.offset = 0;
+        });
+      },
+      refresherpulling(e) {
+        this.$emit("refresherpulling", e);
+      },
+      refresherrefresh(e) {
+        this.$emit("refresherrefresh", e);
+      },
+      refresherrestore(e) {
+        this.$emit("refresherrestore", e);
+      },
+      refresherabort(e) {
+        this.$emit("refresherabort", e);
+      }
+    }
+  };
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("scroll-view", {
+      class: "u-list",
+      "scroll-into-view": _ctx.scrollIntoView,
+      style: vue.normalizeStyle([$options.listStyle]),
+      "scroll-y": _ctx.scrollable,
+      "scroll-top": Number(_ctx.scrollTop),
+      "lower-threshold": Number(_ctx.lowerThreshold),
+      "upper-threshold": Number(_ctx.upperThreshold),
+      "show-scrollbar": _ctx.showScrollbar,
+      "enable-back-to-top": _ctx.enableBackToTop,
+      "scroll-with-animation": _ctx.scrollWithAnimation,
+      onScroll: _cache[0] || (_cache[0] = (...args) => $options.onScroll && $options.onScroll(...args)),
+      onScrolltolower: _cache[1] || (_cache[1] = (...args) => $options.scrolltolower && $options.scrolltolower(...args)),
+      onScrolltoupper: _cache[2] || (_cache[2] = (...args) => $options.scrolltoupper && $options.scrolltoupper(...args)),
+      "refresher-enabled": _ctx.refresherEnabled,
+      "refresher-threshold": _ctx.refresherThreshold,
+      "refresher-default-style": _ctx.refresherDefaultStyle,
+      "refresher-background": _ctx.refresherBackground,
+      "refresher-triggered": _ctx.refresherTriggered,
+      onRefresherpulling: _cache[3] || (_cache[3] = (...args) => $options.refresherpulling && $options.refresherpulling(...args)),
+      onRefresherrefresh: _cache[4] || (_cache[4] = (...args) => $options.refresherrefresh && $options.refresherrefresh(...args)),
+      onRefresherrestore: _cache[5] || (_cache[5] = (...args) => $options.refresherrestore && $options.refresherrestore(...args)),
+      onRefresherabort: _cache[6] || (_cache[6] = (...args) => $options.refresherabort && $options.refresherabort(...args)),
+      "scroll-anchoring": true
+    }, [
+      vue.createElementVNode("view", null, [
+        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+      ])
+    ], 44, ["scroll-into-view", "scroll-y", "scroll-top", "lower-threshold", "upper-threshold", "show-scrollbar", "enable-back-to-top", "scroll-with-animation", "refresher-enabled", "refresher-threshold", "refresher-default-style", "refresher-background", "refresher-triggered"]);
+  }
+  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-9ad03670"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list/u-list.vue"]]);
+  const keyword = vue.ref("");
+  const _sfc_main$1 = {
+    data() {
+      return {
+        keyword,
+        indexList: [],
+        showModal: false,
+        // 控制模态框显示
+        newUserName: "",
+        // 新用户名称
+        showModaldelete: false,
+        //控制删除确认弹窗
+        nowDeleteUser: ""
+      };
+    },
+    methods: {
+      async deleteUser(name) {
+        this.closeDeleteModal();
+        formatAppLog("log", "at pages/home/index.vue:67", "要删除的名字" + name);
+        try {
+          const result = await util.deleteInformationType("user", "name", name);
+          formatAppLog("log", "at pages/home/index.vue:71", "用户" + name + "删除成功：");
+          this.handleSearch();
+        } catch (error2) {
+          formatAppLog("error", "at pages/home/index.vue:74", "加载用户失败：", error2);
+          uni.showToast({
+            title: "加载用户失败",
+            icon: "none"
+          });
+        }
+      },
+      closeDeleteModal() {
+        this.showModaldelete = false;
+        this.nowDeleteUser = "";
+      },
+      showDeleteModal(index2) {
+        this.showModaldelete = true;
+        this.nowDeleteUser = this.indexList[index2].name;
+      },
+      handleSearch() {
+        this.performSearch(this.keyword);
+      },
+      async performSearch(keyword2) {
+        try {
+          var result;
+          if (keyword2 == "") {
+            this.loadUsers();
+            return;
+          } else {
+            formatAppLog("log", "at pages/home/index.vue:103", "按条件搜索： " + keyword2);
+            result = await util.selectInformationType("user", "name", '"' + keyword2 + '%"');
+            formatAppLog("log", "at pages/home/index.vue:106", "result: ", result);
+          }
+          formatAppLog("log", "at pages/home/index.vue:108", "用户列表加载成功：", result);
+          this.indexList = result;
+        } catch (error2) {
+          formatAppLog("error", "at pages/home/index.vue:111", "加载用户失败：", error2);
+          uni.showToast({
+            title: "加载用户失败",
+            icon: "none"
+          });
+        }
+      },
+      async loadUsers() {
+        try {
+          const result = await util.selectInformationType("user");
+          formatAppLog("log", "at pages/home/index.vue:122", "用户列表加载成功：", result);
+          this.indexList = result;
+        } catch (error2) {
+          formatAppLog("error", "at pages/home/index.vue:125", "加载用户失败：", error2);
+          uni.showToast({
+            title: "加载用户失败",
+            icon: "none"
+          });
+        }
+      },
+      showAddModal() {
+        this.showModal = true;
+      },
+      closeModal() {
+        this.showModal = false;
+        this.newUserName = "";
+      },
+      scrolltolower() {
+        this.loadmore();
+      },
+      loadmore() {
+        for (let i = 0; i < 30; i++) {
+          this.indexList.push({
+            url: this.urls[uni.$u.random(0, this.urls.length - 1)]
+          });
+        }
+      },
+      async addUserToDB() {
+        if (!this.newUserName.trim()) {
+          uni.showToast({
+            title: "名称不能为空",
+            icon: "none"
+          });
+          return;
+        }
+        const obj = {
+          id: 1,
+          name: this.newUserName
+        };
+        try {
+          await util.addUser(obj);
+          uni.showToast({
+            title: "用户添加成功",
+            icon: "success"
+          });
+          this.closeModal();
+          this.loadUsers();
+        } catch (error2) {
+          formatAppLog("error", "at pages/home/index.vue:172", "添加用户失败：", error2);
+          uni.showToast({
+            title: "用户添加失败",
+            icon: "none"
+          });
+        }
+      }
+    },
+    mounted() {
+      util.openSqlite();
+      this.loadUsers();
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_up_search = resolveEasycom(vue.resolveDynamicComponent("up-search"), __easycom_0);
+    const _component_up_cell = resolveEasycom(vue.resolveDynamicComponent("up-cell"), __easycom_1);
+    const _component_up_list_item = resolveEasycom(vue.resolveDynamicComponent("up-list-item"), __easycom_2);
+    const _component_up_list = resolveEasycom(vue.resolveDynamicComponent("up-list"), __easycom_3);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
+      vue.createCommentVNode(" 列表 "),
+      vue.createVNode(_component_up_search, {
+        placeholder: "输入搜索名字",
+        modelValue: $data.keyword,
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.keyword = $event),
+        clearabled: true,
+        "show-action": true,
+        actionText: "搜索",
+        onSearch: $options.handleSearch,
+        onCustom: $options.handleSearch
+      }, null, 8, ["modelValue", "onSearch", "onCustom"]),
+      vue.createVNode(_component_up_list, {
+        onScrolltolower: $options.scrolltolower
+      }, {
+        default: vue.withCtx(() => [
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($data.indexList, (item, index2) => {
+              return vue.openBlock(), vue.createBlock(
+                _component_up_list_item,
+                {
+                  key: index2,
+                  class: "items"
+                },
+                {
+                  default: vue.withCtx(() => [
+                    vue.createVNode(_component_up_cell, {
+                      title: item.name
+                    }, null, 8, ["title"]),
+                    vue.createElementVNode("image", {
+                      src: _imports_0,
+                      style: { "height": "30rpx", "width": "30rpx", "margin-right": "30rpx" },
+                      onClick: ($event) => $options.showDeleteModal(index2)
+                    }, null, 8, ["onClick"])
+                  ]),
+                  _: 2
+                  /* DYNAMIC */
+                },
+                1024
+                /* DYNAMIC_SLOTS */
+              );
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ]),
+        _: 1
+        /* STABLE */
+      }, 8, ["onScrolltolower"]),
+      vue.createCommentVNode(" 蓝色添加按钮 "),
+      vue.createElementVNode("button", {
+        class: "add-button",
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.showAddModal && $options.showAddModal(...args))
+      }, "+"),
+      $data.showModal ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "modal-overlay"
+      }, [
+        vue.createElementVNode("view", { class: "modal-content" }, [
+          vue.createElementVNode("view", { class: "modal-header" }, "添加用户"),
+          vue.createElementVNode("view", { class: "modal-body" }, [
+            vue.withDirectives(vue.createElementVNode(
+              "input",
+              {
+                class: "input",
+                type: "text",
+                placeholder: "请输入用户名称",
+                "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.newUserName = $event)
+              },
+              null,
+              512
+              /* NEED_PATCH */
+            ), [
+              [vue.vModelText, $data.newUserName]
+            ])
+          ]),
+          vue.createElementVNode("view", { class: "modal-footer" }, [
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[3] || (_cache[3] = (...args) => $options.addUserToDB && $options.addUserToDB(...args))
+            }, "确认"),
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[4] || (_cache[4] = (...args) => $options.closeModal && $options.closeModal(...args))
+            }, "取消")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createCommentVNode(" 提示是否删除user "),
+      $data.showModaldelete ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "modal-overlay"
+      }, [
+        vue.createElementVNode("view", { class: "modal-content" }, [
+          vue.createElementVNode(
+            "view",
+            { class: "modal-header" },
+            "确认删除" + vue.toDisplayString($data.nowDeleteUser) + "？",
+            1
+            /* TEXT */
+          ),
+          vue.createElementVNode("view", { class: "modal-footer" }, [
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[5] || (_cache[5] = ($event) => $options.deleteUser($data.nowDeleteUser))
+            }, "确认"),
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[6] || (_cache[6] = (...args) => $options.closeDeleteModal && $options.closeDeleteModal(...args))
+            }, "取消")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const PagesHomeIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-4978fed5"], ["__file", "D:/uni/travel-new/pages/home/index.vue"]]);
+  __definePage("pages/index/index", PagesIndexIndex);
+  __definePage("pages/PayBill/index", PagesPayBillIndex);
+  __definePage("pages/sql/sql", PagesSqlSql);
+  __definePage("pages/home/index", PagesHomeIndex);
+  const _sfc_main = {
+    onLaunch: function() {
+      formatAppLog("log", "at App.vue:4", "App Launch");
+    },
+    onShow: function() {
+      formatAppLog("log", "at App.vue:7", "App Show");
+    },
+    onHide: function() {
+      formatAppLog("log", "at App.vue:10", "App Hide");
+    }
+  };
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "D:/uni/travel-new/App.vue"]]);
+  const { toString } = Object.prototype;
+  function isArray(val) {
+    return toString.call(val) === "[object Array]";
+  }
+  function isObject(val) {
+    return val !== null && typeof val === "object";
+  }
+  function isDate(val) {
+    return toString.call(val) === "[object Date]";
+  }
+  function isURLSearchParams(val) {
+    return typeof URLSearchParams !== "undefined" && val instanceof URLSearchParams;
+  }
+  function forEach(obj, fn) {
+    if (obj === null || typeof obj === "undefined") {
+      return;
+    }
+    if (typeof obj !== "object") {
+      obj = [obj];
+    }
+    if (isArray(obj)) {
+      for (let i = 0, l = obj.length; i < l; i++) {
+        fn.call(null, obj[i], i, obj);
+      }
+    } else {
+      for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          fn.call(null, obj[key], key, obj);
+        }
+      }
+    }
+  }
+  function isPlainObject(obj) {
+    return Object.prototype.toString.call(obj) === "[object Object]";
+  }
+  function deepMerge() {
+    const result = {};
+    function assignValue(val, key) {
+      if (typeof result[key] === "object" && typeof val === "object") {
+        result[key] = deepMerge(result[key], val);
+      } else if (typeof val === "object") {
+        result[key] = deepMerge({}, val);
+      } else {
+        result[key] = val;
+      }
+    }
+    for (let i = 0, l = arguments.length; i < l; i++) {
+      forEach(arguments[i], assignValue);
+    }
+    return result;
+  }
+  function isUndefined(val) {
+    return typeof val === "undefined";
+  }
+  function encode(val) {
+    return encodeURIComponent(val).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
+  }
+  function buildURL(url2, params) {
+    if (!params) {
+      return url2;
+    }
+    let serializedParams;
+    if (isURLSearchParams(params)) {
+      serializedParams = params.toString();
+    } else {
+      const parts = [];
+      forEach(params, (val, key) => {
+        if (val === null || typeof val === "undefined") {
+          return;
+        }
+        if (isArray(val)) {
+          key = `${key}[]`;
+        } else {
+          val = [val];
+        }
+        forEach(val, (v) => {
+          if (isDate(v)) {
+            v = v.toISOString();
+          } else if (isObject(v)) {
+            v = JSON.stringify(v);
+          }
+          parts.push(`${encode(key)}=${encode(v)}`);
+        });
+      });
+      serializedParams = parts.join("&");
+    }
+    if (serializedParams) {
+      const hashmarkIndex = url2.indexOf("#");
+      if (hashmarkIndex !== -1) {
+        url2 = url2.slice(0, hashmarkIndex);
+      }
+      url2 += (url2.indexOf("?") === -1 ? "?" : "&") + serializedParams;
+    }
+    return url2;
+  }
+  function isAbsoluteURL(url2) {
+    return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url2);
+  }
+  function combineURLs(baseURL, relativeURL) {
+    return relativeURL ? `${baseURL.replace(/\/+$/, "")}/${relativeURL.replace(/^\/+/, "")}` : baseURL;
+  }
+  function buildFullPath(baseURL, requestedURL) {
+    if (baseURL && !isAbsoluteURL(requestedURL)) {
+      return combineURLs(baseURL, requestedURL);
+    }
+    return requestedURL;
+  }
+  function settle(resolve, reject, response) {
+    const { validateStatus } = response.config;
+    const status = response.statusCode;
+    if (status && (!validateStatus || validateStatus(status))) {
+      resolve(response);
+    } else {
+      reject(response);
+    }
+  }
+  const mergeKeys$1 = (keys, config2) => {
+    const config3 = {};
+    keys.forEach((prop) => {
+      if (!isUndefined(config2[prop])) {
+        config3[prop] = config2[prop];
+      }
+    });
+    return config3;
+  };
+  const adapter = (config2) => new Promise((resolve, reject) => {
+    const fullPath = buildURL(buildFullPath(config2.baseURL, config2.url), config2.params);
+    const _config = {
+      url: fullPath,
+      header: config2.header,
+      complete: (response) => {
+        config2.fullPath = fullPath;
+        response.config = config2;
+        try {
+          if (typeof response.data === "string") {
+            response.data = JSON.parse(response.data);
+          }
+        } catch (e) {
+        }
+        settle(resolve, reject, response);
+      }
+    };
+    let requestTask;
+    if (config2.method === "UPLOAD") {
+      delete _config.header["content-type"];
+      delete _config.header["Content-Type"];
+      const otherConfig = {
+        filePath: config2.filePath,
+        name: config2.name
+      };
+      const optionalKeys = [
+        "files",
+        "timeout",
+        "formData"
+      ];
+      requestTask = uni.uploadFile({ ..._config, ...otherConfig, ...mergeKeys$1(optionalKeys, config2) });
+    } else if (config2.method === "DOWNLOAD") {
+      if (!isUndefined(config2.timeout)) {
+        _config.timeout = config2.timeout;
+      }
+      requestTask = uni.downloadFile(_config);
+    } else {
+      const optionalKeys = [
+        "data",
+        "method",
+        "timeout",
+        "dataType",
+        "responseType",
+        "sslVerify",
+        "firstIpv4"
+      ];
+      requestTask = uni.request({ ..._config, ...mergeKeys$1(optionalKeys, config2) });
+    }
+    if (config2.getTask) {
+      config2.getTask(requestTask, config2);
+    }
+  });
+  const dispatchRequest = (config2) => adapter(config2);
+  function InterceptorManager() {
+    this.handlers = [];
+  }
+  InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+    this.handlers.push({
+      fulfilled,
+      rejected
+    });
+    return this.handlers.length - 1;
+  };
+  InterceptorManager.prototype.eject = function eject(id) {
+    if (this.handlers[id]) {
+      this.handlers[id] = null;
+    }
+  };
+  InterceptorManager.prototype.forEach = function forEach2(fn) {
+    this.handlers.forEach((h) => {
+      if (h !== null) {
+        fn(h);
+      }
+    });
+  };
+  const mergeKeys = (keys, globalsConfig, config2) => {
+    const config3 = {};
+    keys.forEach((prop) => {
+      if (!isUndefined(config2[prop])) {
+        config3[prop] = config2[prop];
+      } else if (!isUndefined(globalsConfig[prop])) {
+        config3[prop] = globalsConfig[prop];
+      }
+    });
+    return config3;
+  };
+  const mergeConfig = (globalsConfig, config2 = {}) => {
+    const method = config2.method || globalsConfig.method || "GET";
+    let config3 = {
+      baseURL: globalsConfig.baseURL || "",
+      method,
+      url: config2.url || "",
+      params: config2.params || {},
+      custom: { ...globalsConfig.custom || {}, ...config2.custom || {} },
+      header: deepMerge(globalsConfig.header || {}, config2.header || {})
+    };
+    const defaultToConfig2Keys = ["getTask", "validateStatus"];
+    config3 = { ...config3, ...mergeKeys(defaultToConfig2Keys, globalsConfig, config2) };
+    if (method === "DOWNLOAD") {
+      if (!isUndefined(config2.timeout)) {
+        config3.timeout = config2.timeout;
+      } else if (!isUndefined(globalsConfig.timeout)) {
+        config3.timeout = globalsConfig.timeout;
+      }
+    } else if (method === "UPLOAD") {
+      delete config3.header["content-type"];
+      delete config3.header["Content-Type"];
+      const uploadKeys = [
+        "files",
+        "filePath",
+        "name",
+        "timeout",
+        "formData"
+      ];
+      uploadKeys.forEach((prop) => {
+        if (!isUndefined(config2[prop])) {
+          config3[prop] = config2[prop];
+        }
+      });
+      if (isUndefined(config3.timeout) && !isUndefined(globalsConfig.timeout)) {
+        config3.timeout = globalsConfig.timeout;
+      }
+    } else {
+      const defaultsKeys = [
+        "data",
+        "timeout",
+        "dataType",
+        "responseType",
+        "sslVerify",
+        "firstIpv4"
+      ];
+      config3 = { ...config3, ...mergeKeys(defaultsKeys, globalsConfig, config2) };
+    }
+    return config3;
+  };
+  const defaults = {
+    baseURL: "",
+    header: {},
+    method: "GET",
+    dataType: "json",
+    responseType: "text",
+    custom: {},
+    timeout: 6e4,
+    sslVerify: true,
+    firstIpv4: false,
+    validateStatus: function validateStatus(status) {
+      return status >= 200 && status < 300;
+    }
+  };
+  var clone = function() {
+    function _instanceof(obj, type) {
+      return type != null && obj instanceof type;
+    }
+    var nativeMap;
+    try {
+      nativeMap = Map;
+    } catch (_) {
+      nativeMap = function() {
+      };
+    }
+    var nativeSet;
+    try {
+      nativeSet = Set;
+    } catch (_) {
+      nativeSet = function() {
+      };
+    }
+    var nativePromise;
+    try {
+      nativePromise = Promise;
+    } catch (_) {
+      nativePromise = function() {
+      };
+    }
+    function clone2(parent, circular, depth, prototype, includeNonEnumerable) {
+      if (typeof circular === "object") {
+        depth = circular.depth;
+        prototype = circular.prototype;
+        includeNonEnumerable = circular.includeNonEnumerable;
+        circular = circular.circular;
+      }
+      var allParents = [];
+      var allChildren = [];
+      var useBuffer = typeof Buffer != "undefined";
+      if (typeof circular == "undefined")
+        circular = true;
+      if (typeof depth == "undefined")
+        depth = Infinity;
+      function _clone(parent2, depth2) {
+        if (parent2 === null)
+          return null;
+        if (depth2 === 0)
+          return parent2;
+        var child;
+        var proto;
+        if (typeof parent2 != "object") {
+          return parent2;
+        }
+        if (_instanceof(parent2, nativeMap)) {
+          child = new nativeMap();
+        } else if (_instanceof(parent2, nativeSet)) {
+          child = new nativeSet();
+        } else if (_instanceof(parent2, nativePromise)) {
+          child = new nativePromise(function(resolve, reject) {
+            parent2.then(function(value) {
+              resolve(_clone(value, depth2 - 1));
+            }, function(err) {
+              reject(_clone(err, depth2 - 1));
+            });
+          });
+        } else if (clone2.__isArray(parent2)) {
+          child = [];
+        } else if (clone2.__isRegExp(parent2)) {
+          child = new RegExp(parent2.source, __getRegExpFlags(parent2));
+          if (parent2.lastIndex)
+            child.lastIndex = parent2.lastIndex;
+        } else if (clone2.__isDate(parent2)) {
+          child = new Date(parent2.getTime());
+        } else if (useBuffer && Buffer.isBuffer(parent2)) {
+          if (Buffer.from) {
+            child = Buffer.from(parent2);
+          } else {
+            child = new Buffer(parent2.length);
+            parent2.copy(child);
+          }
+          return child;
+        } else if (_instanceof(parent2, Error)) {
+          child = Object.create(parent2);
+        } else {
+          if (typeof prototype == "undefined") {
+            proto = Object.getPrototypeOf(parent2);
+            child = Object.create(proto);
+          } else {
+            child = Object.create(prototype);
+            proto = prototype;
+          }
+        }
+        if (circular) {
+          var index2 = allParents.indexOf(parent2);
+          if (index2 != -1) {
+            return allChildren[index2];
+          }
+          allParents.push(parent2);
+          allChildren.push(child);
+        }
+        if (_instanceof(parent2, nativeMap)) {
+          parent2.forEach(function(value, key) {
+            var keyChild = _clone(key, depth2 - 1);
+            var valueChild = _clone(value, depth2 - 1);
+            child.set(keyChild, valueChild);
+          });
+        }
+        if (_instanceof(parent2, nativeSet)) {
+          parent2.forEach(function(value) {
+            var entryChild = _clone(value, depth2 - 1);
+            child.add(entryChild);
+          });
+        }
+        for (var i in parent2) {
+          var attrs = Object.getOwnPropertyDescriptor(parent2, i);
+          if (attrs) {
+            child[i] = _clone(parent2[i], depth2 - 1);
+          }
+          try {
+            var objProperty = Object.getOwnPropertyDescriptor(parent2, i);
+            if (objProperty.set === "undefined") {
+              continue;
+            }
+            child[i] = _clone(parent2[i], depth2 - 1);
+          } catch (e) {
+            if (e instanceof TypeError) {
+              continue;
+            } else if (e instanceof ReferenceError) {
+              continue;
+            }
+          }
+        }
+        if (Object.getOwnPropertySymbols) {
+          var symbols = Object.getOwnPropertySymbols(parent2);
+          for (var i = 0; i < symbols.length; i++) {
+            var symbol = symbols[i];
+            var descriptor = Object.getOwnPropertyDescriptor(parent2, symbol);
+            if (descriptor && !descriptor.enumerable && !includeNonEnumerable) {
+              continue;
+            }
+            child[symbol] = _clone(parent2[symbol], depth2 - 1);
+            Object.defineProperty(child, symbol, descriptor);
+          }
+        }
+        if (includeNonEnumerable) {
+          var allPropertyNames = Object.getOwnPropertyNames(parent2);
+          for (var i = 0; i < allPropertyNames.length; i++) {
+            var propertyName = allPropertyNames[i];
+            var descriptor = Object.getOwnPropertyDescriptor(parent2, propertyName);
+            if (descriptor && descriptor.enumerable) {
+              continue;
+            }
+            child[propertyName] = _clone(parent2[propertyName], depth2 - 1);
+            Object.defineProperty(child, propertyName, descriptor);
+          }
+        }
+        return child;
+      }
+      return _clone(parent, depth);
+    }
+    clone2.clonePrototype = function clonePrototype(parent) {
+      if (parent === null)
+        return null;
+      var c = function() {
+      };
+      c.prototype = parent;
+      return new c();
+    };
+    function __objToStr(o) {
+      return Object.prototype.toString.call(o);
+    }
+    clone2.__objToStr = __objToStr;
+    function __isDate(o) {
+      return typeof o === "object" && __objToStr(o) === "[object Date]";
+    }
+    clone2.__isDate = __isDate;
+    function __isArray(o) {
+      return typeof o === "object" && __objToStr(o) === "[object Array]";
+    }
+    clone2.__isArray = __isArray;
+    function __isRegExp(o) {
+      return typeof o === "object" && __objToStr(o) === "[object RegExp]";
+    }
+    clone2.__isRegExp = __isRegExp;
+    function __getRegExpFlags(re) {
+      var flags = "";
+      if (re.global)
+        flags += "g";
+      if (re.ignoreCase)
+        flags += "i";
+      if (re.multiline)
+        flags += "m";
+      return flags;
+    }
+    clone2.__getRegExpFlags = __getRegExpFlags;
+    return clone2;
+  }();
+  class Request {
+    /**
+    * @param {Object} arg - 全局配置
+    * @param {String} arg.baseURL - 全局根路径
+    * @param {Object} arg.header - 全局header
+    * @param {String} arg.method = [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE] - 全局默认请求方式
+    * @param {String} arg.dataType = [json] - 全局默认的dataType
+    * @param {String} arg.responseType = [text|arraybuffer] - 全局默认的responseType。支付宝小程序不支持
+    * @param {Object} arg.custom - 全局默认的自定义参数
+    * @param {Number} arg.timeout - 全局默认的超时时间，单位 ms。默认60000。H5(HBuilderX 2.9.9+)、APP(HBuilderX 2.9.9+)、微信小程序（2.10.0）、支付宝小程序
+    * @param {Boolean} arg.sslVerify - 全局默认的是否验证 ssl 证书。默认true.仅App安卓端支持（HBuilderX 2.3.3+）
+    * @param {Boolean} arg.withCredentials - 全局默认的跨域请求时是否携带凭证（cookies）。默认false。仅H5支持（HBuilderX 2.6.15+）
+    * @param {Boolean} arg.firstIpv4 - 全DNS解析时优先使用ipv4。默认false。仅 App-Android 支持 (HBuilderX 2.8.0+)
+    * @param {Function(statusCode):Boolean} arg.validateStatus - 全局默认的自定义验证器。默认statusCode >= 200 && statusCode < 300
+    */
+    constructor(arg = {}) {
+      if (!isPlainObject(arg)) {
+        arg = {};
+        formatAppLog("warn", "at node_modules/uview-plus/libs/luch-request/core/Request.js:39", "设置全局参数必须接收一个Object");
+      }
+      this.config = clone({ ...defaults, ...arg });
+      this.interceptors = {
+        request: new InterceptorManager(),
+        response: new InterceptorManager()
+      };
+    }
+    /**
+    * @Function
+    * @param {Request~setConfigCallback} f - 设置全局默认配置
+    */
+    setConfig(f) {
+      this.config = f(this.config);
+    }
+    middleware(config2) {
+      config2 = mergeConfig(this.config, config2);
+      const chain = [dispatchRequest, void 0];
+      let promise2 = Promise.resolve(config2);
+      this.interceptors.request.forEach((interceptor) => {
+        chain.unshift(interceptor.fulfilled, interceptor.rejected);
+      });
+      this.interceptors.response.forEach((interceptor) => {
+        chain.push(interceptor.fulfilled, interceptor.rejected);
+      });
+      while (chain.length) {
+        promise2 = promise2.then(chain.shift(), chain.shift());
+      }
+      return promise2;
+    }
+    /**
+    * @Function
+    * @param {Object} config - 请求配置项
+    * @prop {String} options.url - 请求路径
+    * @prop {Object} options.data - 请求参数
+    * @prop {Object} [options.responseType = config.responseType] [text|arraybuffer] - 响应的数据类型
+    * @prop {Object} [options.dataType = config.dataType] - 如果设为 json，会尝试对返回的数据做一次 JSON.parse
+    * @prop {Object} [options.header = config.header] - 请求header
+    * @prop {Object} [options.method = config.method] - 请求方法
+    * @returns {Promise<unknown>}
+    */
+    request(config2 = {}) {
+      return this.middleware(config2);
+    }
+    get(url2, options = {}) {
+      return this.middleware({
+        url: url2,
+        method: "GET",
+        ...options
+      });
+    }
+    post(url2, data, options = {}) {
+      return this.middleware({
+        url: url2,
+        data,
+        method: "POST",
+        ...options
+      });
+    }
+    put(url2, data, options = {}) {
+      return this.middleware({
+        url: url2,
+        data,
+        method: "PUT",
+        ...options
+      });
+    }
+    delete(url2, data, options = {}) {
+      return this.middleware({
+        url: url2,
+        data,
+        method: "DELETE",
+        ...options
+      });
+    }
+    options(url2, data, options = {}) {
+      return this.middleware({
+        url: url2,
+        data,
+        method: "OPTIONS",
+        ...options
+      });
+    }
+    upload(url2, config2 = {}) {
+      config2.url = url2;
+      config2.method = "UPLOAD";
+      return this.middleware(config2);
+    }
+    download(url2, config2 = {}) {
+      config2.url = url2;
+      config2.method = "DOWNLOAD";
+      return this.middleware(config2);
+    }
+  }
+  function colorGradient(startColor = "rgb(0, 0, 0)", endColor = "rgb(255, 255, 255)", step = 10) {
+    const startRGB = hexToRgb(startColor, false);
+    const startR = startRGB[0];
+    const startG = startRGB[1];
+    const startB = startRGB[2];
+    const endRGB = hexToRgb(endColor, false);
+    const endR = endRGB[0];
+    const endG = endRGB[1];
+    const endB = endRGB[2];
+    const sR = (endR - startR) / step;
+    const sG = (endG - startG) / step;
+    const sB = (endB - startB) / step;
+    const colorArr = [];
+    for (let i = 0; i < step; i++) {
+      let hex = rgbToHex(`rgb(${Math.round(sR * i + startR)},${Math.round(sG * i + startG)},${Math.round(sB * i + startB)})`);
+      if (i === 0)
+        hex = rgbToHex(startColor);
+      if (i === step - 1)
+        hex = rgbToHex(endColor);
+      colorArr.push(hex);
+    }
+    return colorArr;
+  }
+  function hexToRgb(sColor, str = true) {
+    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+    sColor = String(sColor).toLowerCase();
+    if (sColor && reg.test(sColor)) {
+      if (sColor.length === 4) {
+        let sColorNew = "#";
+        for (let i = 1; i < 4; i += 1) {
+          sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+        }
+        sColor = sColorNew;
+      }
+      const sColorChange = [];
+      for (let i = 1; i < 7; i += 2) {
+        sColorChange.push(parseInt(`0x${sColor.slice(i, i + 2)}`));
+      }
+      if (!str) {
+        return sColorChange;
+      }
+      return `rgb(${sColorChange[0]},${sColorChange[1]},${sColorChange[2]})`;
+    }
+    if (/^(rgb|RGB)/.test(sColor)) {
+      const arr = sColor.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+      return arr.map((val) => Number(val));
+    }
+    return sColor;
+  }
+  function rgbToHex(rgb) {
+    const _this = rgb;
+    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+    if (/^(rgb|RGB)/.test(_this)) {
+      const aColor = _this.replace(/(?:\(|\)|rgb|RGB)*/g, "").split(",");
+      let strHex = "#";
+      for (let i = 0; i < aColor.length; i++) {
+        let hex = Number(aColor[i]).toString(16);
+        hex = String(hex).length == 1 ? `${0}${hex}` : hex;
+        if (hex === "0") {
+          hex += hex;
+        }
+        strHex += hex;
+      }
+      if (strHex.length !== 7) {
+        strHex = _this;
+      }
+      return strHex;
+    }
+    if (reg.test(_this)) {
+      const aNum = _this.replace(/#/, "").split("");
+      if (aNum.length === 6) {
+        return _this;
+      }
+      if (aNum.length === 3) {
+        let numHex = "#";
+        for (let i = 0; i < aNum.length; i += 1) {
+          numHex += aNum[i] + aNum[i];
+        }
+        return numHex;
+      }
+    } else {
+      return _this;
+    }
+  }
+  function colorToRgba(color2, alpha) {
+    color2 = rgbToHex(color2);
+    const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
+    let sColor = String(color2).toLowerCase();
+    if (sColor && reg.test(sColor)) {
+      if (sColor.length === 4) {
+        let sColorNew = "#";
+        for (let i = 1; i < 4; i += 1) {
+          sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1));
+        }
+        sColor = sColorNew;
+      }
+      const sColorChange = [];
+      for (let i = 1; i < 7; i += 2) {
+        sColorChange.push(parseInt(`0x${sColor.slice(i, i + 2)}`));
+      }
+      return `rgba(${sColorChange.join(",")},${alpha})`;
+    }
+    return sColor;
+  }
+  const colorGradient$1 = {
+    colorGradient,
+    hexToRgb,
+    rgbToHex,
+    colorToRgba
+  };
+  let timeout = null;
+  function debounce(func2, wait = 500, immediate = false) {
+    if (timeout !== null)
+      clearTimeout(timeout);
+    if (immediate) {
+      const callNow = !timeout;
+      timeout = setTimeout(() => {
+        timeout = null;
+      }, wait);
+      if (callNow)
+        typeof func2 === "function" && func2();
+    } else {
+      timeout = setTimeout(() => {
+        typeof func2 === "function" && func2();
+      }, wait);
+    }
+  }
+  let flag;
+  function throttle(func2, wait = 500, immediate = true) {
+    if (immediate) {
+      if (!flag) {
+        flag = true;
+        typeof func2 === "function" && func2();
+        setTimeout(() => {
+          flag = false;
+        }, wait);
+      }
+    } else if (!flag) {
+      flag = true;
+      setTimeout(() => {
+        flag = false;
+        typeof func2 === "function" && func2();
+      }, wait);
+    }
+  }
   const zIndex = {
     toast: 10090,
     noNetwork: 10080,
@@ -3901,7 +5667,7 @@ if (uni.restoreGlobal) {
   let themeType = ["primary", "success", "error", "warning", "info"];
   function setConfig(configs) {
     index.shallowMerge(config, configs.config || {});
-    index.shallowMerge(props, configs.props || {});
+    index.shallowMerge(props$6, configs.props || {});
     index.shallowMerge(color, configs.color || {});
     index.shallowMerge(zIndex, configs.zIndex || {});
   }
@@ -3924,7 +5690,7 @@ if (uni.restoreGlobal) {
     throttle,
     mixin,
     mpMixin,
-    props,
+    props: props$6,
     ...index,
     color,
     platform: platform$1

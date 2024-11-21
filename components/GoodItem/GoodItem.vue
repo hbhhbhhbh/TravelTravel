@@ -15,6 +15,8 @@
 			</view>
 		</view>
 	</view>
+
+	<!-- 弹窗编辑部分 -->
 	<view v-if="showModal" class="modal">
 		<view class="modal-content">
 			<view class="modal-header">

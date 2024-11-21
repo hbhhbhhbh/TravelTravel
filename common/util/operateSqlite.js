@@ -21,7 +21,7 @@ function CreateBillSQL() {
 		plus.sqlite.executeSql({
 			name: 'travel',
 			//表格创建或者打开，后面为表格结构
-			sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"project" TEXT,"name" TEXT, "cnt" INTEGER, "price" INTEGER )',
+			sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"billid" INTEGER,"project" TEXT,"name" TEXT, "cnt" INTEGER, "price" INTEGER )',
 			success(e) {
 				resolve(e);
 			},
@@ -33,7 +33,7 @@ function CreateBillSQL() {
 }
 
 //创建项目账单-用户表
-function CreateBillSQL() {
+function CreateBillUserSQL() {
 	return new Promise((resolve, reject) => {
 		//创建表格在executeSql方法里写
 		plus.sqlite.executeSql({
@@ -56,7 +56,7 @@ function CreateUserSQL() {
 		plus.sqlite.executeSql({
 			name: 'travel',
 			//表格创建或者打开，后面为表格结构
-			sql: 'create table if not exists user("id" INTEGER PRIMARY KEY ,"name" TEXT)',
+			sql: 'create table if not exists user("id" INTEGER PRIMARY KEY ,"userid" INTEGER ,"name" TEXT)',
 			success(e) {
 				resolve(e);
 			},
@@ -69,19 +69,11 @@ function CreateUserSQL() {
 
 
 
-
-//在该数据库里创建表格
-//userInfo是表格名。
-//括号里是表格的结构，列，这里我写了四列，list,id,gender,avatar这四列
-//list后面大写的英文是自动增加的意思，因为表格里的每一行必须有唯一标识
-//这sql语句会数据库的应该都看的懂，我是前端菜鸡，所以详细说明以便跟我一样不懂sql的前端看
-//"id" TEXT  意思是这一列放的值为字符串之类的，如果是想存数字之类的就改为INTEGER
-//数据库不能存对象，数组
 function userInfoSQL() {
 	return new Promise((resolve, reject) => {
 		//创建表格在executeSql方法里写
 		plus.sqlite.executeSql({
-			name: 'travel',
+			name: 'pop',
 			//表格创建或者打开，后面为表格结构
 			sql: 'create table if not exists userInfo("list" INTEGER PRIMARY KEY AUTOINCREMENT,"id" TEXT,"name" TEXT,"gender" TEXT,"avatar" TEXT)',
 			success(e) {
@@ -98,7 +90,7 @@ function userInfoSQL() {
 //根据表格的列来添加信息
 //因为list列我设为自动增加，所以不用添加数据
 //values里是传过来要存的值，我这里是动态的，单引号加双引号拼接
-function addUserInformation(obj) {
+function addUser(obj) {
 	//判断有没有传参
 	if (obj !== undefined) {
 		//判断传的参是否有值
@@ -107,13 +99,11 @@ function addUserInformation(obj) {
 			//obj传来的参数对象
 			var id = obj.id || null; //id
 			var name = obj.name || null; //名称
-			var gender = obj.gender || null; //性别
-			var avatar = obj.avatar || null; //头像
 			return new Promise((resolve, reject) => {
 				plus.sqlite.executeSql({
-					name: 'pop',
-					sql: 'insert into userInfo(id,name,gender,avatar) values("' + id + '","' + name +
-						'","' + gender + '","' + avatar + '")',
+					name: 'travel',
+					sql: 'insert into user(userid,name) values("' + id + '","' + name +
+						'")',
 					success(e) {
 						resolve(e);
 					},
@@ -139,22 +129,24 @@ function addUserInformation(obj) {
 //第一个参数为表格名，aa,bb分别为列名和列的值 ， cc,dd同前面
 //传的参数按1,3,5来传，传一个，传三个，传五个参数，不能只传两个或者四个
 function selectInformationType(name, aa, bb, cc, dd) {
+
 	if (name !== undefined) {
 		//第一个是表单名称，后两个参数是列表名，用来检索
 		if (aa !== undefined && cc !== undefined) {
 			//两个检索条件
-			var sql = 'select * from ' + name + ' where ' + aa + '=' + bb + ' and ' + cc + '=' + dd + '';
+			var sql = 'select * from ' + name + ' where ' + aa + ' like ' + bb + ' and ' + cc + ' like ' + dd + '';
 		}
 		if (aa !== undefined && cc == undefined) {
 			//一个检索条件
-			var sql = 'select * from ' + name + ' where ' + aa + '=' + bb + '';
+			var sql = 'select * from ' + name + ' where ' + aa + ' like ' + bb + '';
 		}
 		if (aa == undefined) {
 			var sql = 'select * from ' + name + '';
 		}
+		console.log(sql);
 		return new Promise((resolve, reject) => {
 			plus.sqlite.selectSql({
-				name: 'pop',
+				name: 'travel',
 				sql: sql,
 				success(e) {
 					resolve(e);
@@ -184,9 +176,10 @@ function deleteInformationType(name, sol, qq, ww, ee) {
 			//一个检索条件
 			var sql = 'delete from ' + name + ' where ' + sol + '="' + qq + '"';
 		}
+		console.log(sql);
 		return new Promise((resolve, reject) => {
 			plus.sqlite.executeSql({
-				name: 'pop',
+				name: 'travel',
 				sql: sql,
 				success(e) {
 					resolve(e);
@@ -246,8 +239,8 @@ function closeSQL(name) {
 
 //监听数据库是否开启
 function isOpen(name, path) {
-	var ss = name || 'pop';
-	var qq = path || '_doc/pop.db';
+	var ss = name || 'travel';
+	var qq = path || '_doc/travel.db';
 	//数据库打开了就返回true,否则返回false
 	var open = plus.sqlite.isOpenDatabase({
 		name: ss,
@@ -279,13 +272,16 @@ function pullSQL(id, num) {
 }
 //把这些方法导出去
 export default {
+	CreateUserSQL,
+	CreateBillUserSQL,
+	CreateBillSQL,
 	openSqlite,
 	userInfoSQL,
-	addUserInformation,
+	addUser,
 	selectInformationType,
 	deleteInformationType,
 	pullSQL,
 	isOpen,
 	closeSQL,
-	modifyInformation
+	modifyInformation,
 }

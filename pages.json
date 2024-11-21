@@ -26,6 +26,12 @@
 			"style": {
 				"navigationBarTitleText": "你好"
 			}
+		},
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "人员"
+			}
 		}
 	],
 
@@ -49,6 +55,12 @@
 				"iconPath": "static/paylist.png",
 				"selectedIconPath": "static/paylistSelected.png"
 
+			},
+			{
+				"pagePath": "pages/home/index",
+				"text": "人员",
+				"iconPath": "static/per.png",
+				"selectedIconPath": "static/perselected.png"
 			}
 		],
 		"color": "#333333",
