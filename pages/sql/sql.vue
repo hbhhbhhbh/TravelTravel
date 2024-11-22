@@ -9,12 +9,16 @@
 			<button type="default" @click="createProjectTable">新建Project库</button>
 			<button type="default" @click="updateTable">更新表结构库</button>
 			<button type="default" @click="deleteTable">删除表</button>
+			<button type="default" @click="addproject">插入数据到project</button>
+			<button type="default" @click="selectproject">查询project</button>
+			<button type="default" @click="deleteproject">删除project</button>
 		</div>
 	</view>
 </template>
 
 <script>
 	import util from '@/common/util/operateSqlite.js';
+	import project from '@/common/util/project.js';
 	export default {
 		data() {
 			return {
@@ -31,6 +35,10 @@
 					content: '你好!',
 					flag: 1
 				},
+				project1: {
+					id: 1,
+					name: "南京",
+				}
 
 			}
 		},
@@ -143,15 +151,15 @@
 							icon: 'success',
 							duration: 2000
 						});
-						console.log('表格创建成功：', result); // 可选，保留日志
+						console.log('Project表格成功：', result); // 可选，保留日志
 					})
 					.catch((error) => {
 						uni.showToast({
-							title: '表格创建失败',
+							title: 'Project表格失败',
 							icon: 'error',
 							duration: 2000
 						});
-						console.error('表格创建失败：', error); // 可选，保留日志
+						console.error('Project表格失败：', error); // 可选，保留日志
 					});
 			},
 
@@ -181,7 +189,63 @@
 						});
 						console.error('表格创建失败：', error); // 可选，保留日志
 					});
+			},
+			addproject(id, name) {
+				const obj = this.project1;
+				project.addUser(obj).then((result) => {
+						uni.showToast({
+							title: 'Project插入成功',
+							icon: 'success',
+							duration: 2000
+						});
+						console.log('Project插入成功：', result); // 可选，保留日志
+					})
+					.catch((error) => {
+						uni.showToast({
+							title: 'Project插入失败',
+							icon: 'error',
+							duration: 2000
+						});
+						console.error('Project插入失败：', error); // 可选，保留日志
+					});
+			},
+			selectproject() {
+				project.selectInformationType("project").then((result) => {
+						uni.showToast({
+							title: 'Project查询成功',
+							icon: 'success',
+							duration: 2000
+						});
+						console.log('Project查询成功：', result); // 可选，保留日志
+					})
+					.catch((error) => {
+						uni.showToast({
+							title: 'Project查询失败',
+							icon: 'error',
+							duration: 2000
+						});
+						console.error('Project查询失败：', error); // 可选，保留日志
+					});
+			},
+			deleteproject() {
+				project.deleteInformationType("project").then((result) => {
+						uni.showToast({
+							title: 'Project删除成功',
+							icon: 'success',
+							duration: 2000
+						});
+						console.log('Project删除成功：', result); // 可选，保留日志
+					})
+					.catch((error) => {
+						uni.showToast({
+							title: 'Project删除失败',
+							icon: 'error',
+							duration: 2000
+						});
+						console.error('Project查询失败：', error); // 可选，保留日志
+					});
 			}
+
 		}
 	}
 </script>

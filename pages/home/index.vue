@@ -10,7 +10,8 @@
 			<up-list-item v-for="(item, index) in indexList" :key="index" class="items">
 				<up-cell :title=item.name>
 				</up-cell>
-				<image src="../../static/GoodItem/delete.png" style="height: 30rpx;width:30rpx ;margin-right: 30rpx;"
+				<image src="../../static/GoodItem/delete.png"
+					style="margin-top: 15rpx; height: 30rpx;width:30rpx ;margin-right: 35rpx;"
 					@click="showDeleteModal(index)">
 				</image>
 			</up-list-item>
@@ -121,6 +122,7 @@
 					const result = await util.selectInformationType("user");
 					console.log("用户列表加载成功：", result);
 					this.indexList = result; // 将查询结果赋值给 items，用于更新页面
+					uni.setStorageSync("AllPerson", result);
 				} catch (error) {
 					console.error("加载用户失败：", error);
 					uni.showToast({
@@ -244,7 +246,9 @@
 	}
 
 	.items {
+		background-color: white;
 		display: flex;
 		justify-content: space-between;
+		margin-top: 10rpx;
 	}
 </style>

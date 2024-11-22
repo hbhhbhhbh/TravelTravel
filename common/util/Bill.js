@@ -71,33 +71,52 @@ function deleteInformationType(name, sol, qq, ww, ee) {
 //修改数据表里的数据
 //第一个参数为表格名，name为要修改的列名，cont为要修改为什么值，use,sel为搜索条件，分别是列名和列值
 //传的参数按1,3,5来传，传一个，传三个，传五个参数，不能只传两个或者四个
-function modifyInformation(listName, name, cont, use, sel) {
+function modifyInformation(obj) {
+	console.log(obj);
 	//表格名，要修改地方的列名，修改后的内容，修改条件查询，列名，内容
-	var sql;
-	if (use == undefined) {
-		sql = 'update ' + listName + ' set ' + name + '="' + cont + '"';
+	if (obj !== undefined) {
+		//判断传的参是否有值
+		var b = (JSON.stringify(obj) == "{}");
+		if (!b) {
+			//obj传来的参数对象
+			var billid = obj.id || null;
+			var projectId = obj.projectId || null; //id
+			var name = obj.name || null; //名称
+			var cnt = obj.cnt || null; //数量
+			var price = obj.price; //价格
+			var sql = 'update Bill set name="' + name + '", cnt="' + cnt + '", price="' +
+				price + '" where projectId="' + projectId + '" and id="' + billid + '"';
+
+			console.log(sql);
+			return new Promise((resolve, reject) => {
+				plus.sqlite.executeSql({
+					name: 'travel',
+					sql: sql,
+
+					success(e) {
+						resolve(e);
+					},
+					fail(e) {
+						reject(e);
+					}
+				})
+			})
+		} else {
+			return new Promise((resolve, reject) => {
+				reject("错误添加")
+			})
+		}
 	} else {
-		sql = 'update ' + listName + ' set ' + name + '="' + cont + '" where ' + use + '="' + sel + '"';
-	}
-	//where前面的是要修改的，后面的是条件，选择哪个
-	return new Promise((resolve, reject) => {
-		plus.sqlite.executeSql({
-			name: 'travel',
-			sql: sql,
-			success(e) {
-				resolve(e);
-			},
-			fail(e) {
-				reject(e);
-			}
+		return new Promise((resolve, reject) => {
+			reject("错误添加")
 		})
-	})
+	}
 }
 //向表格里添加数据
 //根据表格的列来添加信息
 //因为list列我设为自动增加，所以不用添加数据
 //values里是传过来要存的值，我这里是动态的，单引号加双引号拼接
-function addUser(obj) {
+function addBill(obj) {
 	//判断有没有传参
 	if (obj !== undefined) {
 		//判断传的参是否有值
@@ -108,13 +127,15 @@ function addUser(obj) {
 			var projectId = obj.projectId || null; //id
 			var name = obj.name || null; //名称
 			var cnt = obj.cnt || null; //数量
-			var price = obj.price || null; //价格
+			var price = obj.price; //价格
+			var sql = 'insert into Bill(billid,projectId,name,cnt,price) values("' + billid + '","' +
+				projectId + '","' + name + '","' + cnt + '","' + price + '")';
+			console.log(sql);
 			return new Promise((resolve, reject) => {
 				plus.sqlite.executeSql({
 					name: 'travel',
-					sql: 'insert into Bill(billid,projectId,name,cnt,price) values("' + billid '","' +
-						projectId + '","' + name +
-						'","' + name + '","' + cnt + '","' + price + '")',
+					sql: sql,
+
 					success(e) {
 						resolve(e);
 					},
@@ -139,5 +160,5 @@ export default {
 	selectInformationType,
 	deleteInformationType,
 	modifyInformation,
-	addUser,
+	addBill,
 }

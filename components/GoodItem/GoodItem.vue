@@ -14,14 +14,18 @@
 				<view class="input-item price" style="font-size: 25rpx; width: 120rpx">{{ showData.price }}</view>
 				<image @click="deleteSelf" src="../../static/GoodItem/delete.png" class="set-info"></image>
 			</view>
-			<view class="per">
-				<view
-					style="background-color: white;width:350rpx;text-align: center;border-radius: 5rpx;border: 1px solid black;"
-					@click="showPer">
-					查看含有人员
-				</view>
 
-			</view>
+			<uni-collapse>
+				<uni-collapse-item class="showPer" title="查看人员">
+					<view class="content">
+						<uni-list>
+							<uni-list-item title="列表文字"></uni-list-item>
+							<uni-list-item :disabled="true" title="列表禁用状态"></uni-list-item>
+						</uni-list>
+					</view>
+				</uni-collapse-item>
+			</uni-collapse>
+
 		</view>
 	</view>
 
@@ -48,6 +52,7 @@
 					<input type="number" v-model="formData.price" placeholder="请输入价格" />
 				</view>
 				<button type="button" @click="submitForm" class="submit-button">提交</button>
+				<button type="button" @click="editPer" class="submit-button" style="margin-top:20rpx;">增加人员</button>
 			</form>
 		</view>
 	</view>
@@ -69,6 +74,7 @@
 		inheritAttrs: false,
 		data() {
 			return {
+				value: ['0'],
 				showModal: false, // 控制弹窗显示
 
 				formData: {
@@ -100,6 +106,10 @@
 				this.toggleModal();
 
 
+			},
+			editPer() {
+				console.log("触发增加人员");
+				this.$emit('edit-per', this.index);
 			},
 			deleteSelf() {
 				console.log(this.index)
@@ -151,11 +161,16 @@
 		color: RGB(87, 91, 90);
 	}
 
-	.per {
-		display: flex;
-		justify-content: center;
+	.showPer {
+		text-align: center;
 		font-size: 20rpx;
-		margin-top: 15rpx;
+		border: 1px solid #000000;
+		height: 60rpx;
+		border-radius: 8rpx;
+	}
 
+	.content {
+		border: 1px solid #000000;
+		height: 100rpx;
 	}
 </style>
