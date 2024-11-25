@@ -1,12 +1,8 @@
 <template>
-	<view class="">
-		<!-- <div>{{odb}}</div> -->
-		<div>
-
-		</div>
-	</view>
+	<div class="typing-container">
+		<span class="typing">HBH's Travel Tools</span>
+	</div>
 </template>
-
 <script>
 	import BillUser from '../../common/util/BillUser';
 	import util from '@/common/util/operateSqlite.js';
@@ -34,12 +30,11 @@
 
 			}
 		},
-		mounted() {
+		onPullDownRefresh() {
+			console.log('refresh');
 
-
-			// 调用
 			this.initializeDB();
-
+			uni.stopPullDownRefresh();
 
 		},
 		onLoad() {
@@ -61,151 +56,79 @@
 			},
 			clearBillUser() {
 				BillUser.clear("BillUser").then((result) => {
-						uni.showToast({
-							title: '数据库清除成功',
-							icon: 'success',
-							duration: 2000
-						});
+
 						console.log('数据库清除成功：', result); // 可选，保留日志
 					})
 					.catch((error) => {
-						uni.showToast({
-							title: '数据库清除失败',
-							icon: 'error',
-							duration: 2000
-						});
+
 						console.error('数据库清除失败：', error); // 可选，保留日志
 					});
 			},
 			dropTable() {
 				util.dropTable().then((result) => {
-						uni.showToast({
-							title: '数据库删除成功',
-							icon: 'success',
-							duration: 2000
-						});
+
 						console.log('表格删除成功：', result); // 可选，保留日志
 					})
 					.catch((error) => {
-						uni.showToast({
-							title: '数据库删除失败',
-							icon: 'error',
-							duration: 2000
-						});
+
 						console.error('表格删除失败：', error); // 可选，保留日志
 					});
 			},
 			isopenDB() {
 				util.openSqlite().then((result) => {
-						// uni.showToast({
-						// 	title: '数据库打开成功',
-						// 	icon: 'success',
-						// 	duration: 2000
-						// });
+
 						console.log('表格创建成功：', result); // 可选，保留日志
 					})
 					.catch((error) => {
-						// uni.showToast({
-						// 	title: '数据库打开失败',
-						// 	icon: 'error',
-						// 	duration: 2000
-						// });
+
 						console.error('表格创建失败：', error); // 可选，保留日志
 					});
 			},
 			createBillTable() {
-				// uni.showToast({
-				// 	title: '测试',
-				// 	icon: 'success',
-				// 	duration: 2000
-				// });
+
 				util.CreateBillSQL()
 					.then((result) => {
-						// uni.showToast({
-						// 	title: '表格创建成功',
-						// 	icon: 'success',
-						// 	duration: 2000
-						// });
+
 						console.log('表格创建成功：', result); // 可选，保留日志
 					})
 					.catch((error) => {
-						uni.showToast({
-							title: '表格创建失败',
-							icon: 'error',
-							duration: 2000
-						});
+
 						console.error('表格创建失败：', error); // 可选，保留日志
 					});
 			},
 			createBillUserTable() {
-				// uni.showToast({
-				// 	title: '测试',
-				// 	icon: 'success',
-				// 	duration: 2000
-				// });
+
 				util.CreateBillUserSQL()
 					.then((result) => {
-						// uni.showToast({
-						// 	title: 'BillUser表格创建成功',
-						// 	icon: 'success',
-						// 	duration: 2000
-						// });
+
 						console.log('表格创建成功：', result); // 可选，保留日志
 					})
 					.catch((error) => {
-						uni.showToast({
-							title: '表格创建失败',
-							icon: 'error',
-							duration: 2000
-						});
+
 						console.error('表格创建失败：', error); // 可选，保留日志
 					});
 			},
 			createUserTable() {
-				// uni.showToast({
-				// 	title: '测试',
-				// 	icon: 'success',
-				// 	duration: 2000
-				// });
+
 				util.CreateUserSQL()
 					.then((result) => {
-						// uni.showToast({
-						// 	title: 'BillUser表格创建成功',
-						// 	icon: 'success',
-						// 	duration: 2000
-						// });
+
 						console.log('表格创建成功：', result); // 可选，保留日志
 					})
 					.catch((error) => {
-						uni.showToast({
-							title: '表格创建失败',
-							icon: 'error',
-							duration: 2000
-						});
+
 						console.error('表格创建失败：', error); // 可选，保留日志
 					});
 			},
 			createProjectTable() {
-				// uni.showToast({
-				// 	title: '测试',
-				// 	icon: 'success',
-				// 	duration: 2000
-				// });
+
 				util.CreateProjectSQL()
 					.then((result) => {
-						// uni.showToast({
-						// 	title: 'Project表格创建成功',
-						// 	icon: 'success',
-						// 	duration: 2000
-						// });
+
 						console.log('Project表格成功：', result); // 可选，保留日志
 					})
 					.catch((error) => {
-						uni.showToast({
-							title: 'Project表格失败',
-							icon: 'error',
-							duration: 2000
-						});
+
 						console.error('Project表格失败：', error); // 可选，保留日志
 					});
 			},
@@ -296,6 +219,51 @@
 		}
 	}
 </script>
+<style scoped>
+	.typing-container {
+		margin-top: 200rpx;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		overflow: hidden;
+		text-align: center;
+		font-size: 50rpx;
+	}
 
-<style>
+	.typing {
+		display: inline-block;
+		white-space: nowrap;
+		overflow: hidden;
+		width: 20ch;
+		animation: typing 4s steps(15) infinite;
+		border-right: 2px solid black;
+		/* 模拟光标 */
+	}
+
+	@keyframes typing {
+		0% {
+			width: 0ch;
+		}
+
+		70% {
+			width: 15ch;
+		}
+
+		100% {
+			width: 15ch;
+		}
+	}
+
+	.typing::after {
+		content: "";
+		border-right: 2px solid black;
+		display: inline-block;
+		animation: blink 0.6s step-end infinite;
+	}
+
+	@keyframes blink {
+		50% {
+			border-color: transparent;
+		}
+	}
 </style>

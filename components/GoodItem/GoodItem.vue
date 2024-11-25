@@ -5,13 +5,13 @@
 			<view class="top-bar">
 				<view style="font-size: 25rpx; width: 200rpx">名称</view>
 				<view style="font-size: 25rpx; width: 200rpx">数量</view>
-				<view style="font-size: 25rpx; width: 120rpx">价格</view>
+				<view style="font-size: 25rpx; width: 200rpx">价格</view>
 				<image @click="toggleModal" src="../../static/GoodItem/edit.png" class="set-info"></image>
 			</view>
 			<view class="top-bar bot-bar">
 				<view class="input-item name" style="font-size: 25rpx; width: 200rpx">{{ showData.name }}</view>
 				<view class="input-item cnt" style="font-size: 25rpx; width: 200rpx">{{ showData.cnt }}</view>
-				<view class="input-item price" style="font-size: 25rpx; width: 120rpx">{{ showData.price }}</view>
+				<view class="input-item price" style="font-size: 25rpx; width: 200rpx">{{ showData.price }}</view>
 				<image @click="deleteSelf" src="../../static/GoodItem/delete.png" class="set-info"></image>
 			</view>
 
@@ -216,7 +216,7 @@
 	@import '@/components/GoodItem/box.css';
 
 	.Item-container {
-		width: 600rpx;
+		width: 700rpx;
 		height: auto;
 		background-color: RGB(250, 249, 240);
 		border-radius: 5rpx;
@@ -226,7 +226,7 @@
 	}
 
 	.card {
-		padding: 10rpx;
+		padding: 20rpx;
 	}
 
 	.list-item {

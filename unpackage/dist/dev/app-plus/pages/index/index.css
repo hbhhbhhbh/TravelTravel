@@ -1,0 +1,41 @@
+
+.typing-container[data-v-1cf27b2a] {
+		margin-top: 6.25rem;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		overflow: hidden;
+		text-align: center;
+		font-size: 1.5625rem;
+}
+.typing[data-v-1cf27b2a] {
+		display: inline-block;
+		white-space: nowrap;
+		overflow: hidden;
+		width: 20ch;
+		animation: typing-1cf27b2a 4s steps(15) infinite;
+		border-right: 2px solid black;
+		/* 模拟光标 */
+}
+@keyframes typing-1cf27b2a {
+0% {
+			width: 0ch;
+}
+70% {
+			width: 15ch;
+}
+100% {
+			width: 15ch;
+}
+}
+.typing[data-v-1cf27b2a]::after {
+		content: "";
+		border-right: 2px solid black;
+		display: inline-block;
+		animation: blink-1cf27b2a 0.6s step-end infinite;
+}
+@keyframes blink-1cf27b2a {
+50% {
+			border-color: transparent;
+}
+}

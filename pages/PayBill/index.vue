@@ -173,7 +173,14 @@
 			this.reloadData();
 
 		},
+		onPullDownRefresh() {
+			console.log('refresh');
+			setTimeout(function() {
+				uni.stopPullDownRefresh();
+			}, 1000);
+		},
 		methods: {
+
 			async reloadData() {
 				try {
 					console.log("重新加载数据...");
@@ -255,7 +262,7 @@
 						billid: this.nowBillId, // 当前账单 id
 					};
 				});
-				BillUser.deleteInformationType("BillUser", "billid", this.nowBillId);
+				BillUser.deleteInformationType("BillUser", "Billid", this.nowBillId);
 				console.log("选中的用户与账单合成对象:", result1);
 				result1.forEach(obj => {
 					BillUser.addUser(obj);
@@ -394,7 +401,7 @@
 				const selectedProject = this.projects[this.selectedProjectIndex].projectName;
 				project.deleteInformationType("project", "id", selectedProjectId);
 				this.currentItems.forEach(obj => {
-					BillUser.deleteInformationType("BillUser", "billid", obj.id);
+					BillUser.deleteInformationType("BillUser", "Billid", obj.id);
 				})
 				Bill.deleteInformationType("Bill", "projectId", selectedProjectId);
 				this.selectProjects().then(() => this.updateprojectBill());

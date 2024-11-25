@@ -746,7 +746,7 @@ uni-input[data-v-c7245072] {
 	cursor: pointer;
 }
 .Item-container[data-v-c7245072] {
-		width: 18.75rem;
+		width: 21.875rem;
 		height: auto;
 		background-color: RGB(250, 249, 240);
 		border-radius: 0.15625rem;
@@ -755,7 +755,7 @@ uni-input[data-v-c7245072] {
 		overflow: visible;
 }
 .card[data-v-c7245072] {
-		padding: 0.3125rem;
+		padding: 0.625rem;
 }
 .list-item[data-v-c7245072] {
 		height: 1.25rem;
