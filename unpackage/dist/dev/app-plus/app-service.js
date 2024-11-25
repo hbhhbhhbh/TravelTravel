@@ -41,7 +41,7 @@ if (uni.restoreGlobal) {
   function resolveEasycom(component, easycom) {
     return typeof component === "string" ? easycom : component;
   }
-  function selectInformationType$3(name, aa, bb, cc, dd) {
+  function selectInformationType$4(name, aa, bb, cc, dd) {
     if (name !== void 0) {
       if (aa !== void 0 && cc !== void 0) {
         var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd + " order by id desc";
@@ -71,7 +71,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function deleteInformationType$3(name, sol, qq, ww, ee) {
+  function deleteInformationType$4(name, sol, qq, ww, ee) {
     if (name !== void 0) {
       if (ww !== void 0) {
         var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
@@ -99,7 +99,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function modifyInformation$3(listName, name, cont, use, sel) {
+  function modifyInformation$4(listName, name, cont, use, sel) {
     var sql;
     if (use == void 0) {
       sql = "update " + listName + " set " + name + '="' + cont + '"';
@@ -119,7 +119,7 @@ if (uni.restoreGlobal) {
       });
     });
   }
-  function addUser$2(obj) {
+  function addUser$3(obj) {
     if (obj !== void 0) {
       var b = JSON.stringify(obj) == "{}";
       if (!b) {
@@ -180,10 +180,10 @@ if (uni.restoreGlobal) {
     }
   }
   const BillUser = {
-    selectInformationType: selectInformationType$3,
-    deleteInformationType: deleteInformationType$3,
-    modifyInformation: modifyInformation$3,
-    addUser: addUser$2,
+    selectInformationType: selectInformationType$4,
+    deleteInformationType: deleteInformationType$4,
+    modifyInformation: modifyInformation$4,
+    addUser: addUser$3,
     clear
   };
   function openSqlite() {
@@ -316,7 +316,7 @@ if (uni.restoreGlobal) {
       });
     });
   }
-  function addUser$1(obj) {
+  function addUser$2(obj) {
     if (obj !== void 0) {
       var b = JSON.stringify(obj) == "{}";
       if (!b) {
@@ -345,7 +345,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function selectInformationType$2(name, aa, bb, cc, dd) {
+  function selectInformationType$3(name, aa, bb, cc, dd) {
     if (name !== void 0) {
       if (aa !== void 0 && cc !== void 0) {
         var sql = "select * from " + name + " where " + aa + " like " + bb + " and " + cc + " like " + dd;
@@ -375,7 +375,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function deleteInformationType$2(name, sol, qq, ww, ee) {
+  function deleteInformationType$3(name, sol, qq, ww, ee) {
     if (name !== void 0 && sol !== void 0) {
       if (ww !== void 0) {
         var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
@@ -401,7 +401,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function modifyInformation$2(listName, name, cont, use, sel) {
+  function modifyInformation$3(listName, name, cont, use, sel) {
     var sql;
     if (use == void 0) {
       sql = "update " + listName + " set " + name + '="' + cont + '"';
@@ -481,18 +481,18 @@ if (uni.restoreGlobal) {
     CreateBillSQL,
     openSqlite,
     userInfoSQL,
-    addUser: addUser$1,
-    selectInformationType: selectInformationType$2,
-    deleteInformationType: deleteInformationType$2,
+    addUser: addUser$2,
+    selectInformationType: selectInformationType$3,
+    deleteInformationType: deleteInformationType$3,
     pullSQL,
     isOpen,
     closeSQL,
-    modifyInformation: modifyInformation$2,
+    modifyInformation: modifyInformation$3,
     updateTableStructure,
     deleteTable,
     dropTable
   };
-  function selectInformationType$1(name, aa, bb, cc, dd) {
+  function selectInformationType$2(name, aa, bb, cc, dd) {
     if (name !== void 0) {
       if (aa !== void 0 && cc !== void 0) {
         var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd + " order by id desc";
@@ -522,7 +522,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function deleteInformationType$1(name, sol, qq, ww, ee) {
+  function deleteInformationType$2(name, sol, qq, ww, ee) {
     if (name !== void 0) {
       if (ww !== void 0) {
         var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
@@ -550,7 +550,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function modifyInformation$1(listName, name, cont, use, sel) {
+  function modifyInformation$2(listName, name, cont, use, sel) {
     var sql;
     if (use == void 0) {
       sql = "update " + listName + " set " + name + '="' + cont + '"';
@@ -570,7 +570,7 @@ if (uni.restoreGlobal) {
       });
     });
   }
-  function addUser(obj) {
+  function addUser$1(obj) {
     if (obj !== void 0) {
       var b = JSON.stringify(obj) == "{}";
       if (!b) {
@@ -603,10 +603,10 @@ if (uni.restoreGlobal) {
     }
   }
   const project = {
-    selectInformationType: selectInformationType$1,
-    deleteInformationType: deleteInformationType$1,
-    modifyInformation: modifyInformation$1,
-    addUser
+    selectInformationType: selectInformationType$2,
+    deleteInformationType: deleteInformationType$2,
+    modifyInformation: modifyInformation$2,
+    addUser: addUser$1
   };
   const _export_sfc = (sfc, props2) => {
     const target = sfc.__vccOpts || sfc;
@@ -615,7 +615,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$j = {
+  const _sfc_main$k = {
     data() {
       return {
         // odb:'',
@@ -822,13 +822,13 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "" }, [
       vue.createCommentVNode(" <div>{{odb}}</div> "),
       vue.createElementVNode("div")
     ]);
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
   const fontData = [
     {
       "font_class": "arrow-down",
@@ -1479,7 +1479,7 @@ if (uni.restoreGlobal) {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$i = {
+  const _sfc_main$j = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -1533,7 +1533,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -1548,8 +1548,8 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/uni/travel-new/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  const _sfc_main$h = {
+  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/uni/travel-new/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$i = {
     name: "uniCollapseItem",
     props: {
       // 列表标题
@@ -1719,7 +1719,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$4);
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-collapse-item" }, [
       vue.createCommentVNode(" onClick(!isOpen) "),
@@ -1796,8 +1796,8 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-3d2dde9f"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
-  const _sfc_main$g = {
+  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-3d2dde9f"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
+  const _sfc_main$h = {
     name: "uniCollapse",
     emits: ["change", "activeItem", "input", "update:modelValue"],
     props: {
@@ -1908,12 +1908,12 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-collapse" }, [
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ]);
   }
-  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-3f050360"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
+  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-3f050360"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
   const STORAGE_KEYS = {
     CURRENTITEMS: "currentItems",
     // 用户信息
@@ -1924,7 +1924,7 @@ if (uni.restoreGlobal) {
   };
   const _imports_0$1 = "/static/GoodItem/edit.png";
   const _imports_0 = "/static/GoodItem/delete.png";
-  const _sfc_main$f = {
+  const _sfc_main$g = {
     name: "GoodItem",
     props: {
       index: {
@@ -2039,7 +2039,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_collapse_item = resolveEasycom(vue.resolveDynamicComponent("uni-collapse-item"), __easycom_0$3);
     const _component_uni_collapse = resolveEasycom(vue.resolveDynamicComponent("uni-collapse"), __easycom_1$3);
     return vue.openBlock(), vue.createElementBlock(
@@ -2234,8 +2234,8 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT */
     );
   }
-  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
-  const _sfc_main$e = {
+  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
+  const _sfc_main$f = {
     name: "uniTh",
     options: {
       virtualHost: true
@@ -2396,7 +2396,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -2410,8 +2410,8 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-bf970acd"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-th/uni-th.vue"]]);
-  const _sfc_main$d = {
+  const __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-bf970acd"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-th/uni-th.vue"]]);
+  const _sfc_main$e = {
     name: "TableCheckbox",
     emits: ["checkboxSelected"],
     props: {
@@ -2476,7 +2476,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "uni-table-checkbox",
       onClick: _cache[0] || (_cache[0] = (...args) => $options.selected && $options.selected(...args))
@@ -2500,8 +2500,8 @@ if (uni.restoreGlobal) {
       ]))
     ]);
   }
-  const tableCheckbox = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-25e435b1"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-tr/table-checkbox.vue"]]);
-  const _sfc_main$c = {
+  const tableCheckbox = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-25e435b1"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-tr/table-checkbox.vue"]]);
+  const _sfc_main$d = {
     name: "uniTr",
     components: {
       tableCheckbox
@@ -2594,7 +2594,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_table_checkbox = vue.resolveComponent("table-checkbox");
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-table-tr" }, [
       $data.selection === "selection" ? (vue.openBlock(), vue.createElementBlock(
@@ -2617,8 +2617,8 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ]);
   }
-  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-b48b3e32"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-tr/uni-tr.vue"]]);
-  const _sfc_main$b = {
+  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-b48b3e32"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-tr/uni-tr.vue"]]);
+  const _sfc_main$c = {
     name: "uniTd",
     options: {
       virtualHost: true
@@ -2667,7 +2667,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       vue.Fragment,
       null,
@@ -2690,8 +2690,8 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
     );
   }
-  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-edae4802"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-td/uni-td.vue"]]);
-  const _sfc_main$a = {
+  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-edae4802"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-td/uni-td.vue"]]);
+  const _sfc_main$b = {
     name: "uniTable",
     options: {
       virtualHost: true
@@ -2938,7 +2938,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -2988,8 +2988,8 @@ if (uni.restoreGlobal) {
       /* CLASS */
     );
   }
-  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-c1ea9b5d"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-table/uni-table.vue"]]);
-  function selectInformationType(name, aa, bb, cc, dd) {
+  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-c1ea9b5d"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-table/uni-table.vue"]]);
+  function selectInformationType$1(name, aa, bb, cc, dd) {
     if (name !== void 0) {
       if (aa !== void 0 && cc !== void 0) {
         var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd;
@@ -3019,7 +3019,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function deleteInformationType(name, sol, qq, ww, ee) {
+  function deleteInformationType$1(name, sol, qq, ww, ee) {
     if (name !== void 0 && sol !== void 0) {
       if (ww !== void 0) {
         var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
@@ -3045,7 +3045,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function modifyInformation(obj) {
+  function modifyInformation$1(obj) {
     formatAppLog("log", "at common/util/Bill.js:75", obj);
     if (obj !== void 0) {
       var b = JSON.stringify(obj) == "{}";
@@ -3115,12 +3115,12 @@ if (uni.restoreGlobal) {
     }
   }
   const Bill = {
-    selectInformationType,
-    deleteInformationType,
-    modifyInformation,
+    selectInformationType: selectInformationType$1,
+    deleteInformationType: deleteInformationType$1,
+    modifyInformation: modifyInformation$1,
     addBill
   };
-  const _sfc_main$9 = {
+  const _sfc_main$a = {
     components: {
       GoodItem: __easycom_0$2
     },
@@ -3334,9 +3334,14 @@ if (uni.restoreGlobal) {
         this.newProjectName = "";
         this.showModaleditPer = false;
       },
+      //结算页面，开始生成账单
       handleSettle() {
         uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
-        formatAppLog("log", "at pages/PayBill/index.vue:368", "当前项目的结算数据:", this.currentItems);
+        formatAppLog("log", "at pages/PayBill/index.vue:370", "当前项目的结算数据:", this.currentItems);
+        formatAppLog("log", "at pages/PayBill/index.vue:371", "存入的project ", uni.getStorageSync(STORAGE_KEYS.nowproject));
+        uni.navigateTo({
+          url: "/pages/settleBill/settleBill"
+        });
       },
       //编辑项目：生成弹窗，里面可以编辑也可以删除
       editProject() {
@@ -3364,7 +3369,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     var _a;
     const _component_GoodItem = resolveEasycom(vue.resolveDynamicComponent("GoodItem"), __easycom_0$2);
     const _component_uni_th = resolveEasycom(vue.resolveDynamicComponent("uni-th"), __easycom_1$2);
@@ -3669,8 +3674,8 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-1fc7d2ef"], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
-  const _sfc_main$8 = {
+  const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-1fc7d2ef"], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
+  const _sfc_main$9 = {
     data() {
       return {
         // odb:'',
@@ -3912,7 +3917,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "" }, [
       vue.createCommentVNode(" <div>{{odb}}</div> "),
       vue.createElementVNode("div", null, [
@@ -3967,7 +3972,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesSqlSql = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "D:/uni/travel-new/pages/sql/sql.vue"]]);
+  const PagesSqlSql = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "D:/uni/travel-new/pages/sql/sql.vue"]]);
   const icons = {
     "uicon-level": "",
     "uicon-column-line": "",
@@ -6822,7 +6827,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$7 = {
+  const _sfc_main$8 = {
     name: "u-icon",
     data() {
       return {};
@@ -6881,7 +6886,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -6925,7 +6930,7 @@ if (uni.restoreGlobal) {
       /* CLASS */
     );
   }
-  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-1c933a9a"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-icon/u-icon.vue"]]);
+  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-1c933a9a"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-icon/u-icon.vue"]]);
   const props$4 = defineMixin({
     props: {
       // 搜索框形状，round-圆形，square-方形
@@ -7058,7 +7063,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$6 = {
+  const _sfc_main$7 = {
     name: "u-search",
     mixins: [mpMixin, mixin, props$4],
     data() {
@@ -7152,7 +7157,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_u_icon = resolveEasycom(vue.resolveDynamicComponent("u-icon"), __easycom_0$1);
     return vue.openBlock(), vue.createElementBlock(
       "view",
@@ -7248,7 +7253,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-ed789780"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-search/u-search.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-ed789780"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-search/u-search.vue"]]);
   const props$3 = defineMixin({
     props: {
       color: {
@@ -7282,7 +7287,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$5 = {
+  const _sfc_main$6 = {
     name: "u-line",
     mixins: [mpMixin, mixin, props$3],
     computed: {
@@ -7307,7 +7312,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -7319,7 +7324,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-bbd9963c"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-line/u-line.vue"]]);
+  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-bbd9963c"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-line/u-line.vue"]]);
   const props$2 = defineMixin({
     props: {
       // 标题
@@ -7430,7 +7435,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$4 = {
+  const _sfc_main$5 = {
     name: "u-cell",
     data() {
       return {};
@@ -7457,7 +7462,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_u_icon = resolveEasycom(vue.resolveDynamicComponent("u-icon"), __easycom_0$1);
     const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$1);
     return vue.openBlock(), vue.createElementBlock("view", {
@@ -7561,7 +7566,7 @@ if (uni.restoreGlobal) {
       _ctx.border ? (vue.openBlock(), vue.createBlock(_component_u_line, { key: 0 })) : vue.createCommentVNode("v-if", true)
     ], 14, ["hover-class"]);
   }
-  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-b4243719"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-cell/u-cell.vue"]]);
+  const __easycom_1 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-b4243719"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-cell/u-cell.vue"]]);
   const props$1 = defineMixin({
     props: {
       // 用于滚动到指定item
@@ -7571,7 +7576,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$3 = {
+  const _sfc_main$4 = {
     name: "u-list-item",
     mixins: [mpMixin, mixin, props$1],
     data() {
@@ -7634,7 +7639,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["u-list-item", [`u-list-item-${_ctx.anchor}`]]),
       ref: `u-list-item-${_ctx.anchor}`,
@@ -7643,7 +7648,7 @@ if (uni.restoreGlobal) {
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ], 10, ["anchor"]);
   }
-  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-32197ac9"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list-item/u-list-item.vue"]]);
+  const __easycom_2 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-32197ac9"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list-item/u-list-item.vue"]]);
   const props = defineMixin({
     props: {
       // 控制是否出现滚动条，仅nvue有效
@@ -7743,7 +7748,7 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$2 = {
+  const _sfc_main$3 = {
     name: "u-list",
     mixins: [mpMixin, mixin, props],
     watch: {
@@ -7832,7 +7837,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("scroll-view", {
       class: "u-list",
       "scroll-into-view": _ctx.scrollIntoView,
@@ -7863,9 +7868,9 @@ if (uni.restoreGlobal) {
       ])
     ], 44, ["scroll-into-view", "scroll-y", "scroll-top", "lower-threshold", "upper-threshold", "show-scrollbar", "enable-back-to-top", "scroll-with-animation", "refresher-enabled", "refresher-threshold", "refresher-default-style", "refresher-background", "refresher-triggered"]);
   }
-  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-9ad03670"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list/u-list.vue"]]);
+  const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-9ad03670"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list/u-list.vue"]]);
   const keyword = vue.ref("");
-  const _sfc_main$1 = {
+  const _sfc_main$2 = {
     data() {
       return {
         keyword,
@@ -7992,7 +7997,7 @@ if (uni.restoreGlobal) {
       this.loadUsers();
     }
   };
-  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_up_search = resolveEasycom(vue.resolveDynamicComponent("up-search"), __easycom_0);
     const _component_up_cell = resolveEasycom(vue.resolveDynamicComponent("up-cell"), __easycom_1);
     const _component_up_list_item = resolveEasycom(vue.resolveDynamicComponent("up-list-item"), __easycom_2);
@@ -8114,11 +8119,402 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const PagesHomeIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-4978fed5"], ["__file", "D:/uni/travel-new/pages/home/index.vue"]]);
+  const PagesHomeIndex = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-4978fed5"], ["__file", "D:/uni/travel-new/pages/home/index.vue"]]);
+  function selectInformationType(name, aa, bb, cc, dd) {
+    if (name !== void 0) {
+      if (aa !== void 0 && cc !== void 0) {
+        var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd + " order by id desc";
+      }
+      if (aa !== void 0 && cc == void 0) {
+        var sql = "select * from " + name + " where " + aa + "=" + bb + " order by id desc";
+      }
+      if (aa == void 0) {
+        var sql = "select * from " + name + " order by id desc";
+      }
+      formatAppLog("log", "at common/util/settleBill.js:21", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.selectSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误查询");
+      });
+    }
+  }
+  function selectBillUser(name, aa) {
+    var sql = "select * from Bill,user,BillUser where BillUser.Billid =" + aa + " and BillUser.userid=user.id and Bill.id=BillUser.Billid  order by id desc";
+    formatAppLog("log", "at common/util/settleBill.js:47", sql);
+    return new Promise((resolve, reject) => {
+      plus.sqlite.selectSql({
+        name: "travel",
+        sql,
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function deleteInformationType(name, sol, qq, ww, ee) {
+    if (name !== void 0) {
+      if (ww !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
+      } else if (sol !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
+      } else {
+        var sql = "delete  from " + name;
+      }
+      formatAppLog("log", "at common/util/settleBill.js:78", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.executeSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误删除");
+      });
+    }
+  }
+  function modifyInformation(listName, name, cont, use, sel) {
+    var sql;
+    if (use == void 0) {
+      sql = "update " + listName + " set " + name + '="' + cont + '"';
+    } else {
+      sql = "update " + listName + " set " + name + '="' + cont + '" where ' + use + '="' + sel + '"';
+    }
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        sql,
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function addUser(obj) {
+    if (obj !== void 0) {
+      var b = JSON.stringify(obj) == "{}";
+      if (!b) {
+        var id = obj.id || null;
+        var name = obj.name || null;
+        formatAppLog("log", "at common/util/settleBill.js:136", id + " " + name);
+        var sql = 'insert into project(projectId,projectName) values("' + id + '","' + name + '")';
+        formatAppLog("log", "at common/util/settleBill.js:139", sql);
+        return new Promise((resolve, reject) => {
+          plus.sqlite.executeSql({
+            name: "travel",
+            sql,
+            success(e) {
+              resolve(e);
+            },
+            fail(e) {
+              reject(e);
+            }
+          });
+        });
+      } else {
+        return new Promise((resolve, reject) => {
+          reject("错误添加");
+        });
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误添加");
+      });
+    }
+  }
+  const settleBill = {
+    selectInformationType,
+    deleteInformationType,
+    modifyInformation,
+    addUser,
+    selectBillUser
+  };
+  const _sfc_main$1 = {
+    data() {
+      return {
+        currentDate: (/* @__PURE__ */ new Date()).toISOString().slice(0, 10),
+        // 当前日期
+        items: [{
+          name: "臭豆腐",
+          qty: 1,
+          price: 15
+        }],
+        single: "",
+        imageSrc: [],
+        // 存储图片路径
+        nowBills: [],
+        showBills: [],
+        userPriceMap: /* @__PURE__ */ new Map()
+      };
+    },
+    computed: {
+      totalAmount() {
+        return this.nowBills.reduce((sum, item) => sum + item.price, 0).toFixed(1);
+      },
+      Date() {
+        const today = /* @__PURE__ */ new Date();
+        const formattedDate = today.toLocaleDateString("zh-CN");
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:104", formattedDate);
+        return formattedDate;
+      }
+    },
+    mounted() {
+      this.load();
+    },
+    methods: {
+      async load() {
+        this.nowBills = await uni.getStorageSync(STORAGE_KEYS.CURRENTITEMS);
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:114", "初始化project:", this.nowBills);
+        const result = this.nowBills.map((item, index2) => ({
+          index: index2,
+          name: item.name,
+          cnt: item.cnt,
+          price: item.price,
+          total: item.price
+        }));
+        this.showBills = result;
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:123", this.showBills);
+        this.computePerPrice();
+      },
+      async computePerPrice() {
+        for (const obj of this.nowBills) {
+          try {
+            const result = await settleBill.selectBillUser("BillUser", obj.id);
+            result.forEach((item) => {
+              const {
+                userid,
+                price
+              } = item;
+              formatAppLog("log", "at pages/settleBill/settleBill.vue:138", item.userid);
+              if (this.userPriceMap.has(item.userid)) {
+                this.userPriceMap.set(item.userid, this.userPriceMap.get(item.userid) + item.price / result.length);
+              } else {
+                this.userPriceMap.set(item.userid, item.price / result.length);
+              }
+            });
+            formatAppLog("log", "at pages/settleBill/settleBill.vue:148", result);
+          } catch (error2) {
+            formatAppLog("error", "at pages/settleBill/settleBill.vue:150", "Error fetching bill user:", error2);
+          }
+        }
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:153", this.userPriceMap.get(1));
+      },
+      closeModal() {
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:157", "关闭模态框");
+      },
+      chooseImage() {
+        uni.chooseImage({
+          count: 1,
+          // 限制只能选择一张图片
+          sourceType: ["album"],
+          // 仅允许从相册选择
+          success: (res) => {
+            formatAppLog("log", "at pages/settleBill/settleBill.vue:165", "图片路径:", res.tempFilePaths[0]);
+            const filePath = res.tempFilePaths[0];
+            this.imageSrc = [];
+            this.imageSrc.push(filePath.startsWith("file://") ? filePath : `file://${filePath}`);
+          },
+          fail: (err) => {
+            formatAppLog("error", "at pages/settleBill/settleBill.vue:174", "选择图片失败:", err);
+          }
+        });
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:177", this.imageSrc);
+      },
+      previewImg(current) {
+        uni.previewImage({
+          current: "current",
+          urls: this.imageSrc,
+          indicator: none
+        });
+      }
+    }
+  };
+  function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "paybill-container" }, [
+      vue.createCommentVNode(" 标题 "),
+      vue.createElementVNode("view", { class: "header" }, [
+        vue.createElementVNode("text", { class: "title" }, "PayBill"),
+        vue.createElementVNode("text", { class: "subtitle" }),
+        vue.createElementVNode("view", {
+          class: "close-button",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.closeModal && $options.closeModal(...args))
+        }, "×")
+      ]),
+      vue.createCommentVNode(" 可插入图片区域 "),
+      $data.imageSrc.length <= 0 ? (vue.openBlock(), vue.createElementBlock("button", {
+        key: 0,
+        type: "primary",
+        onClick: _cache[1] || (_cache[1] = (...args) => $options.chooseImage && $options.chooseImage(...args))
+      }, "可选择上传图片")) : vue.createCommentVNode("v-if", true),
+      (vue.openBlock(true), vue.createElementBlock(
+        vue.Fragment,
+        null,
+        vue.renderList($data.imageSrc, (item) => {
+          return vue.openBlock(), vue.createElementBlock("image", {
+            onClick: _cache[2] || (_cache[2] = (...args) => $options.chooseImage && $options.chooseImage(...args)),
+            src: item,
+            class: "image-placeholder"
+          }, null, 8, ["src"]);
+        }),
+        256
+        /* UNKEYED_FRAGMENT */
+      )),
+      vue.createCommentVNode(" 单号和日期 "),
+      vue.createElementVNode("view", { class: "info" }, [
+        vue.createElementVNode("view", { class: "info-line" }, [
+          vue.createElementVNode("text", null, "NO:"),
+          vue.createElementVNode("text", null, "00001")
+        ]),
+        vue.createElementVNode("view", { class: "info-line" }, [
+          vue.createElementVNode("text", null, "Date:"),
+          vue.createCommentVNode(' <uni-datetime-picker style="margin-left:300rpx;" type="date" :clear-icon="false" v-model="single"\r\n					@maskClick="maskClick" /> '),
+          vue.createElementVNode(
+            "view",
+            null,
+            vue.toDisplayString($options.Date),
+            1
+            /* TEXT */
+          )
+        ])
+      ]),
+      vue.createCommentVNode(" 商品列表 "),
+      vue.createElementVNode("view", { class: "table" }, [
+        vue.createElementVNode("view", { class: "table-header" }, [
+          vue.createElementVNode("text", { class: "table-cell" }, "NO"),
+          vue.createElementVNode("text", { class: "table-cell" }, "Item"),
+          vue.createElementVNode("text", { class: "table-cell" }, "QTY"),
+          vue.createElementVNode("text", { class: "table-cell" }, "Price"),
+          vue.createElementVNode("text", { class: "table-cell" }, "Total")
+        ]),
+        vue.createElementVNode("view", { class: "table-body" }, [
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($data.showBills, (item, index2) => {
+              return vue.openBlock(), vue.createElementBlock("view", {
+                class: "table-row",
+                key: index2
+              }, [
+                vue.createElementVNode(
+                  "text",
+                  { class: "table-cell" },
+                  vue.toDisplayString(index2 + 1),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "text",
+                  { class: "table-cell" },
+                  vue.toDisplayString(item.name),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "text",
+                  { class: "table-cell" },
+                  vue.toDisplayString(item.cnt),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "text",
+                  { class: "table-cell" },
+                  vue.toDisplayString(item.price.toFixed(1)),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "text",
+                  { class: "table-cell" },
+                  vue.toDisplayString(item.total),
+                  1
+                  /* TEXT */
+                )
+              ]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ])
+      ]),
+      vue.createCommentVNode(" 总计 "),
+      vue.createElementVNode("view", { class: "total-section" }, [
+        vue.createElementVNode("view", { class: "total-line" }, [
+          vue.createElementVNode("text", { class: "total-title" }, "Total"),
+          vue.createElementVNode(
+            "text",
+            {
+              class: "total-amount",
+              style: { "margin-left": "400rpx" }
+            },
+            vue.toDisplayString($options.totalAmount) + " ¥",
+            1
+            /* TEXT */
+          )
+        ])
+      ]),
+      vue.createCommentVNode(" 人员信息 "),
+      vue.createElementVNode("view", { class: "person-section" }, [
+        vue.createElementVNode("view", { class: "person-line" }, [
+          vue.createElementVNode("text", { class: "person-title" }, "Person"),
+          vue.createElementVNode("text", { class: "person-title" }, "Price")
+        ]),
+        vue.createElementVNode("view", { class: "person-line" }, [
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($data.showBills, (item, index2) => {
+              return vue.openBlock(), vue.createElementBlock("view", {
+                class: "table-row",
+                key: index2
+              }, [
+                vue.createElementVNode("text", { class: "person-value" }, "黄秉浩"),
+                vue.createElementVNode(
+                  "text",
+                  { class: "person-value" },
+                  vue.toDisplayString($options.totalAmount),
+                  1
+                  /* TEXT */
+                )
+              ]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ])
+      ])
+    ]);
+  }
+  const PagesSettleBillSettleBill = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-02643f65"], ["__file", "D:/uni/travel-new/pages/settleBill/settleBill.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
   __definePage("pages/PayBill/index", PagesPayBillIndex);
   __definePage("pages/sql/sql", PagesSqlSql);
   __definePage("pages/home/index", PagesHomeIndex);
+  __definePage("pages/settleBill/settleBill", PagesSettleBillSettleBill);
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");

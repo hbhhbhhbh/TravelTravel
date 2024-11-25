@@ -35,9 +35,9 @@
 		},
 
 		{
-			"path": "pages/showPer/showPer",
+			"path": "pages/settleBill/settleBill",
 			"style": {
-				"navigationBarTitleText": "当前人员"
+				"navigationBarTitleText": "结算"
 			}
 		}
 	],

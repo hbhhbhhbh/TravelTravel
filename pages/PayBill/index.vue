@@ -363,10 +363,19 @@
 				this.newProjectName = ""; // 清空输入框
 				this.showModaleditPer = false;
 			},
+
+			//结算页面，开始生成账单
 			handleSettle() {
 				uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
 				console.log('当前项目的结算数据:', this.currentItems);
+				console.log("存入的project ", uni.getStorageSync(STORAGE_KEYS.nowproject));
+				uni.navigateTo({
+					url: "/pages/settleBill/settleBill"
+				})
 			},
+
+
+
 			//编辑项目：生成弹窗，里面可以编辑也可以删除
 			editProject() {
 				this.showModaledit = true;

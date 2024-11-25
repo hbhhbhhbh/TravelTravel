@@ -1,42 +1,68 @@
 <template>
-	<view class="container">
-		<!-- 列表 -->
-		<up-search placeholder="输入搜索名字" v-model="keyword" :clearabled="true" :show-action="true" actionText="搜索"
-			@search="handleSearch" @custom="handleSearch">
+	<view class="paybill-container">
+		<!-- 标题 -->
+		<view class="header">
+			<text class="title">PayBill</text>
+			<text class="subtitle"></text>
+			<view class="close-button" @click="closeModal">×</view>
+		</view>
 
-		</up-search>
+		<!-- 可插入图片区域 -->
+		<button v-if="imageSrc.length<=0" type="primary" @click="chooseImage">可选择上传图片</button>
+		<image @click="chooseImage" v-for="item in imageSrc" :src="item" class="image-placeholder">
+		</image>
+		<!-- 单号和日期 -->
+		<view class="info">
+			<view class="info-line">
+				<text>NO:</text>
+				<text>00001</text>
+			</view>
+			<view class="info-line">
+				<text>Date:</text>
+				<!-- <uni-datetime-picker style="margin-left:300rpx;" type="date" :clear-icon="false" v-model="single"
+					@maskClick="maskClick" /> -->
+				<view>{{Date}}</view>
+			</view>
+		</view>
 
-		<up-list @scrolltolower=" scrolltolower">
-			<up-list-item v-for="(item, index) in indexList" :key="index" class="items">
-				<up-cell :title=item.name>
-				</up-cell>
-				<image src="../../static/GoodItem/delete.png" style="height: 30rpx;width:30rpx ;margin-right: 30rpx;"
-					@click="showDeleteModal(index)">
-				</image>
-			</up-list-item>
-		</up-list>
-
-		<!-- 蓝色添加按钮 -->
-		<button class="add-button" @click="showAddModal">+</button>
-		<view v-if="showModal" class="modal-overlay">
-			<view class="modal-content">
-				<view class="modal-header">添加用户</view>
-				<view class="modal-body">
-					<input class="input" type="text" placeholder="请输入用户名称" v-model="newUserName" />
-				</view>
-				<view class="modal-footer">
-					<button class="btn" @click="addUserToDB">确认</button>
-					<button class="btn" @click="closeModal">取消</button>
+		<!-- 商品列表 -->
+		<view class="table">
+			<view class="table-header">
+				<text class="table-cell">NO</text>
+				<text class="table-cell">Item</text>
+				<text class="table-cell">QTY</text>
+				<text class="table-cell">Price</text>
+				<text class="table-cell">Total</text>
+			</view>
+			<view class="table-body">
+				<view class="table-row" v-for="(item, index) in showBills" :key="index">
+					<text class="table-cell">{{ index + 1 }}</text>
+					<text class="table-cell">{{ item.name }}</text>
+					<text class="table-cell">{{ item.cnt }}</text>
+					<text class="table-cell">{{ item.price.toFixed(1) }}</text>
+					<text class="table-cell">{{ item.total }}</text>
 				</view>
 			</view>
 		</view>
-		<!-- 提示是否删除user -->
-		<view v-if="showModaldelete" class="modal-overlay">
-			<view class="modal-content">
-				<view class="modal-header">确认删除{{nowDeleteUser}}？</view>
-				<view class="modal-footer">
-					<button class="btn" @click="deleteUser(nowDeleteUser)">确认</button>
-					<button class="btn" @click="closeDeleteModal">取消</button>
+
+		<!-- 总计 -->
+		<view class="total-section">
+			<view class="total-line">
+				<text class="total-title">Total</text>
+				<text class="total-amount" style="margin-left:400rpx;">{{ totalAmount }} ¥</text>
+			</view>
+		</view>
+
+		<!-- 人员信息 -->
+		<view class="person-section">
+			<view class="person-line">
+				<text class="person-title">Person</text>
+				<text class="person-title">Price</text>
+			</view>
+			<view class="person-line">
+				<view class="table-row" v-for="(item, index) in showBills" :key="index">
+					<text class="person-value">黄秉浩</text>
+					<text class="person-value">{{ totalAmount }}</text>
 				</view>
 			</view>
 		</view>
@@ -45,206 +71,242 @@
 
 <script>
 	import {
-		ref
-	} from 'vue';
-	import util from "@/common/util/operateSqlite.js";
-	const keyword = ref('');
+		STORAGE_KEYS
+	} from '../../utils/key';
+	import {
+		pathToBase64
+	} from '@/js_sdk/mmmm-image-tools/index.js'
+	import settleBill from '@/common/util/settleBill.js';
 	export default {
-
 		data() {
 			return {
-				keyword,
-				indexList: [],
-				showModal: false, // 控制模态框显示
-				newUserName: "", // 新用户名称
-				showModaldelete: false, //控制删除确认弹窗
-				nowDeleteUser: ""
-			}
+				currentDate: new Date().toISOString().slice(0, 10), // 当前日期
+				items: [{
+					name: "臭豆腐",
+					qty: 1,
+					price: 15.0
+				}],
+				single: "",
+				imageSrc: [], // 存储图片路径
+				nowBills: [],
+				showBills: [],
+				userPriceMap: new Map(),
+			};
 		},
-		methods: {
-			async deleteUser(name) {
-				this.closeDeleteModal();
-				console.log("要删除的名字" + name);
-				try {
-					// 调用 selectInformationType，传入表名和查询条件
-					const result = await util.deleteInformationType("user", "name", name);
-					console.log("用户" + name + "删除成功：");
-					this.handleSearch();
-				} catch (error) {
-					console.error("加载用户失败：", error);
-					uni.showToast({
-						title: "加载用户失败",
-						icon: "none",
-					});
-				}
+		computed: {
+			totalAmount() {
+				return this.nowBills.reduce((sum, item) => sum + item.price, 0).toFixed(1);
 			},
-			closeDeleteModal() {
-				// 关闭模态框
-				this.showModaldelete = false;
-				this.nowDeleteUser = ""; // 清空输入框
-			},
-			showDeleteModal(index) {
-				// 显示添加用户模态框
-				this.showModaldelete = true;
-				this.nowDeleteUser = this.indexList[index].name;
-			},
-			handleSearch() {
+			Date() {
+				const today = new Date();
 
-				this.performSearch(this.keyword);
-			},
-			async performSearch(keyword) {
-				try {
-					var result;
-					// 调用 selectInformationType，传入表名和查询条件
-					if (keyword == "") {
-						this.loadUsers();
-						return;
-					} else {
-						console.log("按条件搜索： " +
-							keyword);
-						result = await util.selectInformationType("user", "name", '"' + keyword + '%"');
-						console.log("result: ", result);
-					}
-					console.log("用户列表加载成功：", result);
-					this.indexList = result; // 将查询结果赋值给 items，用于更新页面
-				} catch (error) {
-					console.error("加载用户失败：", error);
-					uni.showToast({
-						title: "加载用户失败",
-						icon: "none",
-					});
-				}
-			},
-			async loadUsers() {
-				try {
-					// 调用 selectInformationType，传入表名和查询条件
-					const result = await util.selectInformationType("user");
-					console.log("用户列表加载成功：", result);
-					this.indexList = result; // 将查询结果赋值给 items，用于更新页面
-				} catch (error) {
-					console.error("加载用户失败：", error);
-					uni.showToast({
-						title: "加载用户失败",
-						icon: "none",
-					});
-				}
-			},
-			showAddModal() {
-				// 显示添加用户模态框
-				this.showModal = true;
-			},
-			closeModal() {
-				// 关闭模态框
-				this.showModal = false;
-				this.newUserName = ""; // 清空输入框
-			},
-			scrolltolower() {
-				this.loadmore()
-			},
-			loadmore() {
-				for (let i = 0; i < 30; i++) {
-					this.indexList.push({
-						url: this.urls[uni.$u.random(0, this.urls.length - 1)]
-					})
-				}
-			},
-			async addUserToDB() {
-				if (!this.newUserName.trim()) {
-					uni.showToast({
-						title: "名称不能为空",
-						icon: "none"
-					});
-					return;
-				}
-				const obj = {
-					id: 1,
-					name: this.newUserName,
-				};
-				try {
-					await util.addUser(obj); // 插入新用户
-					uni.showToast({
-						title: "用户添加成功",
-						icon: "success"
-					});
-					this.closeModal(); // 关闭模态框
-					this.loadUsers();
-				} catch (error) {
-					console.error("添加用户失败：", error);
-					uni.showToast({
-						title: "用户添加失败",
-						icon: "none"
-					});
-				}
+				const formattedDate = today.toLocaleDateString('zh-CN'); // 中文格式
+				console.log(formattedDate); // 输出类似：2024/11/25
+				return formattedDate;
 			}
 		},
 		mounted() {
-			util.openSqlite();
-			this.loadUsers();
-		}
-	}
+			this.load();
+		},
+		methods: {
+			async load() {
+				this.nowBills = await uni.getStorageSync(STORAGE_KEYS.CURRENTITEMS);
+				console.log("初始化project:", this.nowBills);
+				const result = this.nowBills.map((item, index) => ({
+					index: index,
+					name: item.name,
+					cnt: item.cnt,
+					price: item.price,
+					total: item.price
+				}));
+				this.showBills = result;
+				console.log(this.showBills);
+				this.computePerPrice();
+			},
+			async computePerPrice() {
+
+				for (const obj of this.nowBills) {
+					try {
+						const result = await settleBill.selectBillUser("BillUser", obj.id);
+
+
+						result.forEach(item => {
+							const {
+								userid,
+								price
+							} = item;
+							console.log(item.userid);
+							if (this.userPriceMap.has(item.userid)) {
+								// 如果 Map 中已有该 userid，累加价格
+								this.userPriceMap.set(item.userid, this.userPriceMap.get(item.userid) + item
+									.price / result.length);
+							} else {
+								// 如果 Map 中没有该 userid，初始化为当前价格
+								this.userPriceMap.set(item.userid, item.price / result.length);
+							}
+						});
+						console.log(result);
+					} catch (error) {
+						console.error("Error fetching bill user:", error);
+					}
+				}
+				console.log(this.userPriceMap.get(1));
+			},
+			closeModal() {
+				// 模态框关闭逻辑
+				console.log("关闭模态框");
+			},
+			chooseImage() {
+				// 打开相册选择图片
+				uni.chooseImage({
+					count: 1, // 限制只能选择一张图片
+					sourceType: ["album"], // 仅允许从相册选择
+					success: (res) => {
+						console.log("图片路径:", res.tempFilePaths[0]); // 调试输出图片路径
+						const filePath = res.tempFilePaths[0];
+						// 针对不同平台处理路径
+						this.imageSrc = [];
+						this.imageSrc.push(filePath.startsWith("file://") ? filePath :
+							`file://${filePath}`); // 非 H5 平台需要加前缀
+
+					},
+					fail: (err) => {
+						console.error("选择图片失败:", err);
+					},
+				});
+				console.log(this.imageSrc);
+			},
+			previewImg(current) {
+				uni.previewImage({
+					current: 'current',
+					urls: this.imageSrc,
+					indicator: none
+				})
+			}
+
+
+
+		},
+	};
 </script>
 
 
-<style scoped>
-	@import "@/pages/home/inputbox.css";
 
-	.container {
-		display: flex;
-		flex-direction: column;
-		height: 100vh;
-		/* 占满整个屏幕 */
-		background-color: #f5f5f5;
+<style scoped>
+	.paybill-container {
+		background-color: #fff;
+		padding: 20px;
+		border-radius: 8px;
+		font-family: Arial, sans-serif;
+	}
+
+	.header {
+		text-align: center;
 		position: relative;
 	}
 
-
-
-	.list-container {
-		flex: 1;
-		/* 占满剩余空间 */
-		padding: 10px;
-		overflow-y: auto;
-		/* 垂直滚动 */
+	.title {
+		font-size: 50px;
+		font-weight: bold;
 	}
 
-	.list-item {
-		height: 50rpx;
-		border-color: black;
-		background-color: white;
-
-		font-size: 14px;
+	.subtitle {
+		font-size: 20px;
+		margin-top: 5px;
 	}
 
-	.add-button {
-		position: fixed;
-		/* 固定位置 */
-		bottom: 20px;
-		/* 距离底部 20px */
-		right: 20px;
-		/* 距离右侧 20px */
-		width: 60px;
-		height: 60px;
-		background-color: #007aff;
-		border: none;
-		border-radius: 50%;
-		color: white;
-		font-size: 28px;
-		text-align: center;
-		line-height: 60px;
-		/* 垂直居中 */
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+	.close-button {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		font-size: 30px;
 		cursor: pointer;
-		z-index: 1000;
-		/* 保证位于其他内容上方 */
 	}
 
-	.add-button:active {
-		background-color: #005bb5;
-		/* 点击时变暗 */
+	.placeholder-image {
+		width: 100%;
+		/* 确保图片占满父容器 */
+		height: auto;
+		/* 按比例缩放 */
+		max-height: 600px;
+		/* 限制图片最大高度 */
+		border-radius: 8px;
+		object-fit: cover;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		/* 确保图片按比例填充容器 */
 	}
 
-	.items {
+
+	.image-placeholder {
+		background-color: white;
+		text-align: center;
+		padding: 20px;
+		margin: 20px 0;
+		border-radius: 8px;
+		width: 90%;
+		height: 200rpx;
+	}
+
+	.info {
+		margin: 20px 0;
+		font-size: 18px;
+	}
+
+	.info-line {
+		font-size: 30rpx;
 		display: flex;
 		justify-content: space-between;
+	}
+
+	.table {
+		border-top: 1px dashed #000;
+		border-bottom: 1px dashed #000;
+		margin: 20px 0;
+	}
+
+	.table-header,
+	.table-row {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.table-cell {
+		flex: 1;
+		text-align: center;
+		padding: 5px;
+		font-size: 16px;
+	}
+
+	.total-section {
+		display: flex;
+		justify-content: space-between;
+		font-size: 20px;
+		font-weight: bold;
+		margin: 20px 0;
+	}
+
+	.total-line {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.person-section {
+		margin-top: 20px;
+	}
+
+	.person-line {
+		display: flex;
+		justify-content: space-between;
+		font-size: 18px;
+	}
+
+	.person-title {
+		font-weight: bold;
+	}
+
+	.person-value {
+		text-align: right;
 	}
 </style>

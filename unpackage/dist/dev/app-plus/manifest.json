@@ -18,6 +18,7 @@
   },
   "permissions": {
     "SQLite": {},
+    "Camera": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }
