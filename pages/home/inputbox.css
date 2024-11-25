@@ -1,18 +1,25 @@
 .add-button {
 	position: fixed;
-	bottom: 20px;
-	right: 20px;
-	width: 60px;
-	height: 60px;
+	bottom: 40rpx;
+	/* 转换为 rpx */
+	right: 40rpx;
+	/* 转换为 rpx */
+	width: 120rpx;
+	/* 转换为 rpx */
+	height: 120rpx;
+	/* 转换为 rpx */
 	background-color: #007aff;
 	border: none;
 	border-radius: 50%;
+	/* 保持为圆形 */
 	color: white;
-	font-size: 28px;
+	font-size: 56rpx;
+	/* 转换为 rpx */
 	text-align: center;
-	line-height: 60px;
-	/* 垂直居中 */
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+	line-height: 120rpx;
+	/* 转换为 rpx，垂直居中 */
+	box-shadow: 0 8rpx 12rpx rgba(0, 0, 0, 0.2);
+	/* 转换为 rpx */
 	cursor: pointer;
 	z-index: 1000;
 	/* 保证位于其他内容上方 */
@@ -39,26 +46,37 @@
 .modal-content {
 	width: 80%;
 	background-color: #fff;
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+	padding: 40rpx;
+	/* 转换为 rpx */
+	border-radius: 20rpx;
+	/* 转换为 rpx */
+	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
+	/* 转换为 rpx */
 }
 
 .modal-header {
-	font-size: 18px;
+	font-size: 36rpx;
+	/* 转换为 rpx */
 	font-weight: bold;
-	margin-bottom: 15px;
+	margin-bottom: 30rpx;
+	/* 转换为 rpx */
 }
 
 .modal-body {
-	margin-bottom: 15px;
+	margin-bottom: 30rpx;
+	/* 转换为 rpx */
 }
 
 .input {
-	width: 100%;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+	width: 90%;
+	padding: 20rpx;
+	/* 转换为 rpx */
+	border: 1rpx solid #ccc;
+	/* 转换为 rpx */
+	border-radius: 10rpx;
+	/* 转换为 rpx */
+	font-size: 28rpx;
+	/* 输入框字体大小 */
 }
 
 .modal-footer {
@@ -67,13 +85,16 @@
 }
 
 .btn {
-	padding: 10px 20px;
+	padding: 20rpx 40rpx;
+	/* 转换为 rpx */
 	border: none;
-	border-radius: 5px;
+	border-radius: 10rpx;
+	/* 转换为 rpx */
 	cursor: pointer;
 	background-color: #007aff;
 	color: white;
-	font-size: 14px;
+	font-size: 28rpx;
+	/* 转换为 rpx */
 }
 
 .btn:active {

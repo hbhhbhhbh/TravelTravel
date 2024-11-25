@@ -6,7 +6,8 @@
 			<picker v-if="projects.length > 0" :value="selectedProjectIndex" :range="projectNames"
 				@change="handleProjectChange">
 				<view class="picker">
-					当前项目：{{ projects[selectedProjectIndex].projectName }}
+					当前项目：{{ projects[selectedProjectIndex]?.projectName || ' ss' }}
+
 				</view>
 			</picker>
 
@@ -106,6 +107,9 @@
 	import Bill from '@/common/util/Bill.js';
 	import util from '@/common/util/operateSqlite.js';
 	import BillUser from '@/common/util/BillUser.js';
+	import {
+		STORAGE_KEYS
+	} from '@/utils/key.js';
 	export default {
 		components: {
 			GoodItem
@@ -140,12 +144,18 @@
 		},
 		computed: {
 			currentItems() {
-				const selectedProject = this.projects[this.selectedProjectIndex].projectName;
-				console.log("当前project: " + selectedProject);
-				//this.updateprojectBill();
+				if (!this.projects.length) {
+					console.warn("当前项目列表为空");
+					return [];
+				}
+				const selectedProject = this.projects[this.selectedProjectIndex]?.projectName || "默认项目";
+				console.log("当前project:" + selectedProject);
 				console.log("看看账单：" + this.projectItems[selectedProject]);
+				uni.setStorageSync(STORAGE_KEYS.CURRENTITEMS, this.projectItems[selectedProject] || []);
 				return this.projectItems[selectedProject] || [];
+
 			},
+
 			totalPrice() {
 				// 计算当前项目的总价，确保数据类型为数字
 				return this.currentItems.reduce((sum, item) => {
@@ -153,47 +163,69 @@
 				}, 0);
 			},
 		},
-		created() {
-			util.openSqlite();
-			this.selectProjects();
 
-		},
+
 		mounted() {
-			this.selectProjects()
-				.then(() => this.updateprojectBill()).then(() => this.selectAllPer());
+			this.reloadData();
 
 		},
 		methods: {
+			async reloadData() {
+				try {
+					console.log("重新加载数据...");
+					await this.selectProjects(); // 加载项目列表
+					await this.updateprojectBill(); // 加载账单数据
+					await this.selectAllPer(); // 加载人员数据
+					console.log("数据重新加载完成");
+				} catch (error) {
+					console.error("重新加载数据时出错：", error);
+				}
+			},
 			//选中人员
 			selectionChange(selectedRows) {
-				console.log("选中的行：", selectedRows);
+				console.log("选中的行", selectedRows);
 				const selectedRow = selectedRows.detail.index || [];
 
 				this.nowBillPerson = selectedRow; // 更新选中内容
 			},
 
 			setDefaultSelection() {
-				// 根据 selectedPersons 自动勾选行
 				const selectedUserIds = this.nowBillPerson.map(person => person.userid);
 				console.log("selectedUserIds ", selectedUserIds);
-				// 找到需要勾选的用户
-				const matchedPersons = this.AllPerson.filter(person => selectedUserIds.includes(person.userid));
-				console.log("matchedPersons ", matchedPersons);
-				// 设置表格默认勾选
-				matchedPersons.forEach(person => {
-					this.$refs.tableRef.toggleRowSelection(person, true); // 通过表格的 ref 设置勾选
-				});
+
+				// 找到需要勾选的用户及其索引
+				const matchedDetails = this.AllPerson
+					.map((person, index) => ({
+						person,
+						index
+					})) // 包装每个用户和索引
+					.filter(({
+						person
+					}) => selectedUserIds.includes(person.id)); // 筛选需要勾选的用户
+
+				console.log("matchedDetails ", matchedDetails);
+
+				// 构造 detail 对象
+
+				const index = matchedDetails.map(({
+					index
+				}) => index);
+
+				console.log("detail ", index);
+				//传入下标数组就行了
+				this.$refs.tableRef.toggleRowSelection(index, true); // 通过表格的 ref 设置勾选
+
 			},
 			//编辑账单人员
 			async selectAllPer() {
 				const result = await util.selectInformationType("user");
 				console.log("找出的AllPerson", result);
 				this.AllPerson = result;
-				uni.setStorageSync("AllPerson", result);
+				uni.setStorageSync(STORAGE_KEYS.AllPerson, result);
 			},
 			editPer(index) {
 				this.showModaleditPer = true;
-				this.selectBillUser(index).then(() => this.setDefaultSelection());
+				this.selectAllPer().then(() => this.selectBillUser(index).then(() => this.setDefaultSelection()));
 			},
 			async selectBillUser(index) {
 				console.log(this.currentItems[index]);
@@ -202,6 +234,7 @@
 				this.nowBillId = this.currentItems[index].id;
 				this.nowBillPerson = result;
 				console.log("nowBillPerson: ", result);
+
 			},
 			updateBillUserToDB() {
 				console.log(this.nowBillPerson);
@@ -218,16 +251,19 @@
 						billid: this.nowBillId, // 当前账单 id
 					};
 				});
-
+				BillUser.deleteInformationType("BillUser", "billid", this.nowBillId);
 				console.log("选中的用户与账单合成对象:", result1);
 				result1.forEach(obj => {
 					BillUser.addUser(obj);
-				})
+				});
+				this.closeModal();
 			},
 			// 处理项目
 			async selectProjects() {
 				const result = await project.selectInformationType("project");
-				this.projects = result;
+				if (result.length > 0)
+					this.projects = result;
+				console.log("SELECTPROJECTS: ", this.projects);
 				this.projectNames = this.projects.map(
 					project => `${project.id}: ${project.projectName}`
 				);
@@ -237,8 +273,8 @@
 			handleProjectChange(e) {
 				console.log('e' + e);
 				this.selectedProjectIndex = parseInt(e.detail.value, 10);
-				uni.setStorageSync("nowproject", this.projects[this.selectedProjectIndex]);
-				console.log("测试本地缓存", uni.getStorageSync("nowproject"));
+				uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
+				console.log("测试本地缓存", uni.getStorageSync(STORAGE_KEYS.nowproject));
 				console.log('切换到项目:', this.projects[this.selectedProjectIndex].projectName);
 				this.updateprojectBill();
 			},
@@ -249,6 +285,7 @@
 				// this.projectItems[selectedProject].splice(index, 1);
 				Bill.deleteInformationType("Bill", "id", this.currentItems[index].id).then(() => this
 					.updateprojectBill());
+				BillUser.deleteInformationType("BillUser", "Billid", this.currentItems[index].id);
 			},
 			handleUpdate(index, updatedItem) {
 				console.log('更新索引：', index, '更新数据：', updatedItem);
@@ -342,6 +379,9 @@
 				const selectedProjectId = this.projects[this.selectedProjectIndex].id;
 				const selectedProject = this.projects[this.selectedProjectIndex].projectName;
 				project.deleteInformationType("project", "id", selectedProjectId);
+				this.currentItems.forEach(obj => {
+					BillUser.deleteInformationType("BillUser", "billid", obj.id);
+				})
 				Bill.deleteInformationType("Bill", "projectId", selectedProjectId);
 				this.selectProjects().then(() => this.updateprojectBill());
 				this.closeModal();

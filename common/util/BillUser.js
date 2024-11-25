@@ -137,9 +137,41 @@ function addUser(obj) {
 	}
 }
 
+function clear(name, sol, qq, ww, ee) {
+	if (name !== undefined) {
+		//listId为表名,后面两个是列表名，检索用的
+		if (ww !== undefined) {
+			//两个检索条件
+			var sql = 'delete from ' + name + ' where ' + sol + '="' + qq + '" and ' + ww + '=' + ee + '';
+		} else if (sol !== undefined) {
+			//一个检索条件
+			var sql = 'delete from ' + name + ' where ' + sol + '="' + qq + '"';
+		} else {
+			var sql = 'delete  from ' + name + '';
+		}
+		console.log(sql);
+		return new Promise((resolve, reject) => {
+			plus.sqlite.executeSql({
+				name: 'travel',
+				sql: sql,
+				success(e) {
+					resolve(e);
+				},
+				fail(e) {
+					reject(e);
+				}
+			})
+		})
+	} else {
+		return new Promise((resolve, reject) => {
+			reject("错误删除")
+		});
+	}
+}
 export default {
 	selectInformationType,
 	deleteInformationType,
 	modifyInformation,
 	addUser,
+	clear
 }

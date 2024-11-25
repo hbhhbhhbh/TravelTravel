@@ -84,20 +84,28 @@ function CreateProjectSQL() {
 //创建项目账单-用户表
 function CreateBillUserSQL() {
 	return new Promise((resolve, reject) => {
-		//创建表格在executeSql方法里写
+		// 创建表格，在 executeSql 方法里写
 		plus.sqlite.executeSql({
 			name: 'travel',
-			//表格创建或者打开，后面为表格结构
-			sql: 'create table if not exists BillUser("id" INTEGER PRIMARY KEY ,"userid" INTEGER,"Billid" INTEGER )',
+			// 表格创建或者打开，后面为表格结构
+			sql: `
+				CREATE TABLE IF NOT EXISTS BillUser (
+					id INTEGER PRIMARY KEY,
+					userid INTEGER,
+					Billid INTEGER,
+					UNIQUE(userid, Billid) -- 添加唯一约束
+				)
+			`,
 			success(e) {
 				resolve(e);
 			},
 			fail(e) {
 				reject(e);
 			}
-		})
-	})
+		});
+	});
 }
+
 //创建用户表
 function CreateUserSQL() {
 	return new Promise((resolve, reject) => {
@@ -319,6 +327,23 @@ function pullSQL(id, num) {
 		})
 	})
 }
+
+function dropTable() {
+	return new Promise((resolve, reject) => {
+		plus.sqlite.executeSql({
+			name: 'travel',
+			sql: 'DROP TABLE IF EXISTS BillUser', // 删除 BillUser 表
+			success(e) {
+				console.log('表 BillUser 删除成功');
+				resolve(e);
+			},
+			fail(e) {
+				console.error('表删除失败:', e);
+				reject(e);
+			},
+		});
+	});
+}
 //把这些方法导出去
 export default {
 	CreateProjectSQL,
@@ -336,4 +361,5 @@ export default {
 	modifyInformation,
 	updateTableStructure,
 	deleteTable,
+	dropTable
 }

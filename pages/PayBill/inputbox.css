@@ -12,28 +12,38 @@
 }
 
 .modal-content {
-	width: 80%;
+	width: 600rpx;
+	/* 80% 的宽度可以用 rpx 表示 */
 	background-color: #fff;
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+	padding: 40rpx;
+	/* 改为适当的 rpx 值 */
+	border-radius: 20rpx;
+	/* 圆角调整为适合小程序的 rpx */
+	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.2);
+	/* 阴影也调整为 rpx */
 }
 
 .modal-header {
-	font-size: 18px;
+	font-size: 36rpx;
+	/* 调整标题字体大小 */
 	font-weight: bold;
-	margin-bottom: 15px;
+	margin-bottom: 30rpx;
+	/* 间距调整为适当的 rpx 值 */
 }
 
 .modal-body {
-	margin-bottom: 15px;
+	margin-bottom: 30rpx;
 }
 
 .input {
-	width: 100%;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+	width: 90%;
+	padding: 20rpx;
+	border: 1rpx solid #ccc;
+	/* 边框宽度改为 rpx */
+	border-radius: 10rpx;
+	/* 边框圆角调整 */
+	font-size: 28rpx;
+	/* 输入框字体大小 */
 }
 
 .modal-footer {
@@ -42,13 +52,16 @@
 }
 
 .btn {
-	padding: 10px 20px;
+	padding: 20rpx 40rpx;
+	/* 调整按钮内边距 */
 	border: none;
-	border-radius: 5px;
+	border-radius: 10rpx;
+	/* 按钮圆角调整 */
 	cursor: pointer;
 	background-color: #007aff;
 	color: white;
-	font-size: 14px;
+	font-size: 28rpx;
+	/* 按钮字体大小 */
 }
 
 .btn:active {

@@ -128,6 +128,12 @@
           "text": "sql-test",
           "iconPath": "/static/paylist.png",
           "selectedIconPath": "/static/paylistSelected.png"
+        },
+        {
+          "pagePath": "pages/home/index",
+          "text": "人员",
+          "iconPath": "/static/per.png",
+          "selectedIconPath": "/static/perselected.png"
         }
       ],
       "backgroundColor": "#ffffff",

@@ -1,7 +1,7 @@
 <template>
 	<!-- 卡片 -->
-	<view class="Item-container">
-		<view class="card">
+	<view class="Item-container" :style="{ height: contentHeight }">
+		<view class=" card">
 			<view class="top-bar">
 				<view style="font-size: 25rpx; width: 200rpx">名称</view>
 				<view style="font-size: 25rpx; width: 200rpx">数量</view>
@@ -16,13 +16,15 @@
 			</view>
 
 			<uni-collapse>
-				<uni-collapse-item class="showPer" title="查看人员">
+				<uni-collapse-item class="showPer" title="查看人员" @click="toggleCollapse">
 					<view class="content">
-						<uni-list>
-							<uni-list-item title="列表文字"></uni-list-item>
-							<uni-list-item :disabled="true" title="列表禁用状态"></uni-list-item>
-						</uni-list>
+						<view v-if="loading">加载中...</view>
+						<view v-else-if="Persons.length === 0">暂无人员</view>
+						<view v-for="(person, index) in Persons" :key="index" class="list-item">
+							{{ person.name }}
+						</view>
 					</view>
+
 				</uni-collapse-item>
 			</uni-collapse>
 
@@ -59,6 +61,11 @@
 </template>
 
 <script>
+	import BillUser from '@/common/util/BillUser.js';
+	import Util from '@/common/util/operateSqlite.js';
+	import {
+		STORAGE_KEYS
+	} from '../../utils/key';
 	export default {
 		name: 'GoodItem',
 		props: {
@@ -74,13 +81,20 @@
 		inheritAttrs: false,
 		data() {
 			return {
+				isExpanded: false,
+				loading: true,
+				Persons: [],
+				update: false,
 				value: ['0'],
 				showModal: false, // 控制弹窗显示
-
+				contentHeight: 'auto', // 动态内容高度
 				formData: {
 					...this.showData,
 				}
 			};
+		},
+		mounted() {
+			this.selectBillUser();
 		},
 		methods: {
 			showPer() {
@@ -102,9 +116,87 @@
 				this.$emit('update-item', this.index, {
 					...this.formData
 				});
+				this.update = true;
 				// 隐藏弹窗
 				this.toggleModal();
 
+
+			},
+			async toggleCollapse(isExpanded) {
+
+				this.update = false;
+				this.isExpanded = !this.isExpanded;
+				if (this.isExpanded) {
+					// 展开时加载数据
+
+					await this.selectBillUser();
+					const query = uni.createSelectorQuery().in(this);
+
+					const query1 = uni.createSelectorQuery().in(this);
+					query1
+						.select(".Item-container")
+						.boundingClientRect((itemData) => {
+							if (!itemData) return;
+							// 转换为 rpx 并设置高度
+							console.log("Item-container: " + itemData.height);
+
+							this.contentHeight =
+								`${this.pxToRpx(this.Persons.length*15 + itemData.height + 20)}rpx`;
+							console.log("调整后的高度:", this.contentHeight);
+
+
+						})
+						.exec();
+
+
+
+				} else {
+					// 收起时重置高度
+					this.contentHeight = "auto";
+				}
+			},
+			pxToRpx(px) {
+				const screenWidth = uni.getSystemInfoSync().screenWidth;
+				return (750 / screenWidth) * px;
+			},
+			async selectBillUser() {
+				this.loading = true;
+				const currentItems = uni.getStorageSync(STORAGE_KEYS.CURRENTITEMS);
+				console.log("GOODITEM-SELECTBILLUSER-START");
+				console.log(currentItems[this.index]);
+
+				// 查询 BillUser 表的数据
+				const result = await BillUser.selectInformationType("BillUser", "Billid", currentItems[this
+					.index].id);
+				console.log("nowBillPerson: ", result);
+
+				this.Persons = []; // 初始化存储结果的数组
+
+				// 使用 for...of 循环处理异步操作
+				for (const obj of result) {
+					try {
+						// 查询 user 表中的记录
+						const result1 = await Util.selectInformationType(
+							'user', // 表名
+							'id', // 查询字段
+							`'${obj.userid}'` // 查询值，注意加上单引号
+						);
+
+						console.log("result: ", result1);
+
+						// 将查询结果添加到数组中
+						this.Persons.push(...result1); // 展开 result 数组并添加
+					} catch (error) {
+						console.error("查询用户失败:", error);
+					} finally {
+						this.loading = false;
+					}
+				}
+				this.loading = false;
+
+				console.log("Persons: ", this.Persons);
+				console.log("loading ", this.loading);
+				console.log("GOODITEM-SELECTBILLUSER-END");
 
 			},
 			editPer() {
@@ -124,17 +216,21 @@
 	@import '@/components/GoodItem/box.css';
 
 	.Item-container {
-
 		width: 600rpx;
-		height: 200rpx;
+		height: auto;
 		background-color: RGB(250, 249, 240);
 		border-radius: 5rpx;
 		box-shadow: 5rpx 5rpx 9rpx rgba(0, 0, 0, 0.5);
 		margin: 20rpx;
+		overflow: visible;
 	}
 
 	.card {
 		padding: 10rpx;
+	}
+
+	.list-item {
+		height: 40rpx;
 	}
 
 	.top-bar {
@@ -147,9 +243,6 @@
 		width: 40rpx;
 		height: 80%;
 		margin-right: 20rpx;
-	}
-
-	.set-info:hover {
 		cursor: pointer;
 	}
 
@@ -165,12 +258,17 @@
 		text-align: center;
 		font-size: 20rpx;
 		border: 1px solid #000000;
-		height: 60rpx;
+		height: 105rpx;
 		border-radius: 8rpx;
+		overflow: visible;
 	}
 
 	.content {
+		height: auto;
 		border: 1px solid #000000;
-		height: 100rpx;
+		transition: height 0.3s ease;
+		overflow: visible;
+		background-color: #fff;
+		z-index: 510;
 	}
 </style>

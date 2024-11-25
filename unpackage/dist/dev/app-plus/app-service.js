@@ -41,6 +41,794 @@ if (uni.restoreGlobal) {
   function resolveEasycom(component, easycom) {
     return typeof component === "string" ? easycom : component;
   }
+  function selectInformationType$3(name, aa, bb, cc, dd) {
+    if (name !== void 0) {
+      if (aa !== void 0 && cc !== void 0) {
+        var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd + " order by id desc";
+      }
+      if (aa !== void 0 && cc == void 0) {
+        var sql = "select * from " + name + " where " + aa + "=" + bb + " order by id desc";
+      }
+      if (aa == void 0) {
+        var sql = "select * from " + name + " order by id desc";
+      }
+      formatAppLog("log", "at common/util/BillUser.js:21", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.selectSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误查询");
+      });
+    }
+  }
+  function deleteInformationType$3(name, sol, qq, ww, ee) {
+    if (name !== void 0) {
+      if (ww !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
+      } else if (sol !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
+      } else {
+        var sql = "delete  from " + name;
+      }
+      formatAppLog("log", "at common/util/BillUser.js:54", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.executeSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误删除");
+      });
+    }
+  }
+  function modifyInformation$3(listName, name, cont, use, sel) {
+    var sql;
+    if (use == void 0) {
+      sql = "update " + listName + " set " + name + '="' + cont + '"';
+    } else {
+      sql = "update " + listName + " set " + name + '="' + cont + '" where ' + use + '="' + sel + '"';
+    }
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        sql,
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function addUser$2(obj) {
+    if (obj !== void 0) {
+      var b = JSON.stringify(obj) == "{}";
+      if (!b) {
+        var userid = obj.userid || null;
+        var billid = obj.billid || null;
+        formatAppLog("log", "at common/util/BillUser.js:112", userid + " " + billid);
+        var sql = 'insert into BillUser(userid,Billid) values("' + userid + '","' + billid + '")';
+        formatAppLog("log", "at common/util/BillUser.js:115", sql);
+        return new Promise((resolve, reject) => {
+          plus.sqlite.executeSql({
+            name: "travel",
+            sql,
+            success(e) {
+              resolve(e);
+            },
+            fail(e) {
+              reject(e);
+            }
+          });
+        });
+      } else {
+        return new Promise((resolve, reject) => {
+          reject("错误添加");
+        });
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误添加");
+      });
+    }
+  }
+  function clear(name, sol, qq, ww, ee) {
+    if (name !== void 0) {
+      if (ww !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
+      } else if (sol !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
+      } else {
+        var sql = "delete  from " + name;
+      }
+      formatAppLog("log", "at common/util/BillUser.js:152", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.executeSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误删除");
+      });
+    }
+  }
+  const BillUser = {
+    selectInformationType: selectInformationType$3,
+    deleteInformationType: deleteInformationType$3,
+    modifyInformation: modifyInformation$3,
+    addUser: addUser$2,
+    clear
+  };
+  function openSqlite() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.openDatabase({
+        name: "travel",
+        //数据库名称
+        path: "_doc/travel.db",
+        //数据库地址，uniapp推荐以下划线为开头
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function CreateBillSQL() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        //表格创建或者打开，后面为表格结构
+        sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"billid" INTEGER,"projectId" INTEGER,"name" TEXT, "cnt" INTEGER, "price" INTEGER )',
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function updateTableStructure(tableName, columnName, columnType) {
+    return new Promise((resolve, reject) => {
+      const sql = `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${columnType}`;
+      plus.sqlite.executeSql({
+        name: "travel",
+        // 数据库名称
+        sql,
+        success(e) {
+          resolve(`表 ${tableName} 成功添加字段 ${columnName} (${columnType})`);
+        },
+        fail(e) {
+          reject(`更新表结构失败: ${JSON.stringify(e)}`);
+        }
+      });
+    });
+  }
+  function deleteTable(tableName) {
+    return new Promise((resolve, reject) => {
+      const sql = `DROP TABLE IF EXISTS ${tableName}`;
+      plus.sqlite.executeSql({
+        name: "travel",
+        // 数据库名称
+        sql,
+        success(e) {
+          resolve(`表 ${tableName} 删除成功`);
+        },
+        fail(e) {
+          reject(`删除表 ${tableName} 失败: ${JSON.stringify(e)}`);
+        }
+      });
+    });
+  }
+  function CreateProjectSQL() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        //表格创建或者打开，后面为表格结构
+        sql: 'create table if not exists project("id" INTEGER PRIMARY KEY ,"projectId" INTEGER,"projectName" TEXT )',
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function CreateBillUserSQL() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        // 表格创建或者打开，后面为表格结构
+        sql: `
+				CREATE TABLE IF NOT EXISTS BillUser (
+					id INTEGER PRIMARY KEY,
+					userid INTEGER,
+					Billid INTEGER,
+					UNIQUE(userid, Billid) -- 添加唯一约束
+				)
+			`,
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function CreateUserSQL() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        //表格创建或者打开，后面为表格结构
+        sql: 'create table if not exists user("id" INTEGER PRIMARY KEY ,"userid" INTEGER ,"name" TEXT)',
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function userInfoSQL() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "pop",
+        //表格创建或者打开，后面为表格结构
+        sql: 'create table if not exists userInfo("list" INTEGER PRIMARY KEY AUTOINCREMENT,"id" TEXT,"name" TEXT,"gender" TEXT,"avatar" TEXT)',
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function addUser$1(obj) {
+    if (obj !== void 0) {
+      var b = JSON.stringify(obj) == "{}";
+      if (!b) {
+        var id = obj.id || null;
+        var name = obj.name || null;
+        return new Promise((resolve, reject) => {
+          plus.sqlite.executeSql({
+            name: "travel",
+            sql: 'insert into user(userid,name) values("' + id + '","' + name + '")',
+            success(e) {
+              resolve(e);
+            },
+            fail(e) {
+              reject(e);
+            }
+          });
+        });
+      } else {
+        return new Promise((resolve, reject) => {
+          reject("错误添加");
+        });
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误添加");
+      });
+    }
+  }
+  function selectInformationType$2(name, aa, bb, cc, dd) {
+    if (name !== void 0) {
+      if (aa !== void 0 && cc !== void 0) {
+        var sql = "select * from " + name + " where " + aa + " like " + bb + " and " + cc + " like " + dd;
+      }
+      if (aa !== void 0 && cc == void 0) {
+        var sql = "select * from " + name + " where " + aa + " like " + bb;
+      }
+      if (aa == void 0) {
+        var sql = "select * from " + name;
+      }
+      formatAppLog("log", "at common/util/operateSqlite.js:203", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.selectSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误查询");
+      });
+    }
+  }
+  function deleteInformationType$2(name, sol, qq, ww, ee) {
+    if (name !== void 0 && sol !== void 0) {
+      if (ww !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
+      } else {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
+      }
+      formatAppLog("log", "at common/util/operateSqlite.js:236", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.executeSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误删除");
+      });
+    }
+  }
+  function modifyInformation$2(listName, name, cont, use, sel) {
+    var sql;
+    if (use == void 0) {
+      sql = "update " + listName + " set " + name + '="' + cont + '"';
+    } else {
+      sql = "update " + listName + " set " + name + '="' + cont + '" where ' + use + '="' + sel + '"';
+    }
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "pop",
+        sql,
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function closeSQL(name) {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.closeDatabase({
+        name: "pop",
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function isOpen(name, path) {
+    var ss = name || "travel";
+    var qq = path || "_doc/travel.db";
+    var open = plus.sqlite.isOpenDatabase({
+      name: ss,
+      path: qq
+    });
+    return open;
+  }
+  function pullSQL(id, num) {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.selectSql({
+        name: "pop",
+        sql: "select * from " + id + " order by list desc limit 15 offset " + num,
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function dropTable() {
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        sql: "DROP TABLE IF EXISTS BillUser",
+        // 删除 BillUser 表
+        success(e) {
+          formatAppLog("log", "at common/util/operateSqlite.js:337", "表 BillUser 删除成功");
+          resolve(e);
+        },
+        fail(e) {
+          formatAppLog("error", "at common/util/operateSqlite.js:341", "表删除失败:", e);
+          reject(e);
+        }
+      });
+    });
+  }
+  const util = {
+    CreateProjectSQL,
+    CreateUserSQL,
+    CreateBillUserSQL,
+    CreateBillSQL,
+    openSqlite,
+    userInfoSQL,
+    addUser: addUser$1,
+    selectInformationType: selectInformationType$2,
+    deleteInformationType: deleteInformationType$2,
+    pullSQL,
+    isOpen,
+    closeSQL,
+    modifyInformation: modifyInformation$2,
+    updateTableStructure,
+    deleteTable,
+    dropTable
+  };
+  function selectInformationType$1(name, aa, bb, cc, dd) {
+    if (name !== void 0) {
+      if (aa !== void 0 && cc !== void 0) {
+        var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd + " order by id desc";
+      }
+      if (aa !== void 0 && cc == void 0) {
+        var sql = "select * from " + name + " where " + aa + "=" + bb + " order by id desc";
+      }
+      if (aa == void 0) {
+        var sql = "select * from " + name + " order by id desc";
+      }
+      formatAppLog("log", "at common/util/project.js:21", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.selectSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误查询");
+      });
+    }
+  }
+  function deleteInformationType$1(name, sol, qq, ww, ee) {
+    if (name !== void 0) {
+      if (ww !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
+      } else if (sol !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
+      } else {
+        var sql = "delete  from " + name;
+      }
+      formatAppLog("log", "at common/util/project.js:54", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.executeSql({
+          name: "travel",
+          sql,
+          success(e) {
+            resolve(e);
+          },
+          fail(e) {
+            reject(e);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误删除");
+      });
+    }
+  }
+  function modifyInformation$1(listName, name, cont, use, sel) {
+    var sql;
+    if (use == void 0) {
+      sql = "update " + listName + " set " + name + '="' + cont + '"';
+    } else {
+      sql = "update " + listName + " set " + name + '="' + cont + '" where ' + use + '="' + sel + '"';
+    }
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        sql,
+        success(e) {
+          resolve(e);
+        },
+        fail(e) {
+          reject(e);
+        }
+      });
+    });
+  }
+  function addUser(obj) {
+    if (obj !== void 0) {
+      var b = JSON.stringify(obj) == "{}";
+      if (!b) {
+        var id = obj.id || null;
+        var name = obj.name || null;
+        formatAppLog("log", "at common/util/project.js:112", id + " " + name);
+        var sql = 'insert into project(projectId,projectName) values("' + id + '","' + name + '")';
+        formatAppLog("log", "at common/util/project.js:115", sql);
+        return new Promise((resolve, reject) => {
+          plus.sqlite.executeSql({
+            name: "travel",
+            sql,
+            success(e) {
+              resolve(e);
+            },
+            fail(e) {
+              reject(e);
+            }
+          });
+        });
+      } else {
+        return new Promise((resolve, reject) => {
+          reject("错误添加");
+        });
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误添加");
+      });
+    }
+  }
+  const project = {
+    selectInformationType: selectInformationType$1,
+    deleteInformationType: deleteInformationType$1,
+    modifyInformation: modifyInformation$1,
+    addUser
+  };
+  const _export_sfc = (sfc, props2) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props2) {
+      target[key] = val;
+    }
+    return target;
+  };
+  const _sfc_main$k = {
+    data() {
+      return {
+        // odb:'',
+        dbName: "travel",
+        dbPath: "_doc/travel.db",
+        dbTable: "user",
+        dbIsOpen: false,
+        chatText: {
+          id: 1,
+          fromId: "123",
+          toId: "321",
+          content: "你好!",
+          flag: 1
+        },
+        project1: {
+          id: 1,
+          name: "南京"
+        }
+      };
+    },
+    mounted() {
+      this.initializeDB();
+    },
+    onLoad() {
+    },
+    methods: {
+      async initializeDB() {
+        try {
+          await this.isopenDB();
+          await this.createBillTable();
+          await this.createBillUserTable();
+          await this.createProjectTable();
+          await this.createUserTable();
+          formatAppLog("log", "at pages/index/index.vue:57", "数据库初始化成功");
+        } catch (error2) {
+          formatAppLog("error", "at pages/index/index.vue:59", "数据库初始化失败：", error2);
+        }
+      },
+      clearBillUser() {
+        BillUser.clear("BillUser").then((result) => {
+          uni.showToast({
+            title: "数据库清除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/index/index.vue:69", "数据库清除成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "数据库清除失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/index/index.vue:77", "数据库清除失败：", error2);
+        });
+      },
+      dropTable() {
+        util.dropTable().then((result) => {
+          uni.showToast({
+            title: "数据库删除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/index/index.vue:87", "表格删除成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "数据库删除失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/index/index.vue:95", "表格删除失败：", error2);
+        });
+      },
+      isopenDB() {
+        util.openSqlite().then((result) => {
+          formatAppLog("log", "at pages/index/index.vue:105", "表格创建成功：", result);
+        }).catch((error2) => {
+          formatAppLog("error", "at pages/index/index.vue:113", "表格创建失败：", error2);
+        });
+      },
+      createBillTable() {
+        util.CreateBillSQL().then((result) => {
+          formatAppLog("log", "at pages/index/index.vue:129", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/index/index.vue:137", "表格创建失败：", error2);
+        });
+      },
+      createBillUserTable() {
+        util.CreateBillUserSQL().then((result) => {
+          formatAppLog("log", "at pages/index/index.vue:153", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/index/index.vue:161", "表格创建失败：", error2);
+        });
+      },
+      createUserTable() {
+        util.CreateUserSQL().then((result) => {
+          formatAppLog("log", "at pages/index/index.vue:177", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/index/index.vue:185", "表格创建失败：", error2);
+        });
+      },
+      createProjectTable() {
+        util.CreateProjectSQL().then((result) => {
+          formatAppLog("log", "at pages/index/index.vue:201", "Project表格成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "Project表格失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/index/index.vue:209", "Project表格失败：", error2);
+        });
+      },
+      updateTable() {
+        util.updateTableStructure("Bill", "project", "INTEGER");
+      },
+      deleteTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
+        });
+        util.deleteTable("Bill").then((result) => {
+          uni.showToast({
+            title: "Bill表格删除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/index/index.vue:229", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/index/index.vue:237", "表格创建失败：", error2);
+        });
+      },
+      addproject(id, name) {
+        const obj = this.project1;
+        project.addUser(obj).then((result) => {
+          uni.showToast({
+            title: "Project插入成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/index/index.vue:248", "Project插入成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "Project插入失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/index/index.vue:256", "Project插入失败：", error2);
+        });
+      },
+      selectproject() {
+        project.selectInformationType("project").then((result) => {
+          uni.showToast({
+            title: "Project查询成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/index/index.vue:266", "Project查询成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "Project查询失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/index/index.vue:274", "Project查询失败：", error2);
+        });
+      },
+      deleteproject() {
+        project.deleteInformationType("project").then((result) => {
+          uni.showToast({
+            title: "Project删除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/index/index.vue:284", "Project删除成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "Project删除失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/index/index.vue:292", "Project查询失败：", error2);
+        });
+      }
+    }
+  };
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "" }, [
+      vue.createCommentVNode(" <div>{{odb}}</div> "),
+      vue.createElementVNode("div")
+    ]);
+  }
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
   const fontData = [
     {
       "font_class": "arrow-down",
@@ -687,18 +1475,11 @@ if (uni.restoreGlobal) {
       "unicode": ""
     }
   ];
-  const _export_sfc = (sfc, props2) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props2) {
-      target[key] = val;
-    }
-    return target;
-  };
   const getVal = (val) => {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$n = {
+  const _sfc_main$j = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -752,7 +1533,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -767,576 +1548,8 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/uni/travel-new/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  const _sfc_main$m = {
-    name: "UniBadge",
-    emits: ["click"],
-    props: {
-      type: {
-        type: String,
-        default: "error"
-      },
-      inverted: {
-        type: Boolean,
-        default: false
-      },
-      isDot: {
-        type: Boolean,
-        default: false
-      },
-      maxNum: {
-        type: Number,
-        default: 99
-      },
-      absolute: {
-        type: String,
-        default: ""
-      },
-      offset: {
-        type: Array,
-        default() {
-          return [0, 0];
-        }
-      },
-      text: {
-        type: [String, Number],
-        default: ""
-      },
-      size: {
-        type: String,
-        default: "small"
-      },
-      customStyle: {
-        type: Object,
-        default() {
-          return {};
-        }
-      }
-    },
-    data() {
-      return {};
-    },
-    computed: {
-      width() {
-        return String(this.text).length * 8 + 12;
-      },
-      classNames() {
-        const {
-          inverted,
-          type,
-          size,
-          absolute
-        } = this;
-        return [
-          inverted ? "uni-badge--" + type + "-inverted" : "",
-          "uni-badge--" + type,
-          "uni-badge--" + size,
-          absolute ? "uni-badge--absolute" : ""
-        ].join(" ");
-      },
-      positionStyle() {
-        if (!this.absolute)
-          return {};
-        let w = this.width / 2, h = 10;
-        if (this.isDot) {
-          w = 5;
-          h = 5;
-        }
-        const x = `${-w + this.offset[0]}px`;
-        const y = `${-h + this.offset[1]}px`;
-        const whiteList = {
-          rightTop: {
-            right: x,
-            top: y
-          },
-          rightBottom: {
-            right: x,
-            bottom: y
-          },
-          leftBottom: {
-            left: x,
-            bottom: y
-          },
-          leftTop: {
-            left: x,
-            top: y
-          }
-        };
-        const match = whiteList[this.absolute];
-        return match ? match : whiteList["rightTop"];
-      },
-      dotStyle() {
-        if (!this.isDot)
-          return {};
-        return {
-          width: "10px",
-          minWidth: "0",
-          height: "10px",
-          padding: "0",
-          borderRadius: "10px"
-        };
-      },
-      displayValue() {
-        const {
-          isDot,
-          text,
-          maxNum
-        } = this;
-        return isDot ? "" : Number(text) > maxNum ? `${maxNum}+` : text;
-      }
-    },
-    methods: {
-      onClick() {
-        this.$emit("click");
-      }
-    }
-  };
-  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-badge--x" }, [
-      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
-      $props.text ? (vue.openBlock(), vue.createElementBlock(
-        "text",
-        {
-          key: 0,
-          class: vue.normalizeClass([$options.classNames, "uni-badge"]),
-          style: vue.normalizeStyle([$options.positionStyle, $props.customStyle, $options.dotStyle]),
-          onClick: _cache[0] || (_cache[0] = ($event) => $options.onClick())
-        },
-        vue.toDisplayString($options.displayValue),
-        7
-        /* TEXT, CLASS, STYLE */
-      )) : vue.createCommentVNode("v-if", true)
-    ]);
-  }
-  const __easycom_1$4 = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-c97cb896"], ["__file", "D:/uni/travel-new/uni_modules/uni-badge/components/uni-badge/uni-badge.vue"]]);
-  const _sfc_main$l = {
-    name: "UniListItem",
-    emits: ["click", "switchChange"],
-    props: {
-      direction: {
-        type: String,
-        default: "row"
-      },
-      title: {
-        type: String,
-        default: ""
-      },
-      note: {
-        type: String,
-        default: ""
-      },
-      ellipsis: {
-        type: [Number, String],
-        default: 0
-      },
-      disabled: {
-        type: [Boolean, String],
-        default: false
-      },
-      clickable: {
-        type: Boolean,
-        default: false
-      },
-      showArrow: {
-        type: [Boolean, String],
-        default: false
-      },
-      link: {
-        type: [Boolean, String],
-        default: false
-      },
-      to: {
-        type: String,
-        default: ""
-      },
-      showBadge: {
-        type: [Boolean, String],
-        default: false
-      },
-      showSwitch: {
-        type: [Boolean, String],
-        default: false
-      },
-      switchChecked: {
-        type: [Boolean, String],
-        default: false
-      },
-      badgeText: {
-        type: String,
-        default: ""
-      },
-      badgeType: {
-        type: String,
-        default: "success"
-      },
-      badgeStyle: {
-        type: Object,
-        default() {
-          return {};
-        }
-      },
-      rightText: {
-        type: String,
-        default: ""
-      },
-      thumb: {
-        type: String,
-        default: ""
-      },
-      thumbSize: {
-        type: String,
-        default: "base"
-      },
-      showExtraIcon: {
-        type: [Boolean, String],
-        default: false
-      },
-      extraIcon: {
-        type: Object,
-        default() {
-          return {
-            type: "",
-            color: "#000000",
-            size: 20,
-            customPrefix: ""
-          };
-        }
-      },
-      border: {
-        type: Boolean,
-        default: true
-      },
-      customStyle: {
-        type: Object,
-        default() {
-          return {
-            padding: "",
-            backgroundColor: "#FFFFFF"
-          };
-        }
-      },
-      keepScrollPosition: {
-        type: Boolean,
-        default: false
-      }
-    },
-    watch: {
-      "customStyle.padding": {
-        handler(padding) {
-          if (typeof padding == "number") {
-            padding += "";
-          }
-          let paddingArr = padding.split(" ");
-          if (paddingArr.length === 1) {
-            const allPadding = paddingArr[0];
-            this.padding = {
-              "top": allPadding,
-              "right": allPadding,
-              "bottom": allPadding,
-              "left": allPadding
-            };
-          } else if (paddingArr.length === 2) {
-            const [verticalPadding, horizontalPadding] = paddingArr;
-            this.padding = {
-              "top": verticalPadding,
-              "right": horizontalPadding,
-              "bottom": verticalPadding,
-              "left": horizontalPadding
-            };
-          } else if (paddingArr.length === 4) {
-            const [topPadding, rightPadding, bottomPadding, leftPadding] = paddingArr;
-            this.padding = {
-              "top": topPadding,
-              "right": rightPadding,
-              "bottom": bottomPadding,
-              "left": leftPadding
-            };
-          }
-        },
-        immediate: true
-      }
-    },
-    // inject: ['list'],
-    data() {
-      return {
-        isFirstChild: false,
-        padding: {
-          top: "",
-          right: "",
-          bottom: "",
-          left: ""
-        }
-      };
-    },
-    mounted() {
-      this.list = this.getForm();
-      if (this.list) {
-        if (!this.list.firstChildAppend) {
-          this.list.firstChildAppend = true;
-          this.isFirstChild = true;
-        }
-      }
-    },
-    methods: {
-      /**
-       * 获取父元素实例
-       */
-      getForm(name = "uniList") {
-        let parent = this.$parent;
-        let parentName = parent.$options.name;
-        while (parentName !== name) {
-          parent = parent.$parent;
-          if (!parent)
-            return false;
-          parentName = parent.$options.name;
-        }
-        return parent;
-      },
-      onClick() {
-        if (this.to !== "") {
-          this.openPage();
-          return;
-        }
-        if (this.clickable || this.link) {
-          this.$emit("click", {
-            data: {}
-          });
-        }
-      },
-      onSwitchChange(e) {
-        this.$emit("switchChange", e.detail);
-      },
-      openPage() {
-        if (["navigateTo", "redirectTo", "reLaunch", "switchTab"].indexOf(this.link) !== -1) {
-          this.pageApi(this.link);
-        } else {
-          this.pageApi("navigateTo");
-        }
-      },
-      pageApi(api) {
-        let callback = {
-          url: this.to,
-          success: (res) => {
-            this.$emit("click", {
-              data: res
-            });
-          },
-          fail: (err) => {
-            this.$emit("click", {
-              data: err
-            });
-          }
-        };
-        switch (api) {
-          case "navigateTo":
-            uni.navigateTo(callback);
-            break;
-          case "redirectTo":
-            uni.redirectTo(callback);
-            break;
-          case "reLaunch":
-            uni.reLaunch(callback);
-            break;
-          case "switchTab":
-            uni.switchTab(callback);
-            break;
-          default:
-            uni.navigateTo(callback);
-        }
-      }
-    }
-  };
-  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$4);
-    const _component_uni_badge = resolveEasycom(vue.resolveDynamicComponent("uni-badge"), __easycom_1$4);
-    return vue.openBlock(), vue.createElementBlock("view", {
-      class: vue.normalizeClass([{ "uni-list-item--disabled": $props.disabled }, "uni-list-item"]),
-      style: vue.normalizeStyle({ "background-color": $props.customStyle.backgroundColor }),
-      "hover-class": !$props.clickable && !$props.link || $props.disabled || $props.showSwitch ? "" : "uni-list-item--hover",
-      onClick: _cache[1] || (_cache[1] = (...args) => $options.onClick && $options.onClick(...args))
-    }, [
-      !$data.isFirstChild ? (vue.openBlock(), vue.createElementBlock(
-        "view",
-        {
-          key: 0,
-          class: vue.normalizeClass(["border--left", { "uni-list--border": $props.border }])
-        },
-        null,
-        2
-        /* CLASS */
-      )) : vue.createCommentVNode("v-if", true),
-      vue.createElementVNode(
-        "view",
-        {
-          class: vue.normalizeClass(["uni-list-item__container", { "container--right": $props.showArrow || $props.link, "flex--direction": $props.direction === "column" }]),
-          style: vue.normalizeStyle({ paddingTop: $data.padding.top, paddingLeft: $data.padding.left, paddingRight: $data.padding.right, paddingBottom: $data.padding.bottom })
-        },
-        [
-          vue.renderSlot(_ctx.$slots, "header", {}, () => [
-            vue.createElementVNode("view", { class: "uni-list-item__header" }, [
-              $props.thumb ? (vue.openBlock(), vue.createElementBlock("view", {
-                key: 0,
-                class: "uni-list-item__icon"
-              }, [
-                vue.createElementVNode("image", {
-                  src: $props.thumb,
-                  class: vue.normalizeClass(["uni-list-item__icon-img", ["uni-list--" + $props.thumbSize]])
-                }, null, 10, ["src"])
-              ])) : $props.showExtraIcon ? (vue.openBlock(), vue.createElementBlock("view", {
-                key: 1,
-                class: "uni-list-item__icon"
-              }, [
-                vue.createVNode(_component_uni_icons, {
-                  customPrefix: $props.extraIcon.customPrefix,
-                  color: $props.extraIcon.color,
-                  size: $props.extraIcon.size,
-                  type: $props.extraIcon.type
-                }, null, 8, ["customPrefix", "color", "size", "type"])
-              ])) : vue.createCommentVNode("v-if", true)
-            ])
-          ], true),
-          vue.renderSlot(_ctx.$slots, "body", {}, () => [
-            vue.createElementVNode(
-              "view",
-              {
-                class: vue.normalizeClass(["uni-list-item__content", { "uni-list-item__content--center": $props.thumb || $props.showExtraIcon || $props.showBadge || $props.showSwitch }])
-              },
-              [
-                $props.title ? (vue.openBlock(), vue.createElementBlock(
-                  "text",
-                  {
-                    key: 0,
-                    class: vue.normalizeClass(["uni-list-item__content-title", [$props.ellipsis !== 0 && $props.ellipsis <= 2 ? "uni-ellipsis-" + $props.ellipsis : ""]])
-                  },
-                  vue.toDisplayString($props.title),
-                  3
-                  /* TEXT, CLASS */
-                )) : vue.createCommentVNode("v-if", true),
-                $props.note ? (vue.openBlock(), vue.createElementBlock(
-                  "text",
-                  {
-                    key: 1,
-                    class: "uni-list-item__content-note"
-                  },
-                  vue.toDisplayString($props.note),
-                  1
-                  /* TEXT */
-                )) : vue.createCommentVNode("v-if", true)
-              ],
-              2
-              /* CLASS */
-            )
-          ], true),
-          vue.renderSlot(_ctx.$slots, "footer", {}, () => [
-            $props.rightText || $props.showBadge || $props.showSwitch ? (vue.openBlock(), vue.createElementBlock(
-              "view",
-              {
-                key: 0,
-                class: vue.normalizeClass(["uni-list-item__extra", { "flex--justify": $props.direction === "column" }])
-              },
-              [
-                $props.rightText ? (vue.openBlock(), vue.createElementBlock(
-                  "text",
-                  {
-                    key: 0,
-                    class: "uni-list-item__extra-text"
-                  },
-                  vue.toDisplayString($props.rightText),
-                  1
-                  /* TEXT */
-                )) : vue.createCommentVNode("v-if", true),
-                $props.showBadge ? (vue.openBlock(), vue.createBlock(_component_uni_badge, {
-                  key: 1,
-                  type: $props.badgeType,
-                  text: $props.badgeText,
-                  "custom-style": $props.badgeStyle
-                }, null, 8, ["type", "text", "custom-style"])) : vue.createCommentVNode("v-if", true),
-                $props.showSwitch ? (vue.openBlock(), vue.createElementBlock("switch", {
-                  key: 2,
-                  disabled: $props.disabled,
-                  checked: $props.switchChecked,
-                  onChange: _cache[0] || (_cache[0] = (...args) => $options.onSwitchChange && $options.onSwitchChange(...args))
-                }, null, 40, ["disabled", "checked"])) : vue.createCommentVNode("v-if", true)
-              ],
-              2
-              /* CLASS */
-            )) : vue.createCommentVNode("v-if", true)
-          ], true)
-        ],
-        6
-        /* CLASS, STYLE */
-      ),
-      $props.showArrow || $props.link ? (vue.openBlock(), vue.createBlock(_component_uni_icons, {
-        key: 1,
-        size: 16,
-        class: "uni-icon-wrapper",
-        color: "#bbb",
-        type: "arrowright"
-      })) : vue.createCommentVNode("v-if", true)
-    ], 14, ["hover-class"]);
-  }
-  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-c7524739"], ["__file", "D:/uni/travel-new/uni_modules/uni-list/components/uni-list-item/uni-list-item.vue"]]);
-  const _sfc_main$k = {
-    name: "uniList",
-    "mp-weixin": {
-      options: {
-        multipleSlots: false
-      }
-    },
-    props: {
-      stackFromEnd: {
-        type: Boolean,
-        default: false
-      },
-      enableBackToTop: {
-        type: [Boolean, String],
-        default: false
-      },
-      scrollY: {
-        type: [Boolean, String],
-        default: false
-      },
-      border: {
-        type: Boolean,
-        default: true
-      },
-      renderReverse: {
-        type: Boolean,
-        default: false
-      }
-    },
-    // provide() {
-    // 	return {
-    // 		list: this
-    // 	};
-    // },
-    created() {
-      this.firstChildAppend = false;
-    },
-    methods: {
-      loadMore(e) {
-        this.$emit("scrolltolower");
-      },
-      scroll(e) {
-        this.$emit("scroll", e);
-      }
-    }
-  };
-  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-list uni-border-top-bottom" }, [
-      $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 0,
-        class: "uni-list--border-top"
-      })) : vue.createCommentVNode("v-if", true),
-      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
-      $props.border ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 1,
-        class: "uni-list--border-bottom"
-      })) : vue.createCommentVNode("v-if", true)
-    ]);
-  }
-  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-c2f1266a"], ["__file", "D:/uni/travel-new/uni_modules/uni-list/components/uni-list/uni-list.vue"]]);
-  const _sfc_main$j = {
+  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/uni/travel-new/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$i = {
     name: "uniCollapseItem",
     props: {
       // 列表标题
@@ -1506,7 +1719,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$4);
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-collapse-item" }, [
       vue.createCommentVNode(" onClick(!isOpen) "),
@@ -1583,8 +1796,8 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_2$2 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-3d2dde9f"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
-  const _sfc_main$i = {
+  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-3d2dde9f"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
+  const _sfc_main$h = {
     name: "uniCollapse",
     emits: ["change", "activeItem", "input", "update:modelValue"],
     props: {
@@ -1695,15 +1908,23 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-collapse" }, [
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ]);
   }
-  const __easycom_3$2 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-3f050360"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
+  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-3f050360"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
+  const STORAGE_KEYS = {
+    CURRENTITEMS: "currentItems",
+    // 用户信息
+    AllPerson: "AllPerson",
+    // 认证令牌
+    nowproject: "nowproject"
+    // 应用设置
+  };
   const _imports_0$1 = "/static/GoodItem/edit.png";
   const _imports_0 = "/static/GoodItem/delete.png";
-  const _sfc_main$h = {
+  const _sfc_main$g = {
     name: "GoodItem",
     props: {
       index: {
@@ -1720,17 +1941,26 @@ if (uni.restoreGlobal) {
     inheritAttrs: false,
     data() {
       return {
+        isExpanded: false,
+        loading: true,
+        Persons: [],
+        update: false,
         value: ["0"],
         showModal: false,
         // 控制弹窗显示
+        contentHeight: "auto",
+        // 动态内容高度
         formData: {
           ...this.showData
         }
       };
     },
+    mounted() {
+      this.selectBillUser();
+    },
     methods: {
       showPer() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:87", "跳转");
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:101", "跳转");
         uni.navigateTo({
           url: "/pages/showPer/showPer"
         });
@@ -1739,111 +1969,181 @@ if (uni.restoreGlobal) {
         this.showModal = !this.showModal;
       },
       submitForm() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:98", "提交的表单数据:", this.formData);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:112", "提交的表单数据:", this.formData);
         this.$emit("update-item", this.index, {
           ...this.formData
         });
+        this.update = true;
         this.toggleModal();
       },
+      async toggleCollapse(isExpanded) {
+        this.update = false;
+        this.isExpanded = !this.isExpanded;
+        if (this.isExpanded) {
+          await this.selectBillUser();
+          uni.createSelectorQuery().in(this);
+          const query1 = uni.createSelectorQuery().in(this);
+          query1.select(".Item-container").boundingClientRect((itemData) => {
+            if (!itemData)
+              return;
+            formatAppLog("log", "at components/GoodItem/GoodItem.vue:141", "Item-container: " + itemData.height);
+            this.contentHeight = `${this.pxToRpx(this.Persons.length * 15 + itemData.height + 20)}rpx`;
+            formatAppLog("log", "at components/GoodItem/GoodItem.vue:145", "调整后的高度:", this.contentHeight);
+          }).exec();
+        } else {
+          this.contentHeight = "auto";
+        }
+      },
+      pxToRpx(px) {
+        const screenWidth = uni.getSystemInfoSync().screenWidth;
+        return 750 / screenWidth * px;
+      },
+      async selectBillUser() {
+        this.loading = true;
+        const currentItems = uni.getStorageSync(STORAGE_KEYS.CURRENTITEMS);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:165", "GOODITEM-SELECTBILLUSER-START");
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:166", currentItems[this.index]);
+        const result = await BillUser.selectInformationType("BillUser", "Billid", currentItems[this.index].id);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:171", "nowBillPerson: ", result);
+        this.Persons = [];
+        for (const obj of result) {
+          try {
+            const result1 = await util.selectInformationType(
+              "user",
+              // 表名
+              "id",
+              // 查询字段
+              `'${obj.userid}'`
+              // 查询值，注意加上单引号
+            );
+            formatAppLog("log", "at components/GoodItem/GoodItem.vue:185", "result: ", result1);
+            this.Persons.push(...result1);
+          } catch (error2) {
+            formatAppLog("error", "at components/GoodItem/GoodItem.vue:190", "查询用户失败:", error2);
+          } finally {
+            this.loading = false;
+          }
+        }
+        this.loading = false;
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:197", "Persons: ", this.Persons);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:198", "loading ", this.loading);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:199", "GOODITEM-SELECTBILLUSER-END");
+      },
       editPer() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:111", "触发增加人员");
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:203", "触发增加人员");
         this.$emit("edit-per", this.index);
       },
       deleteSelf() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:115", this.index);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:207", this.index);
         this.$emit("delete-item", this.index);
       }
     }
   };
-  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_list_item = resolveEasycom(vue.resolveDynamicComponent("uni-list-item"), __easycom_0$3);
-    const _component_uni_list = resolveEasycom(vue.resolveDynamicComponent("uni-list"), __easycom_1$3);
-    const _component_uni_collapse_item = resolveEasycom(vue.resolveDynamicComponent("uni-collapse-item"), __easycom_2$2);
-    const _component_uni_collapse = resolveEasycom(vue.resolveDynamicComponent("uni-collapse"), __easycom_3$2);
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_collapse_item = resolveEasycom(vue.resolveDynamicComponent("uni-collapse-item"), __easycom_0$3);
+    const _component_uni_collapse = resolveEasycom(vue.resolveDynamicComponent("uni-collapse"), __easycom_1$3);
     return vue.openBlock(), vue.createElementBlock(
       vue.Fragment,
       null,
       [
         vue.createCommentVNode(" 卡片 "),
-        vue.createElementVNode("view", { class: "Item-container" }, [
-          vue.createElementVNode("view", { class: "card" }, [
-            vue.createElementVNode("view", { class: "top-bar" }, [
-              vue.createElementVNode("view", { style: { "font-size": "25rpx", "width": "200rpx" } }, "名称"),
-              vue.createElementVNode("view", { style: { "font-size": "25rpx", "width": "200rpx" } }, "数量"),
-              vue.createElementVNode("view", { style: { "font-size": "25rpx", "width": "120rpx" } }, "价格"),
-              vue.createElementVNode("image", {
-                onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleModal && $options.toggleModal(...args)),
-                src: _imports_0$1,
-                class: "set-info"
-              })
-            ]),
-            vue.createElementVNode("view", { class: "top-bar bot-bar" }, [
-              vue.createElementVNode(
-                "view",
-                {
-                  class: "input-item name",
-                  style: { "font-size": "25rpx", "width": "200rpx" }
-                },
-                vue.toDisplayString($props.showData.name),
-                1
-                /* TEXT */
-              ),
-              vue.createElementVNode(
-                "view",
-                {
-                  class: "input-item cnt",
-                  style: { "font-size": "25rpx", "width": "200rpx" }
-                },
-                vue.toDisplayString($props.showData.cnt),
-                1
-                /* TEXT */
-              ),
-              vue.createElementVNode(
-                "view",
-                {
-                  class: "input-item price",
-                  style: { "font-size": "25rpx", "width": "120rpx" }
-                },
-                vue.toDisplayString($props.showData.price),
-                1
-                /* TEXT */
-              ),
-              vue.createElementVNode("image", {
-                onClick: _cache[1] || (_cache[1] = (...args) => $options.deleteSelf && $options.deleteSelf(...args)),
-                src: _imports_0,
-                class: "set-info"
-              })
-            ]),
-            vue.createVNode(_component_uni_collapse, null, {
-              default: vue.withCtx(() => [
-                vue.createVNode(_component_uni_collapse_item, {
-                  class: "showPer",
-                  title: "查看人员"
-                }, {
-                  default: vue.withCtx(() => [
-                    vue.createElementVNode("view", { class: "content" }, [
-                      vue.createVNode(_component_uni_list, null, {
-                        default: vue.withCtx(() => [
-                          vue.createVNode(_component_uni_list_item, { title: "列表文字" }),
-                          vue.createVNode(_component_uni_list_item, {
-                            disabled: true,
-                            title: "列表禁用状态"
-                          })
-                        ]),
-                        _: 1
-                        /* STABLE */
-                      })
-                    ])
-                  ]),
-                  _: 1
-                  /* STABLE */
+        vue.createElementVNode(
+          "view",
+          {
+            class: "Item-container",
+            style: vue.normalizeStyle({ height: $data.contentHeight })
+          },
+          [
+            vue.createElementVNode("view", { class: "card" }, [
+              vue.createElementVNode("view", { class: "top-bar" }, [
+                vue.createElementVNode("view", { style: { "font-size": "25rpx", "width": "200rpx" } }, "名称"),
+                vue.createElementVNode("view", { style: { "font-size": "25rpx", "width": "200rpx" } }, "数量"),
+                vue.createElementVNode("view", { style: { "font-size": "25rpx", "width": "120rpx" } }, "价格"),
+                vue.createElementVNode("image", {
+                  onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleModal && $options.toggleModal(...args)),
+                  src: _imports_0$1,
+                  class: "set-info"
                 })
               ]),
-              _: 1
-              /* STABLE */
-            })
-          ])
-        ]),
+              vue.createElementVNode("view", { class: "top-bar bot-bar" }, [
+                vue.createElementVNode(
+                  "view",
+                  {
+                    class: "input-item name",
+                    style: { "font-size": "25rpx", "width": "200rpx" }
+                  },
+                  vue.toDisplayString($props.showData.name),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "view",
+                  {
+                    class: "input-item cnt",
+                    style: { "font-size": "25rpx", "width": "200rpx" }
+                  },
+                  vue.toDisplayString($props.showData.cnt),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "view",
+                  {
+                    class: "input-item price",
+                    style: { "font-size": "25rpx", "width": "120rpx" }
+                  },
+                  vue.toDisplayString($props.showData.price),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode("image", {
+                  onClick: _cache[1] || (_cache[1] = (...args) => $options.deleteSelf && $options.deleteSelf(...args)),
+                  src: _imports_0,
+                  class: "set-info"
+                })
+              ]),
+              vue.createVNode(_component_uni_collapse, null, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uni_collapse_item, {
+                    class: "showPer",
+                    title: "查看人员",
+                    onClick: $options.toggleCollapse
+                  }, {
+                    default: vue.withCtx(() => [
+                      vue.createElementVNode("view", { class: "content" }, [
+                        $data.loading ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "加载中...")) : $data.Persons.length === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "暂无人员")) : vue.createCommentVNode("v-if", true),
+                        (vue.openBlock(true), vue.createElementBlock(
+                          vue.Fragment,
+                          null,
+                          vue.renderList($data.Persons, (person, index2) => {
+                            return vue.openBlock(), vue.createElementBlock(
+                              "view",
+                              {
+                                key: index2,
+                                class: "list-item"
+                              },
+                              vue.toDisplayString(person.name),
+                              1
+                              /* TEXT */
+                            );
+                          }),
+                          128
+                          /* KEYED_FRAGMENT */
+                        ))
+                      ])
+                    ]),
+                    _: 1
+                    /* STABLE */
+                  }, 8, ["onClick"])
+                ]),
+                _: 1
+                /* STABLE */
+              })
+            ])
+          ],
+          4
+          /* STYLE */
+        ),
         vue.createCommentVNode(" 弹窗编辑部分 "),
         $data.showModal ? (vue.openBlock(), vue.createElementBlock("view", {
           key: 0,
@@ -1934,21 +2234,7 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT */
     );
   }
-  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
-  const _sfc_main$g = {
-    __name: "index",
-    setup(__props, { expose: __expose }) {
-      __expose();
-      const show = vue.ref(true);
-      const __returned__ = { show, ref: vue.ref, GoodItem: __easycom_0$2 };
-      Object.defineProperty(__returned__, "__isScriptSetup", { enumerable: false, value: true });
-      return __returned__;
-    }
-  };
-  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { style: { "display": "flex", "justify-content": "center" } });
-  }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
+  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
   const _sfc_main$f = {
     name: "uniTh",
     options: {
@@ -2520,8 +2806,8 @@ if (uni.restoreGlobal) {
        * 用于多选表格，切换某一行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中）
        */
       toggleRowSelection(row, selected) {
-        formatAppLog("log", "at uni_modules/uni-table/components/uni-table/uni-table.vue:168", "row: " + row);
         row = [].concat(row);
+        formatAppLog("log", "at uni_modules/uni-table/components/uni-table/uni-table.vue:170", "row: " + row);
         this.trChildren.forEach((item, index2) => {
           const select = row.findIndex((v) => {
             if (typeof v === "number") {
@@ -2703,404 +2989,7 @@ if (uni.restoreGlobal) {
     );
   }
   const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-c1ea9b5d"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-table/uni-table.vue"]]);
-  function openSqlite() {
-    return new Promise((resolve, reject) => {
-      plus.sqlite.openDatabase({
-        name: "travel",
-        //数据库名称
-        path: "_doc/travel.db",
-        //数据库地址，uniapp推荐以下划线为开头
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  function CreateBillSQL() {
-    return new Promise((resolve, reject) => {
-      plus.sqlite.executeSql({
-        name: "travel",
-        //表格创建或者打开，后面为表格结构
-        sql: 'create table if not exists Bill("id" INTEGER PRIMARY KEY ,"billid" INTEGER,"projectId" INTEGER,"name" TEXT, "cnt" INTEGER, "price" INTEGER )',
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  function updateTableStructure(tableName, columnName, columnType) {
-    return new Promise((resolve, reject) => {
-      const sql = `ALTER TABLE ${tableName} ADD COLUMN ${columnName} ${columnType}`;
-      plus.sqlite.executeSql({
-        name: "travel",
-        // 数据库名称
-        sql,
-        success(e) {
-          resolve(`表 ${tableName} 成功添加字段 ${columnName} (${columnType})`);
-        },
-        fail(e) {
-          reject(`更新表结构失败: ${JSON.stringify(e)}`);
-        }
-      });
-    });
-  }
-  function deleteTable(tableName) {
-    return new Promise((resolve, reject) => {
-      const sql = `DROP TABLE IF EXISTS ${tableName}`;
-      plus.sqlite.executeSql({
-        name: "travel",
-        // 数据库名称
-        sql,
-        success(e) {
-          resolve(`表 ${tableName} 删除成功`);
-        },
-        fail(e) {
-          reject(`删除表 ${tableName} 失败: ${JSON.stringify(e)}`);
-        }
-      });
-    });
-  }
-  function CreateProjectSQL() {
-    return new Promise((resolve, reject) => {
-      plus.sqlite.executeSql({
-        name: "travel",
-        //表格创建或者打开，后面为表格结构
-        sql: 'create table if not exists project("id" INTEGER PRIMARY KEY ,"projectId" INTEGER,"projectName" TEXT )',
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  function CreateBillUserSQL() {
-    return new Promise((resolve, reject) => {
-      plus.sqlite.executeSql({
-        name: "travel",
-        //表格创建或者打开，后面为表格结构
-        sql: 'create table if not exists BillUser("id" INTEGER PRIMARY KEY ,"userid" INTEGER,"Billid" INTEGER )',
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  function CreateUserSQL() {
-    return new Promise((resolve, reject) => {
-      plus.sqlite.executeSql({
-        name: "travel",
-        //表格创建或者打开，后面为表格结构
-        sql: 'create table if not exists user("id" INTEGER PRIMARY KEY ,"userid" INTEGER ,"name" TEXT)',
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  function userInfoSQL() {
-    return new Promise((resolve, reject) => {
-      plus.sqlite.executeSql({
-        name: "pop",
-        //表格创建或者打开，后面为表格结构
-        sql: 'create table if not exists userInfo("list" INTEGER PRIMARY KEY AUTOINCREMENT,"id" TEXT,"name" TEXT,"gender" TEXT,"avatar" TEXT)',
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  function addUser$2(obj) {
-    if (obj !== void 0) {
-      var b = JSON.stringify(obj) == "{}";
-      if (!b) {
-        var id = obj.id || null;
-        var name = obj.name || null;
-        return new Promise((resolve, reject) => {
-          plus.sqlite.executeSql({
-            name: "travel",
-            sql: 'insert into user(userid,name) values("' + id + '","' + name + '")',
-            success(e) {
-              resolve(e);
-            },
-            fail(e) {
-              reject(e);
-            }
-          });
-        });
-      } else {
-        return new Promise((resolve, reject) => {
-          reject("错误添加");
-        });
-      }
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误添加");
-      });
-    }
-  }
-  function selectInformationType$3(name, aa, bb, cc, dd) {
-    if (name !== void 0) {
-      if (aa !== void 0 && cc !== void 0) {
-        var sql = "select * from " + name + " where " + aa + " like " + bb + " and " + cc + " like " + dd;
-      }
-      if (aa !== void 0 && cc == void 0) {
-        var sql = "select * from " + name + " where " + aa + " like " + bb;
-      }
-      if (aa == void 0) {
-        var sql = "select * from " + name;
-      }
-      formatAppLog("log", "at common/util/operateSqlite.js:195", sql);
-      return new Promise((resolve, reject) => {
-        plus.sqlite.selectSql({
-          name: "travel",
-          sql,
-          success(e) {
-            resolve(e);
-          },
-          fail(e) {
-            reject(e);
-          }
-        });
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误查询");
-      });
-    }
-  }
-  function deleteInformationType$3(name, sol, qq, ww, ee) {
-    if (name !== void 0 && sol !== void 0) {
-      if (ww !== void 0) {
-        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
-      } else {
-        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
-      }
-      formatAppLog("log", "at common/util/operateSqlite.js:228", sql);
-      return new Promise((resolve, reject) => {
-        plus.sqlite.executeSql({
-          name: "travel",
-          sql,
-          success(e) {
-            resolve(e);
-          },
-          fail(e) {
-            reject(e);
-          }
-        });
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误删除");
-      });
-    }
-  }
-  function modifyInformation$3(listName, name, cont, use, sel) {
-    var sql;
-    if (use == void 0) {
-      sql = "update " + listName + " set " + name + '="' + cont + '"';
-    } else {
-      sql = "update " + listName + " set " + name + '="' + cont + '" where ' + use + '="' + sel + '"';
-    }
-    return new Promise((resolve, reject) => {
-      plus.sqlite.executeSql({
-        name: "pop",
-        sql,
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  function closeSQL(name) {
-    return new Promise((resolve, reject) => {
-      plus.sqlite.closeDatabase({
-        name: "pop",
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  function isOpen(name, path) {
-    var ss = name || "travel";
-    var qq = path || "_doc/travel.db";
-    var open = plus.sqlite.isOpenDatabase({
-      name: ss,
-      path: qq
-    });
-    return open;
-  }
-  function pullSQL(id, num) {
-    return new Promise((resolve, reject) => {
-      plus.sqlite.selectSql({
-        name: "pop",
-        sql: "select * from " + id + " order by list desc limit 15 offset " + num,
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  const util = {
-    CreateProjectSQL,
-    CreateUserSQL,
-    CreateBillUserSQL,
-    CreateBillSQL,
-    openSqlite,
-    userInfoSQL,
-    addUser: addUser$2,
-    selectInformationType: selectInformationType$3,
-    deleteInformationType: deleteInformationType$3,
-    pullSQL,
-    isOpen,
-    closeSQL,
-    modifyInformation: modifyInformation$3,
-    updateTableStructure,
-    deleteTable
-  };
-  function selectInformationType$2(name, aa, bb, cc, dd) {
-    if (name !== void 0) {
-      if (aa !== void 0 && cc !== void 0) {
-        var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd + " order by id desc";
-      }
-      if (aa !== void 0 && cc == void 0) {
-        var sql = "select * from " + name + " where " + aa + "=" + bb + " order by id desc";
-      }
-      if (aa == void 0) {
-        var sql = "select * from " + name + " order by id desc";
-      }
-      formatAppLog("log", "at common/util/project.js:21", sql);
-      return new Promise((resolve, reject) => {
-        plus.sqlite.selectSql({
-          name: "travel",
-          sql,
-          success(e) {
-            resolve(e);
-          },
-          fail(e) {
-            reject(e);
-          }
-        });
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误查询");
-      });
-    }
-  }
-  function deleteInformationType$2(name, sol, qq, ww, ee) {
-    if (name !== void 0) {
-      if (ww !== void 0) {
-        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
-      } else if (sol !== void 0) {
-        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
-      } else {
-        var sql = "delete  from " + name;
-      }
-      formatAppLog("log", "at common/util/project.js:54", sql);
-      return new Promise((resolve, reject) => {
-        plus.sqlite.executeSql({
-          name: "travel",
-          sql,
-          success(e) {
-            resolve(e);
-          },
-          fail(e) {
-            reject(e);
-          }
-        });
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误删除");
-      });
-    }
-  }
-  function modifyInformation$2(listName, name, cont, use, sel) {
-    var sql;
-    if (use == void 0) {
-      sql = "update " + listName + " set " + name + '="' + cont + '"';
-    } else {
-      sql = "update " + listName + " set " + name + '="' + cont + '" where ' + use + '="' + sel + '"';
-    }
-    return new Promise((resolve, reject) => {
-      plus.sqlite.executeSql({
-        name: "travel",
-        sql,
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  function addUser$1(obj) {
-    if (obj !== void 0) {
-      var b = JSON.stringify(obj) == "{}";
-      if (!b) {
-        var id = obj.id || null;
-        var name = obj.name || null;
-        formatAppLog("log", "at common/util/project.js:112", id + " " + name);
-        var sql = 'insert into project(projectId,projectName) values("' + id + '","' + name + '")';
-        formatAppLog("log", "at common/util/project.js:115", sql);
-        return new Promise((resolve, reject) => {
-          plus.sqlite.executeSql({
-            name: "travel",
-            sql,
-            success(e) {
-              resolve(e);
-            },
-            fail(e) {
-              reject(e);
-            }
-          });
-        });
-      } else {
-        return new Promise((resolve, reject) => {
-          reject("错误添加");
-        });
-      }
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误添加");
-      });
-    }
-  }
-  const project = {
-    selectInformationType: selectInformationType$2,
-    deleteInformationType: deleteInformationType$2,
-    modifyInformation: modifyInformation$2,
-    addUser: addUser$1
-  };
-  function selectInformationType$1(name, aa, bb, cc, dd) {
+  function selectInformationType(name, aa, bb, cc, dd) {
     if (name !== void 0) {
       if (aa !== void 0 && cc !== void 0) {
         var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd;
@@ -3130,7 +3019,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function deleteInformationType$1(name, sol, qq, ww, ee) {
+  function deleteInformationType(name, sol, qq, ww, ee) {
     if (name !== void 0 && sol !== void 0) {
       if (ww !== void 0) {
         var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
@@ -3156,7 +3045,7 @@ if (uni.restoreGlobal) {
       });
     }
   }
-  function modifyInformation$1(obj) {
+  function modifyInformation(obj) {
     formatAppLog("log", "at common/util/Bill.js:75", obj);
     if (obj !== void 0) {
       var b = JSON.stringify(obj) == "{}";
@@ -3226,126 +3115,10 @@ if (uni.restoreGlobal) {
     }
   }
   const Bill = {
-    selectInformationType: selectInformationType$1,
-    deleteInformationType: deleteInformationType$1,
-    modifyInformation: modifyInformation$1,
-    addBill
-  };
-  function selectInformationType(name, aa, bb, cc, dd) {
-    if (name !== void 0) {
-      if (aa !== void 0 && cc !== void 0) {
-        var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd + " order by id desc";
-      }
-      if (aa !== void 0 && cc == void 0) {
-        var sql = "select * from " + name + " where " + aa + "=" + bb + " order by id desc";
-      }
-      if (aa == void 0) {
-        var sql = "select * from " + name + " order by id desc";
-      }
-      formatAppLog("log", "at common/util/BillUser.js:21", sql);
-      return new Promise((resolve, reject) => {
-        plus.sqlite.selectSql({
-          name: "travel",
-          sql,
-          success(e) {
-            resolve(e);
-          },
-          fail(e) {
-            reject(e);
-          }
-        });
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误查询");
-      });
-    }
-  }
-  function deleteInformationType(name, sol, qq, ww, ee) {
-    if (name !== void 0) {
-      if (ww !== void 0) {
-        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
-      } else if (sol !== void 0) {
-        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
-      } else {
-        var sql = "delete  from " + name;
-      }
-      formatAppLog("log", "at common/util/BillUser.js:54", sql);
-      return new Promise((resolve, reject) => {
-        plus.sqlite.executeSql({
-          name: "travel",
-          sql,
-          success(e) {
-            resolve(e);
-          },
-          fail(e) {
-            reject(e);
-          }
-        });
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误删除");
-      });
-    }
-  }
-  function modifyInformation(listName, name, cont, use, sel) {
-    var sql;
-    if (use == void 0) {
-      sql = "update " + listName + " set " + name + '="' + cont + '"';
-    } else {
-      sql = "update " + listName + " set " + name + '="' + cont + '" where ' + use + '="' + sel + '"';
-    }
-    return new Promise((resolve, reject) => {
-      plus.sqlite.executeSql({
-        name: "travel",
-        sql,
-        success(e) {
-          resolve(e);
-        },
-        fail(e) {
-          reject(e);
-        }
-      });
-    });
-  }
-  function addUser(obj) {
-    if (obj !== void 0) {
-      var b = JSON.stringify(obj) == "{}";
-      if (!b) {
-        var userid = obj.userid || null;
-        var billid = obj.billid || null;
-        formatAppLog("log", "at common/util/BillUser.js:112", userid + " " + billid);
-        var sql = 'insert into BillUser(userid,Billid) values("' + userid + '","' + billid + '")';
-        formatAppLog("log", "at common/util/BillUser.js:115", sql);
-        return new Promise((resolve, reject) => {
-          plus.sqlite.executeSql({
-            name: "travel",
-            sql,
-            success(e) {
-              resolve(e);
-            },
-            fail(e) {
-              reject(e);
-            }
-          });
-        });
-      } else {
-        return new Promise((resolve, reject) => {
-          reject("错误添加");
-        });
-      }
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误添加");
-      });
-    }
-  }
-  const BillUser = {
     selectInformationType,
     deleteInformationType,
     modifyInformation,
-    addUser
+    addBill
   };
   const _sfc_main$a = {
     components: {
@@ -3382,9 +3155,15 @@ if (uni.restoreGlobal) {
     },
     computed: {
       currentItems() {
-        const selectedProject = this.projects[this.selectedProjectIndex].projectName;
-        formatAppLog("log", "at pages/PayBill/index.vue:144", "当前project: " + selectedProject);
-        formatAppLog("log", "at pages/PayBill/index.vue:146", "看看账单：" + this.projectItems[selectedProject]);
+        var _a;
+        if (!this.projects.length) {
+          formatAppLog("warn", "at pages/PayBill/index.vue:148", "当前项目列表为空");
+          return [];
+        }
+        const selectedProject = ((_a = this.projects[this.selectedProjectIndex]) == null ? void 0 : _a.projectName) || "默认项目";
+        formatAppLog("log", "at pages/PayBill/index.vue:152", "当前project:" + selectedProject);
+        formatAppLog("log", "at pages/PayBill/index.vue:153", "看看账单：" + this.projectItems[selectedProject]);
+        uni.setStorageSync(STORAGE_KEYS.CURRENTITEMS, this.projectItems[selectedProject] || []);
         return this.projectItems[selectedProject] || [];
       },
       totalPrice() {
@@ -3393,53 +3172,67 @@ if (uni.restoreGlobal) {
         }, 0);
       }
     },
-    created() {
-      util.openSqlite();
-      this.selectProjects();
-    },
     mounted() {
-      this.selectProjects().then(() => this.updateprojectBill()).then(() => this.selectAllPer());
+      this.reloadData();
     },
     methods: {
+      async reloadData() {
+        try {
+          formatAppLog("log", "at pages/PayBill/index.vue:175", "重新加载数据...");
+          await this.selectProjects();
+          await this.updateprojectBill();
+          await this.selectAllPer();
+          formatAppLog("log", "at pages/PayBill/index.vue:179", "数据重新加载完成");
+        } catch (error2) {
+          formatAppLog("error", "at pages/PayBill/index.vue:181", "重新加载数据时出错：", error2);
+        }
+      },
       //选中人员
       selectionChange(selectedRows) {
-        formatAppLog("log", "at pages/PayBill/index.vue:169", "选中的行：", selectedRows);
+        formatAppLog("log", "at pages/PayBill/index.vue:186", "选中的行", selectedRows);
         const selectedRow = selectedRows.detail.index || [];
         this.nowBillPerson = selectedRow;
       },
       setDefaultSelection() {
         const selectedUserIds = this.nowBillPerson.map((person) => person.userid);
-        formatAppLog("log", "at pages/PayBill/index.vue:178", "selectedUserIds ", selectedUserIds);
-        const matchedPersons = this.AllPerson.filter((person) => selectedUserIds.includes(person.userid));
-        formatAppLog("log", "at pages/PayBill/index.vue:181", "matchedPersons ", matchedPersons);
-        matchedPersons.forEach((person) => {
-          this.$refs.tableRef.toggleRowSelection(person, true);
-        });
+        formatAppLog("log", "at pages/PayBill/index.vue:194", "selectedUserIds ", selectedUserIds);
+        const matchedDetails = this.AllPerson.map((person, index3) => ({
+          person,
+          index: index3
+        })).filter(({
+          person
+        }) => selectedUserIds.includes(person.id));
+        formatAppLog("log", "at pages/PayBill/index.vue:206", "matchedDetails ", matchedDetails);
+        const index2 = matchedDetails.map(({
+          index: index3
+        }) => index3);
+        formatAppLog("log", "at pages/PayBill/index.vue:214", "detail ", index2);
+        this.$refs.tableRef.toggleRowSelection(index2, true);
       },
       //编辑账单人员
       async selectAllPer() {
         const result = await util.selectInformationType("user");
-        formatAppLog("log", "at pages/PayBill/index.vue:190", "找出的AllPerson", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:222", "找出的AllPerson", result);
         this.AllPerson = result;
-        uni.setStorageSync("AllPerson", result);
+        uni.setStorageSync(STORAGE_KEYS.AllPerson, result);
       },
       editPer(index2) {
         this.showModaleditPer = true;
-        this.selectBillUser(index2).then(() => this.setDefaultSelection());
+        this.selectAllPer().then(() => this.selectBillUser(index2).then(() => this.setDefaultSelection()));
       },
       async selectBillUser(index2) {
-        formatAppLog("log", "at pages/PayBill/index.vue:199", this.currentItems[index2]);
+        formatAppLog("log", "at pages/PayBill/index.vue:231", this.currentItems[index2]);
         const result = await BillUser.selectInformationType("BillUser", "Billid", this.currentItems[index2].id);
-        formatAppLog("log", "at pages/PayBill/index.vue:201", "当前账单: " + this.currentItems[index2] + "result: ", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:233", "当前账单: " + this.currentItems[index2] + "result: ", result);
         this.nowBillId = this.currentItems[index2].id;
         this.nowBillPerson = result;
-        formatAppLog("log", "at pages/PayBill/index.vue:204", "nowBillPerson: ", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:236", "nowBillPerson: ", result);
       },
       updateBillUserToDB() {
-        formatAppLog("log", "at pages/PayBill/index.vue:207", this.nowBillPerson);
+        formatAppLog("log", "at pages/PayBill/index.vue:240", this.nowBillPerson);
         const result = this.nowBillPerson.map((index2) => this.AllPerson[index2].id);
-        formatAppLog("log", "at pages/PayBill/index.vue:211", "选中的用户id:", result);
-        formatAppLog("log", "at pages/PayBill/index.vue:212", "当前账单Id:", this.nowBillId);
+        formatAppLog("log", "at pages/PayBill/index.vue:244", "选中的用户id:", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:245", "当前账单Id:", this.nowBillId);
         const result1 = result.map((userId) => {
           return {
             userid: userId,
@@ -3448,37 +3241,42 @@ if (uni.restoreGlobal) {
             // 当前账单 id
           };
         });
-        formatAppLog("log", "at pages/PayBill/index.vue:222", "选中的用户与账单合成对象:", result1);
+        BillUser.deleteInformationType("BillUser", "billid", this.nowBillId);
+        formatAppLog("log", "at pages/PayBill/index.vue:255", "选中的用户与账单合成对象:", result1);
         result1.forEach((obj) => {
           BillUser.addUser(obj);
         });
+        this.closeModal();
       },
       // 处理项目
       async selectProjects() {
         const result = await project.selectInformationType("project");
-        this.projects = result;
+        if (result.length > 0)
+          this.projects = result;
+        formatAppLog("log", "at pages/PayBill/index.vue:266", "SELECTPROJECTS: ", this.projects);
         this.projectNames = this.projects.map(
           (project2) => `${project2.id}: ${project2.projectName}`
         );
         this.selectedProjectIndex = 0;
-        formatAppLog("log", "at pages/PayBill/index.vue:235", this.projects);
+        formatAppLog("log", "at pages/PayBill/index.vue:271", this.projects);
       },
       handleProjectChange(e) {
-        formatAppLog("log", "at pages/PayBill/index.vue:238", "e" + e);
+        formatAppLog("log", "at pages/PayBill/index.vue:274", "e" + e);
         this.selectedProjectIndex = parseInt(e.detail.value, 10);
-        uni.setStorageSync("nowproject", this.projects[this.selectedProjectIndex]);
-        formatAppLog("log", "at pages/PayBill/index.vue:241", "测试本地缓存", uni.getStorageSync("nowproject"));
-        formatAppLog("log", "at pages/PayBill/index.vue:242", "切换到项目:", this.projects[this.selectedProjectIndex].projectName);
+        uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
+        formatAppLog("log", "at pages/PayBill/index.vue:277", "测试本地缓存", uni.getStorageSync(STORAGE_KEYS.nowproject));
+        formatAppLog("log", "at pages/PayBill/index.vue:278", "切换到项目:", this.projects[this.selectedProjectIndex].projectName);
         this.updateprojectBill();
       },
       //更新Item
       handleDelete(index2) {
         this.projects[this.selectedProjectIndex].id;
-        formatAppLog("log", "at pages/PayBill/index.vue:248", this.currentItems[index2]);
+        formatAppLog("log", "at pages/PayBill/index.vue:284", this.currentItems[index2]);
         Bill.deleteInformationType("Bill", "id", this.currentItems[index2].id).then(() => this.updateprojectBill());
+        BillUser.deleteInformationType("BillUser", "Billid", this.currentItems[index2].id);
       },
       handleUpdate(index2, updatedItem) {
-        formatAppLog("log", "at pages/PayBill/index.vue:254", "更新索引：", index2, "更新数据：", updatedItem);
+        formatAppLog("log", "at pages/PayBill/index.vue:291", "更新索引：", index2, "更新数据：", updatedItem);
         this.projects[this.selectedProjectIndex].projectName;
         Bill.modifyInformation(updatedItem).then(() => this.updateprojectBill());
       },
@@ -3504,12 +3302,12 @@ if (uni.restoreGlobal) {
       },
       //更新项目账单
       async updateprojectBill() {
-        formatAppLog("log", "at pages/PayBill/index.vue:290", "当前index: " + this.selectedProjectIndex);
+        formatAppLog("log", "at pages/PayBill/index.vue:327", "当前index: " + this.selectedProjectIndex);
         const selectedProjectId = this.projects[this.selectedProjectIndex].id;
         const selectedProject = this.projects[this.selectedProjectIndex].projectName;
-        formatAppLog("log", "at pages/PayBill/index.vue:293", "当前projects:", this.projects);
+        formatAppLog("log", "at pages/PayBill/index.vue:330", "当前projects:", this.projects);
         const result = await Bill.selectInformationType("Bill", "projectId", selectedProjectId);
-        formatAppLog("log", "at pages/PayBill/index.vue:295", "更新项目账单： ", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:332", "更新项目账单： ", result);
         this.projectItems[selectedProject] = result;
       },
       //新增project
@@ -3523,7 +3321,7 @@ if (uni.restoreGlobal) {
         };
         project.addUser(obj);
         this.selectProjects();
-        formatAppLog("log", "at pages/PayBill/index.vue:311", "添加新项目:", this.newProjectName);
+        formatAppLog("log", "at pages/PayBill/index.vue:348", "添加新项目:", this.newProjectName);
         this.closeModal();
       },
       closeModal() {
@@ -3537,7 +3335,7 @@ if (uni.restoreGlobal) {
         this.showModaleditPer = false;
       },
       handleSettle() {
-        formatAppLog("log", "at pages/PayBill/index.vue:326", "当前项目的结算数据:", this.currentItems);
+        formatAppLog("log", "at pages/PayBill/index.vue:363", "当前项目的结算数据:", this.currentItems);
       },
       //编辑项目：生成弹窗，里面可以编辑也可以删除
       editProject() {
@@ -3556,6 +3354,9 @@ if (uni.restoreGlobal) {
         const selectedProjectId = this.projects[this.selectedProjectIndex].id;
         this.projects[this.selectedProjectIndex].projectName;
         project.deleteInformationType("project", "id", selectedProjectId);
+        this.currentItems.forEach((obj) => {
+          BillUser.deleteInformationType("BillUser", "billid", obj.id);
+        });
         Bill.deleteInformationType("Bill", "projectId", selectedProjectId);
         this.selectProjects().then(() => this.updateprojectBill());
         this.closeModal();
@@ -3563,6 +3364,7 @@ if (uni.restoreGlobal) {
     }
   };
   function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+    var _a;
     const _component_GoodItem = resolveEasycom(vue.resolveDynamicComponent("GoodItem"), __easycom_0$2);
     const _component_uni_th = resolveEasycom(vue.resolveDynamicComponent("uni-th"), __easycom_1$2);
     const _component_uni_tr = resolveEasycom(vue.resolveDynamicComponent("uni-tr"), __easycom_2$1);
@@ -3580,7 +3382,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode(
             "view",
             { class: "picker" },
-            " 当前项目：" + vue.toDisplayString($data.projects[$data.selectedProjectIndex].projectName),
+            " 当前项目：" + vue.toDisplayString(((_a = $data.projects[$data.selectedProjectIndex]) == null ? void 0 : _a.projectName) || " ss"),
             1
             /* TEXT */
           )
@@ -3890,6 +3692,40 @@ if (uni.restoreGlobal) {
     onLoad() {
     },
     methods: {
+      clearBillUser() {
+        BillUser.clear("BillUser").then((result) => {
+          uni.showToast({
+            title: "数据库清除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:60", "数据库清除成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "数据库清除失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:68", "数据库清除失败：", error2);
+        });
+      },
+      dropTable() {
+        util.dropTable().then((result) => {
+          uni.showToast({
+            title: "数据库删除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:78", "表格删除成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "数据库删除失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:86", "表格删除失败：", error2);
+        });
+      },
       isopenDB() {
         util.openSqlite().then((result) => {
           uni.showToast({
@@ -3897,14 +3733,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:58", "表格创建成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:96", "表格创建成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "数据库打开失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:66", "表格创建失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:104", "表格创建失败：", error2);
         });
       },
       createBillTable() {
@@ -3919,14 +3755,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:82", "表格创建成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:120", "表格创建成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "表格创建失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:90", "表格创建失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:128", "表格创建失败：", error2);
         });
       },
       createBillUserTable() {
@@ -3941,14 +3777,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:106", "表格创建成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:144", "表格创建成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "表格创建失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:114", "表格创建失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:152", "表格创建失败：", error2);
         });
       },
       createUserTable() {
@@ -3963,14 +3799,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:130", "表格创建成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:168", "表格创建成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "表格创建失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:138", "表格创建失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:176", "表格创建失败：", error2);
         });
       },
       createProjectTable() {
@@ -3985,14 +3821,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:154", "Project表格成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:192", "Project表格成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "Project表格失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:162", "Project表格失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:200", "Project表格失败：", error2);
         });
       },
       updateTable() {
@@ -4010,14 +3846,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:182", "表格创建成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:220", "表格创建成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "表格创建失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:190", "表格创建失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:228", "表格创建失败：", error2);
         });
       },
       addproject(id, name) {
@@ -4028,14 +3864,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:201", "Project插入成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:239", "Project插入成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "Project插入失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:209", "Project插入失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:247", "Project插入失败：", error2);
         });
       },
       selectproject() {
@@ -4045,14 +3881,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:219", "Project查询成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:257", "Project查询成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "Project查询失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:227", "Project查询失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:265", "Project查询失败：", error2);
         });
       },
       deleteproject() {
@@ -4062,14 +3898,14 @@ if (uni.restoreGlobal) {
             icon: "success",
             duration: 2e3
           });
-          formatAppLog("log", "at pages/sql/sql.vue:237", "Project删除成功：", result);
+          formatAppLog("log", "at pages/sql/sql.vue:275", "Project删除成功：", result);
         }).catch((error2) => {
           uni.showToast({
             title: "Project删除失败",
             icon: "error",
             duration: 2e3
           });
-          formatAppLog("error", "at pages/sql/sql.vue:245", "Project查询失败：", error2);
+          formatAppLog("error", "at pages/sql/sql.vue:283", "Project查询失败：", error2);
         });
       }
     }
@@ -4117,7 +3953,15 @@ if (uni.restoreGlobal) {
         vue.createElementVNode("button", {
           type: "default",
           onClick: _cache[9] || (_cache[9] = (...args) => $options.deleteproject && $options.deleteproject(...args))
-        }, "删除project")
+        }, "删除project"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[10] || (_cache[10] = ($event) => $options.dropTable())
+        }, "删除BillUser"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[11] || (_cache[11] = ($event) => $options.clearBillUser())
+        }, "清除BillUser")
       ])
     ]);
   }

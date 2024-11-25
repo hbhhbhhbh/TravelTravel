@@ -12,11 +12,14 @@
 			<button type="default" @click="addproject">插入数据到project</button>
 			<button type="default" @click="selectproject">查询project</button>
 			<button type="default" @click="deleteproject">删除project</button>
+			<button type="default" @click="dropTable()">删除BillUser</button>
+			<button type="default" @click="clearBillUser()">清除BillUser</button>
 		</div>
 	</view>
 </template>
 
 <script>
+	import BillUser from '../../common/util/BillUser';
 	import util from '@/common/util/operateSqlite.js';
 	import project from '@/common/util/project.js';
 	export default {
@@ -47,7 +50,42 @@
 			// this.open();
 		},
 		methods: {
-
+			clearBillUser() {
+				BillUser.clear("BillUser").then((result) => {
+						uni.showToast({
+							title: '数据库清除成功',
+							icon: 'success',
+							duration: 2000
+						});
+						console.log('数据库清除成功：', result); // 可选，保留日志
+					})
+					.catch((error) => {
+						uni.showToast({
+							title: '数据库清除失败',
+							icon: 'error',
+							duration: 2000
+						});
+						console.error('数据库清除失败：', error); // 可选，保留日志
+					});
+			},
+			dropTable() {
+				util.dropTable().then((result) => {
+						uni.showToast({
+							title: '数据库删除成功',
+							icon: 'success',
+							duration: 2000
+						});
+						console.log('表格删除成功：', result); // 可选，保留日志
+					})
+					.catch((error) => {
+						uni.showToast({
+							title: '数据库删除失败',
+							icon: 'error',
+							duration: 2000
+						});
+						console.error('表格删除失败：', error); // 可选，保留日志
+					});
+			},
 			isopenDB() {
 				util.openSqlite().then((result) => {
 						uni.showToast({

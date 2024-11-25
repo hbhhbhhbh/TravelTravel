@@ -165,9 +165,9 @@
 			 */
 			toggleRowSelection(row, selected) {
 				// if (!this.theadChildren) return
-				console.log("row: " + row);
-				row = [].concat(row)
 
+				row = [].concat(row)
+				console.log("row: " + row);
 				this.trChildren.forEach((item, index) => {
 					// if (item.keyValue) {
 
