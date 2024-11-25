@@ -30,9 +30,13 @@
 
 		<!-- 底部固定按钮 -->
 		<view class="fixed-button-container">
-			<view class="add-button" @click="handleAdd">添加</view>
 			<view class="fixed-button" @click="handleSettle">结算</view>
+			<view class="add-button" @click="handleAdd">记一笔</view>
+
 		</view>
+
+
+		<!-- 弹窗 -->
 		<view v-if="showModalAddProject" class="modal-overlay">
 			<view class="modal-content">
 				<view class="modal-header">添加项目</view>
@@ -360,6 +364,7 @@
 				this.showModaleditPer = false;
 			},
 			handleSettle() {
+				uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
 				console.log('当前项目的结算数据:', this.currentItems);
 			},
 			//编辑项目：生成弹窗，里面可以编辑也可以删除

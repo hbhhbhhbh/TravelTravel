@@ -45,16 +45,29 @@
 
 .add-button {
 	position: fixed;
-	bottom: 62rpx;
-	left: 0;
-	width: 100%;
-	display: flex;
-	justify-content: space-around;
-	padding: 10rpx 0;
-	background-color: #ffffff;
-	box-shadow: 0 -2rpx 5rpx rgba(0, 0, 0, 0.1);
-	border: 1px solid #000000;
-
+	bottom: 80rpx;
+	/* 转换为 rpx */
+	right: 40rpx;
+	/* 转换为 rpx */
+	width: 120rpx;
+	/* 转换为 rpx */
+	height: 120rpx;
+	/* 转换为 rpx */
+	background-color: #007aff;
+	border: none;
+	border-radius: 50%;
+	/* 保持为圆形 */
+	color: white;
+	font-size: 30rpx;
+	/* 转换为 rpx */
+	text-align: center;
+	line-height: 120rpx;
+	/* 转换为 rpx，垂直居中 */
+	box-shadow: 0 8rpx 12rpx rgba(0, 0, 0, 0.2);
+	/* 转换为 rpx */
+	cursor: pointer;
+	z-index: 1000;
+	/* 保证位于其他内容上方 */
 }
 
 .calc-button {

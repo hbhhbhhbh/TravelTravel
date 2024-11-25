@@ -1241,15 +1241,29 @@ uni-input[data-v-c7245072] {
 }
 .add-button[data-v-1fc7d2ef] {
 	position: fixed;
-	bottom: 1.9375rem;
-	left: 0;
-	width: 100%;
-	display: flex;
-	justify-content: space-around;
-	padding: 0.3125rem 0;
-	background-color: #ffffff;
-	box-shadow: 0 -0.0625rem 0.15625rem rgba(0, 0, 0, 0.1);
-	border: 1px solid #000000;
+	bottom: 2.5rem;
+	/* 转换为 rpx */
+	right: 1.25rem;
+	/* 转换为 rpx */
+	width: 3.75rem;
+	/* 转换为 rpx */
+	height: 3.75rem;
+	/* 转换为 rpx */
+	background-color: #007aff;
+	border: none;
+	border-radius: 50%;
+	/* 保持为圆形 */
+	color: white;
+	font-size: 0.9375rem;
+	/* 转换为 rpx */
+	text-align: center;
+	line-height: 3.75rem;
+	/* 转换为 rpx，垂直居中 */
+	box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.2);
+	/* 转换为 rpx */
+	cursor: pointer;
+	z-index: 1000;
+	/* 保证位于其他内容上方 */
 }
 .calc-button[data-v-1fc7d2ef] {
 	width: 40%;
