@@ -40,7 +40,7 @@
 	padding: 20rpx;
 	border: 1rpx solid #ccc;
 	/* 边框宽度改为 rpx */
-	border-radius: 10rpx;
+	//border-radius: 10rpx;
 	/* 边框圆角调整 */
 	font-size: 28rpx;
 	/* 输入框字体大小 */
@@ -58,7 +58,7 @@
 	border-radius: 10rpx;
 	/* 按钮圆角调整 */
 	cursor: pointer;
-	background-color: #007aff;
+	background-color: #687267;
 	color: white;
 	font-size: 28rpx;
 	/* 按钮字体大小 */

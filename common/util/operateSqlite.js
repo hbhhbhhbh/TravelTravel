@@ -251,7 +251,66 @@ function deleteInformationType(name, sol, qq, ww, ee) {
 			reject("错误删除")
 		});
 	}
+} // 删除 BillUser 表中的数据
+function deleteFromBillUser(name) {
+	// 拼接 SQL 删除 BillUser 表中的数据
+	const sql = 'DELETE FROM BillUser WHERE userid IN (SELECT id FROM user WHERE name = "' + name + '")';
+	console.log(sql);
+	return new Promise((resolve, reject) => {
+		plus.sqlite.executeSql({
+			name: 'travel',
+			sql: sql,
+			success(e) {
+				console.log('Deleted from BillUser table', e);
+				resolve(e); // 成功后返回结果
+			},
+			fail(e) {
+				console.error('Failed to delete from BillUser table:', e);
+				reject(e); // 失败时返回错误
+			}
+		});
+	});
 }
+
+// 删除 user 表中的数据
+function deleteFromUser(name) {
+	// 拼接 SQL 删除 user 表中的数据
+	const sql = 'DELETE FROM user WHERE name = "' + name + '"';
+	console.log(sql);
+	return new Promise((resolve, reject) => {
+		plus.sqlite.executeSql({
+			name: 'travel',
+			sql: sql,
+			success(e) {
+				console.log('Deleted from user table', e);
+				resolve(e); // 成功后返回结果
+			},
+			fail(e) {
+				console.error('Failed to delete from user table:', e);
+				reject(e); // 失败时返回错误
+			}
+		});
+	});
+}
+
+// 删除用户数据的整体方法
+function deleteUser(name) {
+	console.log('Deleting data for user:', name);
+
+	// 先删除 BillUser 表中的数据
+	deleteFromBillUser(name)
+		.then(() => {
+			// BillUser 表中的数据删除成功后，继续删除 user 表中的数据
+			return deleteFromUser(name);
+		})
+		.then(() => {
+			console.log('Successfully deleted user data from both tables');
+		})
+		.catch((error) => {
+			console.error('Error deleting user data:', error);
+		});
+}
+
 
 //修改数据表里的数据
 //第一个参数为表格名，name为要修改的列名，cont为要修改为什么值，use,sel为搜索条件，分别是列名和列值
@@ -361,5 +420,6 @@ export default {
 	modifyInformation,
 	updateTableStructure,
 	deleteTable,
-	dropTable
+	dropTable,
+	deleteUser,
 }

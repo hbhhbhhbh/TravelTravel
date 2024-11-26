@@ -401,6 +401,52 @@ if (uni.restoreGlobal) {
       });
     }
   }
+  function deleteFromBillUser(name) {
+    const sql = 'DELETE FROM BillUser WHERE userid IN (SELECT id FROM user WHERE name = "' + name + '")';
+    formatAppLog("log", "at common/util/operateSqlite.js:258", sql);
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        sql,
+        success(e2) {
+          formatAppLog("log", "at common/util/operateSqlite.js:264", "Deleted from BillUser table", e2);
+          resolve(e2);
+        },
+        fail(e2) {
+          formatAppLog("error", "at common/util/operateSqlite.js:268", "Failed to delete from BillUser table:", e2);
+          reject(e2);
+        }
+      });
+    });
+  }
+  function deleteFromUser(name) {
+    const sql = 'DELETE FROM user WHERE name = "' + name + '"';
+    formatAppLog("log", "at common/util/operateSqlite.js:279", sql);
+    return new Promise((resolve, reject) => {
+      plus.sqlite.executeSql({
+        name: "travel",
+        sql,
+        success(e2) {
+          formatAppLog("log", "at common/util/operateSqlite.js:285", "Deleted from user table", e2);
+          resolve(e2);
+        },
+        fail(e2) {
+          formatAppLog("error", "at common/util/operateSqlite.js:289", "Failed to delete from user table:", e2);
+          reject(e2);
+        }
+      });
+    });
+  }
+  function deleteUser(name) {
+    formatAppLog("log", "at common/util/operateSqlite.js:298", "Deleting data for user:", name);
+    deleteFromBillUser(name).then(() => {
+      return deleteFromUser(name);
+    }).then(() => {
+      formatAppLog("log", "at common/util/operateSqlite.js:307", "Successfully deleted user data from both tables");
+    }).catch((error2) => {
+      formatAppLog("error", "at common/util/operateSqlite.js:310", "Error deleting user data:", error2);
+    });
+  }
   function modifyInformation$3(listName, name, cont, use, sel) {
     var sql;
     if (use == void 0) {
@@ -464,11 +510,11 @@ if (uni.restoreGlobal) {
         sql: "DROP TABLE IF EXISTS BillUser",
         // 删除 BillUser 表
         success(e2) {
-          formatAppLog("log", "at common/util/operateSqlite.js:337", "表 BillUser 删除成功");
+          formatAppLog("log", "at common/util/operateSqlite.js:396", "表 BillUser 删除成功");
           resolve(e2);
         },
         fail(e2) {
-          formatAppLog("error", "at common/util/operateSqlite.js:341", "表删除失败:", e2);
+          formatAppLog("error", "at common/util/operateSqlite.js:400", "表删除失败:", e2);
           reject(e2);
         }
       });
@@ -490,7 +536,8 @@ if (uni.restoreGlobal) {
     modifyInformation: modifyInformation$3,
     updateTableStructure,
     deleteTable,
-    dropTable
+    dropTable,
+    deleteUser
   };
   function selectInformationType$2(name, aa, bb, cc, dd) {
     if (name !== void 0) {
@@ -675,7 +722,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$k = {
+  const _sfc_main$l = {
     data() {
       return {
         // odb:'',
@@ -696,21 +743,19 @@ if (uni.restoreGlobal) {
         }
       };
     },
-    onPullDownRefresh() {
-      formatAppLog("log", "at pages/index/index.vue:35", "refresh");
-      utils.initializeDB();
-      uni.stopPullDownRefresh();
-    },
     onLoad() {
+      utils.initializeDB();
     },
     methods: {}
   };
-  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("div", { class: "typing-container" }, [
-      vue.createElementVNode("span", { class: "typing" }, "HBH's Travel Tools")
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "main-container" }, [
+      vue.createElementVNode("view", { class: "typing-container" }, [
+        vue.createElementVNode("span", { class: "typing" }, "HBH's Travel Tools")
+      ])
     ]);
   }
-  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-1cf27b2a"], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
+  const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-1cf27b2a"], ["__file", "D:/uni/travel-new/pages/index/index.vue"]]);
   const fontData = [
     {
       "font_class": "arrow-down",
@@ -1361,7 +1406,7 @@ if (uni.restoreGlobal) {
     const reg = /^[0-9]*$/g;
     return typeof val === "number" || reg.test(val) ? val + "px" : val;
   };
-  const _sfc_main$j = {
+  const _sfc_main$k = {
     name: "UniIcons",
     emits: ["click"],
     props: {
@@ -1415,7 +1460,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "text",
       {
@@ -1430,8 +1475,8 @@ if (uni.restoreGlobal) {
       /* CLASS, STYLE */
     );
   }
-  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/uni/travel-new/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
-  const _sfc_main$i = {
+  const __easycom_0$4 = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-d31e1c47"], ["__file", "D:/uni/travel-new/uni_modules/uni-icons/components/uni-icons/uni-icons.vue"]]);
+  const _sfc_main$j = {
     name: "uniCollapseItem",
     props: {
       // 列表标题
@@ -1601,7 +1646,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_uni_icons = resolveEasycom(vue.resolveDynamicComponent("uni-icons"), __easycom_0$4);
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-collapse-item" }, [
       vue.createCommentVNode(" onClick(!isOpen) "),
@@ -1678,8 +1723,8 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-3d2dde9f"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
-  const _sfc_main$h = {
+  const __easycom_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-3d2dde9f"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse-item/uni-collapse-item.vue"]]);
+  const _sfc_main$i = {
     name: "uniCollapse",
     emits: ["change", "activeItem", "input", "update:modelValue"],
     props: {
@@ -1790,2291 +1835,12 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "uni-collapse" }, [
       vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
     ]);
   }
-  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-3f050360"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
-  const STORAGE_KEYS = {
-    CURRENTITEMS: "currentItems",
-    // 用户信息
-    AllPerson: "AllPerson",
-    // 认证令牌
-    nowproject: "nowproject"
-    // 应用设置
-  };
-  const _imports_0$1 = "/static/GoodItem/edit.png";
-  const _imports_0 = "/static/GoodItem/delete.png";
-  const _sfc_main$g = {
-    name: "GoodItem",
-    props: {
-      index: {
-        type: Number,
-        // 父组件传入的索引，用于标识具体的卡片
-        required: true
-      },
-      showData: {
-        type: Object,
-        required: true
-        // 从父组件接收数据
-      }
-    },
-    inheritAttrs: false,
-    data() {
-      return {
-        isExpanded: false,
-        loading: true,
-        Persons: [],
-        update: false,
-        value: ["0"],
-        showModal: false,
-        // 控制弹窗显示
-        contentHeight: "auto",
-        // 动态内容高度
-        formData: {
-          ...this.showData
-        }
-      };
-    },
-    mounted() {
-      this.selectBillUser();
-    },
-    methods: {
-      showPer() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:101", "跳转");
-        uni.navigateTo({
-          url: "/pages/showPer/showPer"
-        });
-      },
-      toggleModal() {
-        this.showModal = !this.showModal;
-      },
-      submitForm() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:112", "提交的表单数据:", this.formData);
-        this.$emit("update-item", this.index, {
-          ...this.formData
-        });
-        this.update = true;
-        this.toggleModal();
-      },
-      async toggleCollapse(isExpanded) {
-        this.update = false;
-        this.isExpanded = !this.isExpanded;
-        if (this.isExpanded) {
-          await this.selectBillUser();
-          uni.createSelectorQuery().in(this);
-          const query1 = uni.createSelectorQuery().in(this);
-          query1.select(".Item-container").boundingClientRect((itemData) => {
-            if (!itemData)
-              return;
-            formatAppLog("log", "at components/GoodItem/GoodItem.vue:141", "Item-container: " + itemData.height);
-            this.contentHeight = `${this.pxToRpx(this.Persons.length * 15 + itemData.height + 20)}rpx`;
-            formatAppLog("log", "at components/GoodItem/GoodItem.vue:145", "调整后的高度:", this.contentHeight);
-          }).exec();
-        } else {
-          this.contentHeight = "auto";
-        }
-      },
-      pxToRpx(px) {
-        const screenWidth = uni.getSystemInfoSync().screenWidth;
-        return 750 / screenWidth * px;
-      },
-      async selectBillUser() {
-        this.loading = true;
-        const currentItems = uni.getStorageSync(STORAGE_KEYS.CURRENTITEMS);
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:165", "GOODITEM-SELECTBILLUSER-START");
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:166", currentItems[this.index]);
-        const result = await BillUser.selectInformationType("BillUser", "Billid", currentItems[this.index].id);
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:171", "nowBillPerson: ", result);
-        this.Persons = [];
-        for (const obj of result) {
-          try {
-            const result1 = await util.selectInformationType(
-              "user",
-              // 表名
-              "id",
-              // 查询字段
-              `'${obj.userid}'`
-              // 查询值，注意加上单引号
-            );
-            formatAppLog("log", "at components/GoodItem/GoodItem.vue:185", "result: ", result1);
-            this.Persons.push(...result1);
-          } catch (error2) {
-            formatAppLog("error", "at components/GoodItem/GoodItem.vue:190", "查询用户失败:", error2);
-          } finally {
-            this.loading = false;
-          }
-        }
-        this.loading = false;
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:197", "Persons: ", this.Persons);
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:198", "loading ", this.loading);
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:199", "GOODITEM-SELECTBILLUSER-END");
-      },
-      editPer() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:203", "触发增加人员");
-        this.$emit("edit-per", this.index);
-      },
-      deleteSelf() {
-        formatAppLog("log", "at components/GoodItem/GoodItem.vue:207", this.index);
-        this.$emit("delete-item", this.index);
-      }
-    }
-  };
-  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_uni_collapse_item = resolveEasycom(vue.resolveDynamicComponent("uni-collapse-item"), __easycom_0$3);
-    const _component_uni_collapse = resolveEasycom(vue.resolveDynamicComponent("uni-collapse"), __easycom_1$3);
-    return vue.openBlock(), vue.createElementBlock(
-      vue.Fragment,
-      null,
-      [
-        vue.createCommentVNode(" 卡片 "),
-        vue.createElementVNode(
-          "view",
-          {
-            class: "Item-container",
-            style: vue.normalizeStyle({ height: $data.contentHeight })
-          },
-          [
-            vue.createElementVNode("view", { class: "card" }, [
-              vue.createElementVNode("view", { class: "top-bar" }, [
-                vue.createElementVNode("view", { style: { "font-size": "25rpx", "width": "200rpx" } }, "名称"),
-                vue.createElementVNode("view", { style: { "font-size": "25rpx", "width": "200rpx" } }, "数量"),
-                vue.createElementVNode("view", { style: { "font-size": "25rpx", "width": "200rpx" } }, "价格"),
-                vue.createElementVNode("image", {
-                  onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleModal && $options.toggleModal(...args)),
-                  src: _imports_0$1,
-                  class: "set-info"
-                })
-              ]),
-              vue.createElementVNode("view", { class: "top-bar bot-bar" }, [
-                vue.createElementVNode(
-                  "view",
-                  {
-                    class: "input-item name",
-                    style: { "font-size": "25rpx", "width": "200rpx" }
-                  },
-                  vue.toDisplayString($props.showData.name),
-                  1
-                  /* TEXT */
-                ),
-                vue.createElementVNode(
-                  "view",
-                  {
-                    class: "input-item cnt",
-                    style: { "font-size": "25rpx", "width": "200rpx" }
-                  },
-                  vue.toDisplayString($props.showData.cnt),
-                  1
-                  /* TEXT */
-                ),
-                vue.createElementVNode(
-                  "view",
-                  {
-                    class: "input-item price",
-                    style: { "font-size": "25rpx", "width": "200rpx" }
-                  },
-                  vue.toDisplayString($props.showData.price),
-                  1
-                  /* TEXT */
-                ),
-                vue.createElementVNode("image", {
-                  onClick: _cache[1] || (_cache[1] = (...args) => $options.deleteSelf && $options.deleteSelf(...args)),
-                  src: _imports_0,
-                  class: "set-info"
-                })
-              ]),
-              vue.createVNode(_component_uni_collapse, null, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(_component_uni_collapse_item, {
-                    class: "showPer",
-                    title: "查看人员",
-                    onClick: $options.toggleCollapse
-                  }, {
-                    default: vue.withCtx(() => [
-                      vue.createElementVNode("view", { class: "content" }, [
-                        $data.loading ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "加载中...")) : $data.Persons.length === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "暂无人员")) : vue.createCommentVNode("v-if", true),
-                        (vue.openBlock(true), vue.createElementBlock(
-                          vue.Fragment,
-                          null,
-                          vue.renderList($data.Persons, (person, index2) => {
-                            return vue.openBlock(), vue.createElementBlock(
-                              "view",
-                              {
-                                key: index2,
-                                class: "list-item"
-                              },
-                              vue.toDisplayString(person.name),
-                              1
-                              /* TEXT */
-                            );
-                          }),
-                          128
-                          /* KEYED_FRAGMENT */
-                        ))
-                      ])
-                    ]),
-                    _: 1
-                    /* STABLE */
-                  }, 8, ["onClick"])
-                ]),
-                _: 1
-                /* STABLE */
-              })
-            ])
-          ],
-          4
-          /* STYLE */
-        ),
-        vue.createCommentVNode(" 弹窗编辑部分 "),
-        $data.showModal ? (vue.openBlock(), vue.createElementBlock("view", {
-          key: 0,
-          class: "modal"
-        }, [
-          vue.createElementVNode("view", { class: "modal-content" }, [
-            vue.createElementVNode("view", { class: "modal-header" }, [
-              vue.createElementVNode("text", null, "填写内容"),
-              vue.createElementVNode("view", {
-                class: "close-button",
-                onClick: _cache[2] || (_cache[2] = (...args) => $options.toggleModal && $options.toggleModal(...args))
-              }, "×")
-            ]),
-            vue.createCommentVNode(" 表单内容 "),
-            vue.createElementVNode(
-              "form",
-              {
-                onSubmit: _cache[8] || (_cache[8] = vue.withModifiers((...args) => $options.submitForm && $options.submitForm(...args), ["prevent"]))
-              },
-              [
-                vue.createElementVNode("view", { class: "form-group" }, [
-                  vue.createElementVNode("text", null, "名称："),
-                  vue.withDirectives(vue.createElementVNode(
-                    "input",
-                    {
-                      type: "text",
-                      "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.formData.name = $event),
-                      placeholder: "请输入名称"
-                    },
-                    null,
-                    512
-                    /* NEED_PATCH */
-                  ), [
-                    [vue.vModelText, $data.formData.name]
-                  ])
-                ]),
-                vue.createElementVNode("view", { class: "form-group" }, [
-                  vue.createElementVNode("text", null, "数量："),
-                  vue.withDirectives(vue.createElementVNode(
-                    "input",
-                    {
-                      type: "number",
-                      "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.formData.cnt = $event),
-                      placeholder: "请输入数量"
-                    },
-                    null,
-                    512
-                    /* NEED_PATCH */
-                  ), [
-                    [vue.vModelText, $data.formData.cnt]
-                  ])
-                ]),
-                vue.createElementVNode("view", { class: "form-group" }, [
-                  vue.createElementVNode("text", null, "价格："),
-                  vue.withDirectives(vue.createElementVNode(
-                    "input",
-                    {
-                      type: "number",
-                      "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.formData.price = $event),
-                      placeholder: "请输入价格"
-                    },
-                    null,
-                    512
-                    /* NEED_PATCH */
-                  ), [
-                    [vue.vModelText, $data.formData.price]
-                  ])
-                ]),
-                vue.createElementVNode("button", {
-                  type: "button",
-                  onClick: _cache[6] || (_cache[6] = (...args) => $options.submitForm && $options.submitForm(...args)),
-                  class: "submit-button"
-                }, "提交"),
-                vue.createElementVNode("button", {
-                  type: "button",
-                  onClick: _cache[7] || (_cache[7] = (...args) => $options.editPer && $options.editPer(...args)),
-                  class: "submit-button",
-                  style: { "margin-top": "20rpx" }
-                }, "增加人员")
-              ],
-              32
-              /* NEED_HYDRATION */
-            )
-          ])
-        ])) : vue.createCommentVNode("v-if", true)
-      ],
-      64
-      /* STABLE_FRAGMENT */
-    );
-  }
-  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
-  const _sfc_main$f = {
-    name: "uniTh",
-    options: {
-      virtualHost: true
-    },
-    components: {},
-    emits: ["sort-change", "filter-change"],
-    props: {
-      width: {
-        type: [String, Number],
-        default: ""
-      },
-      align: {
-        type: String,
-        default: "left"
-      },
-      rowspan: {
-        type: [Number, String],
-        default: 1
-      },
-      colspan: {
-        type: [Number, String],
-        default: 1
-      },
-      sortable: {
-        type: Boolean,
-        default: false
-      },
-      filterType: {
-        type: String,
-        default: ""
-      },
-      filterData: {
-        type: Array,
-        default() {
-          return [];
-        }
-      },
-      filterDefaultValue: {
-        type: [Array, String],
-        default() {
-          return "";
-        }
-      }
-    },
-    data() {
-      return {
-        border: false,
-        ascending: false,
-        descending: false
-      };
-    },
-    computed: {
-      // 根据props中的width属性 自动匹配当前th的宽度(px)
-      customWidth() {
-        if (typeof this.width === "number") {
-          return this.width;
-        } else if (typeof this.width === "string") {
-          let regexHaveUnitPx = new RegExp(/^[1-9][0-9]*px$/g);
-          let regexHaveUnitRpx = new RegExp(/^[1-9][0-9]*rpx$/g);
-          let regexHaveNotUnit = new RegExp(/^[1-9][0-9]*$/g);
-          if (this.width.match(regexHaveUnitPx) !== null) {
-            return this.width.replace("px", "");
-          } else if (this.width.match(regexHaveUnitRpx) !== null) {
-            let numberRpx = Number(this.width.replace("rpx", ""));
-            let widthCoe = uni.getSystemInfoSync().screenWidth / 750;
-            return Math.round(numberRpx * widthCoe);
-          } else if (this.width.match(regexHaveNotUnit) !== null) {
-            return this.width;
-          } else {
-            return "";
-          }
-        } else {
-          return "";
-        }
-      },
-      contentAlign() {
-        let align = "left";
-        switch (this.align) {
-          case "left":
-            align = "flex-start";
-            break;
-          case "center":
-            align = "center";
-            break;
-          case "right":
-            align = "flex-end";
-            break;
-        }
-        return align;
-      }
-    },
-    created() {
-      this.root = this.getTable("uniTable");
-      this.rootTr = this.getTable("uniTr");
-      this.rootTr.minWidthUpdate(this.customWidth ? this.customWidth : 140);
-      this.border = this.root.border;
-      this.root.thChildren.push(this);
-    },
-    methods: {
-      sort() {
-        if (!this.sortable)
-          return;
-        this.clearOther();
-        if (!this.ascending && !this.descending) {
-          this.ascending = true;
-          this.$emit("sort-change", { order: "ascending" });
-          return;
-        }
-        if (this.ascending && !this.descending) {
-          this.ascending = false;
-          this.descending = true;
-          this.$emit("sort-change", { order: "descending" });
-          return;
-        }
-        if (!this.ascending && this.descending) {
-          this.ascending = false;
-          this.descending = false;
-          this.$emit("sort-change", { order: null });
-        }
-      },
-      ascendingFn() {
-        this.clearOther();
-        this.ascending = !this.ascending;
-        this.descending = false;
-        this.$emit("sort-change", { order: this.ascending ? "ascending" : null });
-      },
-      descendingFn() {
-        this.clearOther();
-        this.descending = !this.descending;
-        this.ascending = false;
-        this.$emit("sort-change", { order: this.descending ? "descending" : null });
-      },
-      clearOther() {
-        this.root.thChildren.map((item) => {
-          if (item !== this) {
-            item.ascending = false;
-            item.descending = false;
-          }
-          return item;
-        });
-      },
-      ondropdown(e2) {
-        this.$emit("filter-change", e2);
-      },
-      /**
-       * 获取父元素实例
-       */
-      getTable(name) {
-        let parent = this.$parent;
-        let parentName = parent.$options.name;
-        while (parentName !== name) {
-          parent = parent.$parent;
-          if (!parent)
-            return false;
-          parentName = parent.$options.name;
-        }
-        return parent;
-      }
-    }
-  };
-  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock(
-      "view",
-      {
-        class: vue.normalizeClass(["uni-table-th", { "table--border": $data.border }]),
-        style: vue.normalizeStyle({ width: $options.customWidth + "px", "text-align": $props.align })
-      },
-      [
-        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
-      ],
-      6
-      /* CLASS, STYLE */
-    );
-  }
-  const __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-bf970acd"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-th/uni-th.vue"]]);
-  const _sfc_main$e = {
-    name: "TableCheckbox",
-    emits: ["checkboxSelected"],
-    props: {
-      indeterminate: {
-        type: Boolean,
-        default: false
-      },
-      checked: {
-        type: [Boolean, String],
-        default: false
-      },
-      disabled: {
-        type: Boolean,
-        default: false
-      },
-      index: {
-        type: Number,
-        default: -1
-      },
-      cellData: {
-        type: Object,
-        default() {
-          return {};
-        }
-      }
-    },
-    watch: {
-      checked(newVal) {
-        if (typeof this.checked === "boolean") {
-          this.isChecked = newVal;
-        } else {
-          this.isChecked = true;
-        }
-      },
-      indeterminate(newVal) {
-        this.isIndeterminate = newVal;
-      }
-    },
-    data() {
-      return {
-        isChecked: false,
-        isDisabled: false,
-        isIndeterminate: false
-      };
-    },
-    created() {
-      if (typeof this.checked === "boolean") {
-        this.isChecked = this.checked;
-      }
-      this.isDisabled = this.disabled;
-    },
-    methods: {
-      selected() {
-        if (this.isDisabled)
-          return;
-        this.isIndeterminate = false;
-        this.isChecked = !this.isChecked;
-        this.$emit("checkboxSelected", {
-          checked: this.isChecked,
-          data: this.cellData
-        });
-      }
-    }
-  };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", {
-      class: "uni-table-checkbox",
-      onClick: _cache[0] || (_cache[0] = (...args) => $options.selected && $options.selected(...args))
-    }, [
-      !$props.indeterminate ? (vue.openBlock(), vue.createElementBlock(
-        "view",
-        {
-          key: 0,
-          class: vue.normalizeClass(["checkbox__inner", { "is-checked": $data.isChecked, "is-disable": $data.isDisabled }])
-        },
-        [
-          vue.createElementVNode("view", { class: "checkbox__inner-icon" })
-        ],
-        2
-        /* CLASS */
-      )) : (vue.openBlock(), vue.createElementBlock("view", {
-        key: 1,
-        class: "checkbox__inner checkbox--indeterminate"
-      }, [
-        vue.createElementVNode("view", { class: "checkbox__inner-icon" })
-      ]))
-    ]);
-  }
-  const tableCheckbox = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-25e435b1"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-tr/table-checkbox.vue"]]);
-  const _sfc_main$d = {
-    name: "uniTr",
-    components: {
-      tableCheckbox
-    },
-    props: {
-      disabled: {
-        type: Boolean,
-        default: false
-      },
-      keyValue: {
-        type: [String, Number],
-        default: ""
-      }
-    },
-    options: {
-      virtualHost: true
-    },
-    data() {
-      return {
-        value: false,
-        border: false,
-        selection: false,
-        widthThArr: [],
-        ishead: true,
-        checked: false,
-        indeterminate: false
-      };
-    },
-    created() {
-      this.root = this.getTable();
-      this.head = this.getTable("uniThead");
-      if (this.head) {
-        this.ishead = false;
-        this.head.init(this);
-      }
-      this.border = this.root.border;
-      this.selection = this.root.type;
-      this.root.trChildren.push(this);
-      const rowData = this.root.data.find((v) => v[this.root.rowKey] === this.keyValue);
-      if (rowData) {
-        this.rowData = rowData;
-      }
-      this.root.isNodata();
-    },
-    mounted() {
-      if (this.widthThArr.length > 0) {
-        const selectionWidth = this.selection === "selection" ? 50 : 0;
-        this.root.minWidth = Number(this.widthThArr.reduce((a2, b) => Number(a2) + Number(b))) + selectionWidth;
-      }
-    },
-    unmounted() {
-      const index2 = this.root.trChildren.findIndex((i2) => i2 === this);
-      this.root.trChildren.splice(index2, 1);
-      this.root.isNodata();
-    },
-    methods: {
-      minWidthUpdate(width) {
-        this.widthThArr.push(width);
-        if (this.widthThArr.length > 0) {
-          const selectionWidth = this.selection === "selection" ? 50 : 0;
-          this.root.minWidth = Number(this.widthThArr.reduce((a2, b) => Number(a2) + Number(b))) + selectionWidth;
-        }
-      },
-      // 选中
-      checkboxSelected(e2) {
-        let rootData = this.root.data.find((v) => v[this.root.rowKey] === this.keyValue);
-        this.checked = e2.checked;
-        this.root.check(rootData || this, e2.checked, rootData ? this.keyValue : null);
-      },
-      change(e2) {
-        this.root.trChildren.forEach((item) => {
-          if (item === this) {
-            this.root.check(this, e2.detail.value.length > 0 ? true : false);
-          }
-        });
-      },
-      /**
-       * 获取父元素实例
-       */
-      getTable(name = "uniTable") {
-        let parent = this.$parent;
-        let parentName = parent.$options.name;
-        while (parentName !== name) {
-          parent = parent.$parent;
-          if (!parent)
-            return false;
-          parentName = parent.$options.name;
-        }
-        return parent;
-      }
-    }
-  };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
-    const _component_table_checkbox = vue.resolveComponent("table-checkbox");
-    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-table-tr" }, [
-      $data.selection === "selection" ? (vue.openBlock(), vue.createElementBlock(
-        "view",
-        {
-          key: 0,
-          class: vue.normalizeClass(["checkbox", { "tr-table--border": $data.border }])
-        },
-        [
-          vue.createVNode(_component_table_checkbox, {
-            checked: $data.checked,
-            indeterminate: $data.indeterminate,
-            disabled: $props.disabled,
-            onCheckboxSelected: $options.checkboxSelected
-          }, null, 8, ["checked", "indeterminate", "disabled", "onCheckboxSelected"])
-        ],
-        2
-        /* CLASS */
-      )) : vue.createCommentVNode("v-if", true),
-      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
-    ]);
-  }
-  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-b48b3e32"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-tr/uni-tr.vue"]]);
-  const _sfc_main$c = {
-    name: "uniTd",
-    options: {
-      virtualHost: true
-    },
-    props: {
-      width: {
-        type: [String, Number],
-        default: ""
-      },
-      align: {
-        type: String,
-        default: "left"
-      },
-      rowspan: {
-        type: [Number, String],
-        default: 1
-      },
-      colspan: {
-        type: [Number, String],
-        default: 1
-      }
-    },
-    data() {
-      return {
-        border: false
-      };
-    },
-    created() {
-      this.root = this.getTable();
-      this.border = this.root.border;
-    },
-    methods: {
-      /**
-       * 获取父元素实例
-       */
-      getTable() {
-        let parent = this.$parent;
-        let parentName = parent.$options.name;
-        while (parentName !== "uniTable") {
-          parent = parent.$parent;
-          if (!parent)
-            return false;
-          parentName = parent.$options.name;
-        }
-        return parent;
-      }
-    }
-  };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock(
-      vue.Fragment,
-      null,
-      [
-        vue.createCommentVNode(` :class="{'table--border':border}"  `),
-        vue.createElementVNode(
-          "view",
-          {
-            class: vue.normalizeClass(["uni-table-td", { "table--border": $data.border }]),
-            style: vue.normalizeStyle({ width: $props.width + "px", "text-align": $props.align })
-          },
-          [
-            vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
-          ],
-          6
-          /* CLASS, STYLE */
-        )
-      ],
-      2112
-      /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
-    );
-  }
-  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-edae4802"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-td/uni-td.vue"]]);
-  const _sfc_main$b = {
-    name: "uniTable",
-    options: {
-      virtualHost: true
-    },
-    emits: ["selection-change"],
-    props: {
-      data: {
-        type: Array,
-        default() {
-          return [];
-        }
-      },
-      // 是否有竖线
-      border: {
-        type: Boolean,
-        default: false
-      },
-      // 是否显示斑马线
-      stripe: {
-        type: Boolean,
-        default: false
-      },
-      // 多选
-      type: {
-        type: String,
-        default: ""
-      },
-      // 没有更多数据
-      emptyText: {
-        type: String,
-        default: "没有更多数据"
-      },
-      loading: {
-        type: Boolean,
-        default: false
-      },
-      rowKey: {
-        type: String,
-        default: ""
-      }
-    },
-    data() {
-      return {
-        noData: true,
-        minWidth: 0,
-        multiTableHeads: []
-      };
-    },
-    watch: {
-      loading(val) {
-      },
-      data(newVal) {
-        this.theadChildren;
-        if (this.theadChildren) {
-          this.theadChildren.rowspan;
-        }
-        this.noData = false;
-      }
-    },
-    created() {
-      this.trChildren = [];
-      this.thChildren = [];
-      this.theadChildren = null;
-      this.backData = [];
-      this.backIndexData = [];
-    },
-    methods: {
-      isNodata() {
-        this.theadChildren;
-        let rowspan = 1;
-        if (this.theadChildren) {
-          rowspan = this.theadChildren.rowspan;
-        }
-        this.noData = this.trChildren.length - rowspan <= 0;
-      },
-      /**
-       * 选中所有
-       */
-      selectionAll() {
-        let startIndex = 1;
-        let theadChildren = this.theadChildren;
-        if (!this.theadChildren) {
-          theadChildren = this.trChildren[0];
-        } else {
-          startIndex = theadChildren.rowspan - 1;
-        }
-        let isHaveData = this.data && this.data.length > 0;
-        theadChildren.checked = true;
-        theadChildren.indeterminate = false;
-        this.trChildren.forEach((item, index2) => {
-          if (!item.disabled) {
-            item.checked = true;
-            if (isHaveData && item.keyValue) {
-              const row = this.data.find((v) => v[this.rowKey] === item.keyValue);
-              if (!this.backData.find((v) => v[this.rowKey] === row[this.rowKey])) {
-                this.backData.push(row);
-              }
-            }
-            if (index2 > startIndex - 1 && this.backIndexData.indexOf(index2 - startIndex) === -1) {
-              this.backIndexData.push(index2 - startIndex);
-            }
-          }
-        });
-        this.$emit("selection-change", {
-          detail: {
-            value: this.backData,
-            index: this.backIndexData
-          }
-        });
-      },
-      /**
-       * 用于多选表格，切换某一行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中）
-       */
-      toggleRowSelection(row, selected) {
-        row = [].concat(row);
-        formatAppLog("log", "at uni_modules/uni-table/components/uni-table/uni-table.vue:170", "row: " + row);
-        this.trChildren.forEach((item, index2) => {
-          const select = row.findIndex((v) => {
-            if (typeof v === "number") {
-              return v === index2 - 1;
-            } else {
-              return v[this.rowKey] === item.keyValue;
-            }
-          });
-          let ischeck = item.checked;
-          if (select !== -1) {
-            if (typeof selected === "boolean") {
-              item.checked = selected;
-            } else {
-              item.checked = !item.checked;
-            }
-            if (ischeck !== item.checked) {
-              this.check(
-                item.rowData || item,
-                item.checked,
-                item.rowData ? item.keyValue : null,
-                true
-              );
-            }
-          }
-        });
-        this.$emit("selection-change", {
-          detail: {
-            value: this.backData,
-            index: this.backIndexData
-          }
-        });
-      },
-      /**
-       * 用于多选表格，清空用户的选择
-       */
-      clearSelection() {
-        let theadChildren = this.theadChildren;
-        if (!this.theadChildren) {
-          theadChildren = this.trChildren[0];
-        }
-        theadChildren.checked = false;
-        theadChildren.indeterminate = false;
-        this.trChildren.forEach((item) => {
-          item.checked = false;
-        });
-        this.backData = [];
-        this.backIndexData = [];
-        this.$emit("selection-change", {
-          detail: {
-            value: [],
-            index: []
-          }
-        });
-      },
-      /**
-       * 用于多选表格，切换所有行的选中状态
-       */
-      toggleAllSelection() {
-        let list = [];
-        let startIndex = 1;
-        let theadChildren = this.theadChildren;
-        if (!this.theadChildren) {
-          theadChildren = this.trChildren[0];
-        } else {
-          startIndex = theadChildren.rowspan - 1;
-        }
-        this.trChildren.forEach((item, index2) => {
-          if (!item.disabled) {
-            if (index2 > startIndex - 1) {
-              list.push(index2 - startIndex);
-            }
-          }
-        });
-        this.toggleRowSelection(list);
-      },
-      /**
-       * 选中\取消选中
-       * @param {Object} child
-       * @param {Object} check
-       * @param {Object} rowValue
-       */
-      check(child, check, keyValue, emit) {
-        let theadChildren = this.theadChildren;
-        if (!this.theadChildren) {
-          theadChildren = this.trChildren[0];
-        }
-        let childDomIndex = this.trChildren.findIndex((item, index2) => child === item);
-        if (childDomIndex < 0) {
-          childDomIndex = this.data.findIndex((v) => v[this.rowKey] === keyValue) + 1;
-        }
-        this.trChildren.filter((v) => !v.disabled && v.keyValue).length;
-        if (childDomIndex === 0) {
-          check ? this.selectionAll() : this.clearSelection();
-          return;
-        }
-        if (check) {
-          if (keyValue) {
-            this.backData.push(child);
-          }
-          this.backIndexData.push(childDomIndex - 1);
-        } else {
-          const index2 = this.backData.findIndex((v) => v[this.rowKey] === keyValue);
-          const idx = this.backIndexData.findIndex((item) => item === childDomIndex - 1);
-          if (keyValue) {
-            this.backData.splice(index2, 1);
-          }
-          this.backIndexData.splice(idx, 1);
-        }
-        const domCheckAll = this.trChildren.find((item, index2) => index2 > 0 && !item.checked && !item.disabled);
-        if (!domCheckAll) {
-          theadChildren.indeterminate = false;
-          theadChildren.checked = true;
-        } else {
-          theadChildren.indeterminate = true;
-          theadChildren.checked = false;
-        }
-        if (this.backIndexData.length === 0) {
-          theadChildren.indeterminate = false;
-        }
-        if (!emit) {
-          this.$emit("selection-change", {
-            detail: {
-              value: this.backData,
-              index: this.backIndexData
-            }
-          });
-        }
-      }
-    }
-  };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock(
-      "view",
-      {
-        class: vue.normalizeClass(["uni-table-scroll", { "table--border": $props.border, "border-none": !$data.noData }])
-      },
-      [
-        vue.createElementVNode(
-          "view",
-          {
-            class: vue.normalizeClass(["uni-table", { "table--stripe": $props.stripe }]),
-            style: vue.normalizeStyle({ "min-width": $data.minWidth + "px" })
-          },
-          [
-            vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
-            $data.noData ? (vue.openBlock(), vue.createElementBlock("view", {
-              key: 0,
-              class: "uni-table-loading"
-            }, [
-              vue.createElementVNode(
-                "view",
-                {
-                  class: vue.normalizeClass(["uni-table-text", { "empty-border": $props.border }])
-                },
-                vue.toDisplayString($props.emptyText),
-                3
-                /* TEXT, CLASS */
-              )
-            ])) : vue.createCommentVNode("v-if", true),
-            $props.loading ? (vue.openBlock(), vue.createElementBlock(
-              "view",
-              {
-                key: 1,
-                class: vue.normalizeClass(["uni-table-mask", { "empty-border": $props.border }])
-              },
-              [
-                vue.createElementVNode("div", { class: "uni-table--loader" })
-              ],
-              2
-              /* CLASS */
-            )) : vue.createCommentVNode("v-if", true)
-          ],
-          6
-          /* CLASS, STYLE */
-        )
-      ],
-      2
-      /* CLASS */
-    );
-  }
-  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-c1ea9b5d"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-table/uni-table.vue"]]);
-  function selectInformationType$1(name, aa, bb, cc, dd) {
-    if (name !== void 0) {
-      if (aa !== void 0 && cc !== void 0) {
-        var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd;
-      }
-      if (aa !== void 0 && cc == void 0) {
-        var sql = "select * from " + name + " where " + aa + "=" + bb;
-      }
-      if (aa == void 0) {
-        var sql = "select * from " + name;
-      }
-      formatAppLog("log", "at common/util/Bill.js:20", sql);
-      return new Promise((resolve, reject) => {
-        plus.sqlite.selectSql({
-          name: "travel",
-          sql,
-          success(e2) {
-            resolve(e2);
-          },
-          fail(e2) {
-            reject(e2);
-          }
-        });
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误查询");
-      });
-    }
-  }
-  function deleteInformationType$1(name, sol, qq, ww, ee) {
-    if (name !== void 0 && sol !== void 0) {
-      if (ww !== void 0) {
-        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
-      } else {
-        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
-      }
-      formatAppLog("log", "at common/util/Bill.js:51", sql);
-      return new Promise((resolve, reject) => {
-        plus.sqlite.executeSql({
-          name: "travel",
-          sql,
-          success(e2) {
-            resolve(e2);
-          },
-          fail(e2) {
-            reject(e2);
-          }
-        });
-      });
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误删除");
-      });
-    }
-  }
-  function modifyInformation$1(obj) {
-    formatAppLog("log", "at common/util/Bill.js:75", obj);
-    if (obj !== void 0) {
-      var b = JSON.stringify(obj) == "{}";
-      if (!b) {
-        var billid = obj.id || null;
-        var projectId = obj.projectId || null;
-        var name = obj.name || null;
-        var cnt = obj.cnt || null;
-        var price = obj.price;
-        var sql = 'update Bill set name="' + name + '", cnt="' + cnt + '", price="' + price + '" where projectId="' + projectId + '" and id="' + billid + '"';
-        formatAppLog("log", "at common/util/Bill.js:90", sql);
-        return new Promise((resolve, reject) => {
-          plus.sqlite.executeSql({
-            name: "travel",
-            sql,
-            success(e2) {
-              resolve(e2);
-            },
-            fail(e2) {
-              reject(e2);
-            }
-          });
-        });
-      } else {
-        return new Promise((resolve, reject) => {
-          reject("错误添加");
-        });
-      }
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误添加");
-      });
-    }
-  }
-  function addBill(obj) {
-    if (obj !== void 0) {
-      var b = JSON.stringify(obj) == "{}";
-      if (!b) {
-        var billid = obj.billid || null;
-        var projectId = obj.projectId || null;
-        var name = obj.name || null;
-        var cnt = obj.cnt || null;
-        var price = obj.price;
-        var sql = 'insert into Bill(billid,projectId,name,cnt,price) values("' + billid + '","' + projectId + '","' + name + '","' + cnt + '","' + price + '")';
-        formatAppLog("log", "at common/util/Bill.js:133", sql);
-        return new Promise((resolve, reject) => {
-          plus.sqlite.executeSql({
-            name: "travel",
-            sql,
-            success(e2) {
-              resolve(e2);
-            },
-            fail(e2) {
-              reject(e2);
-            }
-          });
-        });
-      } else {
-        return new Promise((resolve, reject) => {
-          reject("错误添加");
-        });
-      }
-    } else {
-      return new Promise((resolve, reject) => {
-        reject("错误添加");
-      });
-    }
-  }
-  const Bill = {
-    selectInformationType: selectInformationType$1,
-    deleteInformationType: deleteInformationType$1,
-    modifyInformation: modifyInformation$1,
-    addBill
-  };
-  const _sfc_main$a = {
-    components: {
-      GoodItem: __easycom_0$2
-    },
-    data() {
-      return {
-        projectItems: {
-          "11": {}
-        },
-        projectNames: [],
-        projects: [{
-          projectName: "默认项目",
-          id: 1
-        }],
-        // 项目名称
-        selectedProjectIndex: 0,
-        // 当前选中的项目索引
-        nextId: 5,
-        // 自动递增的 ID
-        newProjectName: "",
-        showModaleditPer: false,
-        showModaledit: false,
-        showModalAddProject: false,
-        showModalAddBill: false,
-        newItemName: "",
-        newItemCnt: 1,
-        newItemPrice: 0,
-        updateProjectName: "",
-        AllPerson: [],
-        nowBillPerson: [],
-        nowBillId: ""
-      };
-    },
-    computed: {
-      currentItems() {
-        var _a;
-        if (!this.projects.length) {
-          formatAppLog("warn", "at pages/PayBill/index.vue:154", "当前项目列表为空");
-          return [];
-        }
-        const selectedProject = ((_a = this.projects[this.selectedProjectIndex]) == null ? void 0 : _a.projectName) || "默认项目";
-        formatAppLog("log", "at pages/PayBill/index.vue:158", "当前project:" + selectedProject);
-        formatAppLog("log", "at pages/PayBill/index.vue:159", "看看账单：" + this.projectItems[selectedProject]);
-        uni.setStorageSync(STORAGE_KEYS.CURRENTITEMS, this.projectItems[selectedProject] || []);
-        return this.projectItems[selectedProject] || [];
-      },
-      totalPrice() {
-        return this.currentItems.reduce((sum, item) => {
-          return sum + Number(item.price);
-        }, 0);
-      }
-    },
-    mounted() {
-      this.reloadData();
-    },
-    onPullDownRefresh() {
-      formatAppLog("log", "at pages/PayBill/index.vue:179", "refresh");
-      utils.initializeDB();
-      uni.stopPullDownRefresh();
-      this.reloadData();
-    },
-    methods: {
-      async reloadData() {
-        try {
-          formatAppLog("log", "at pages/PayBill/index.vue:189", "重新加载数据...");
-          await this.selectProjects();
-          await this.updateprojectBill();
-          await this.selectAllPer();
-          formatAppLog("log", "at pages/PayBill/index.vue:193", "数据重新加载完成");
-        } catch (error2) {
-          formatAppLog("error", "at pages/PayBill/index.vue:195", "重新加载数据时出错：", error2);
-        }
-      },
-      //选中人员
-      selectionChange(selectedRows) {
-        formatAppLog("log", "at pages/PayBill/index.vue:200", "选中的行", selectedRows);
-        const selectedRow = selectedRows.detail.index || [];
-        this.nowBillPerson = selectedRow;
-      },
-      setDefaultSelection() {
-        const selectedUserIds = this.nowBillPerson.map((person) => person.userid);
-        formatAppLog("log", "at pages/PayBill/index.vue:208", "selectedUserIds ", selectedUserIds);
-        const matchedDetails = this.AllPerson.map((person, index3) => ({
-          person,
-          index: index3
-        })).filter(({
-          person
-        }) => selectedUserIds.includes(person.id));
-        formatAppLog("log", "at pages/PayBill/index.vue:220", "matchedDetails ", matchedDetails);
-        const index2 = matchedDetails.map(({
-          index: index3
-        }) => index3);
-        formatAppLog("log", "at pages/PayBill/index.vue:228", "detail ", index2);
-        this.$refs.tableRef.toggleRowSelection(index2, true);
-      },
-      //编辑账单人员
-      async selectAllPer() {
-        const result = await util.selectInformationType("user");
-        formatAppLog("log", "at pages/PayBill/index.vue:236", "找出的AllPerson", result);
-        this.AllPerson = result;
-        uni.setStorageSync(STORAGE_KEYS.AllPerson, result);
-      },
-      editPer(index2) {
-        this.showModaleditPer = true;
-        this.selectAllPer().then(() => this.selectBillUser(index2).then(() => this.setDefaultSelection()));
-      },
-      async selectBillUser(index2) {
-        formatAppLog("log", "at pages/PayBill/index.vue:245", this.currentItems[index2]);
-        const result = await BillUser.selectInformationType("BillUser", "Billid", this.currentItems[index2].id);
-        formatAppLog("log", "at pages/PayBill/index.vue:247", "当前账单: " + this.currentItems[index2] + "result: ", result);
-        this.nowBillId = this.currentItems[index2].id;
-        this.nowBillPerson = result;
-        formatAppLog("log", "at pages/PayBill/index.vue:250", "nowBillPerson: ", result);
-      },
-      updateBillUserToDB() {
-        formatAppLog("log", "at pages/PayBill/index.vue:254", this.nowBillPerson);
-        const result = this.nowBillPerson.map((index2) => this.AllPerson[index2].id);
-        formatAppLog("log", "at pages/PayBill/index.vue:258", "选中的用户id:", result);
-        formatAppLog("log", "at pages/PayBill/index.vue:259", "当前账单Id:", this.nowBillId);
-        const result1 = result.map((userId) => {
-          return {
-            userid: userId,
-            // 用户 id
-            billid: this.nowBillId
-            // 当前账单 id
-          };
-        });
-        BillUser.deleteInformationType("BillUser", "Billid", this.nowBillId);
-        formatAppLog("log", "at pages/PayBill/index.vue:269", "选中的用户与账单合成对象:", result1);
-        result1.forEach((obj) => {
-          BillUser.addUser(obj);
-        });
-        this.closeModal();
-      },
-      // 处理项目
-      async selectProjects() {
-        const result = await project.selectInformationType("project");
-        if (result.length > 0)
-          this.projects = result;
-        formatAppLog("log", "at pages/PayBill/index.vue:280", "SELECTPROJECTS: ", this.projects);
-        this.projectNames = this.projects.map(
-          (project2) => `${project2.id}: ${project2.projectName}`
-        );
-        this.selectedProjectIndex = 0;
-        formatAppLog("log", "at pages/PayBill/index.vue:285", this.projects);
-      },
-      handleProjectChange(e2) {
-        formatAppLog("log", "at pages/PayBill/index.vue:288", "e" + e2);
-        this.selectedProjectIndex = parseInt(e2.detail.value, 10);
-        uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
-        formatAppLog("log", "at pages/PayBill/index.vue:291", "测试本地缓存", uni.getStorageSync(STORAGE_KEYS.nowproject));
-        formatAppLog("log", "at pages/PayBill/index.vue:292", "切换到项目:", this.projects[this.selectedProjectIndex].projectName);
-        this.updateprojectBill();
-      },
-      //更新Item
-      handleDelete(index2) {
-        this.projects[this.selectedProjectIndex].id;
-        formatAppLog("log", "at pages/PayBill/index.vue:298", this.currentItems[index2]);
-        Bill.deleteInformationType("Bill", "id", this.currentItems[index2].id).then(() => this.updateprojectBill());
-        BillUser.deleteInformationType("BillUser", "Billid", this.currentItems[index2].id);
-      },
-      handleUpdate(index2, updatedItem) {
-        formatAppLog("log", "at pages/PayBill/index.vue:305", "更新索引：", index2, "更新数据：", updatedItem);
-        this.projects[this.selectedProjectIndex].projectName;
-        Bill.modifyInformation(updatedItem).then(() => this.updateprojectBill());
-      },
-      //新增project内的items
-      handleAdd() {
-        this.showModalAddBill = true;
-      },
-      addBillsToDB() {
-        const selectedProjectId = this.projects[this.selectedProjectIndex].id;
-        const newItem = {
-          billid: this.nextId++,
-          projectId: selectedProjectId,
-          name: this.newItemName,
-          cnt: this.newItemCnt,
-          price: this.newItemPrice
-        };
-        this.addprojectBill(newItem);
-      },
-      addprojectBill(newItem) {
-        Bill.addBill(newItem);
-        this.updateprojectBill();
-        this.closeModal();
-      },
-      //更新项目账单
-      async updateprojectBill() {
-        formatAppLog("log", "at pages/PayBill/index.vue:341", "当前index: " + this.selectedProjectIndex);
-        const selectedProjectId = this.projects[this.selectedProjectIndex].id;
-        const selectedProject = this.projects[this.selectedProjectIndex].projectName;
-        formatAppLog("log", "at pages/PayBill/index.vue:344", "当前projects:", this.projects);
-        const result = await Bill.selectInformationType("Bill", "projectId", selectedProjectId);
-        formatAppLog("log", "at pages/PayBill/index.vue:346", "更新项目账单： ", result);
-        this.projectItems[selectedProject] = result;
-      },
-      //新增project
-      addProject() {
-        this.showModalAddProject = true;
-      },
-      addProjectToDB() {
-        const obj = {
-          id: 1,
-          name: this.newProjectName
-        };
-        project.addUser(obj);
-        this.selectProjects();
-        formatAppLog("log", "at pages/PayBill/index.vue:362", "添加新项目:", this.newProjectName);
-        this.closeModal();
-      },
-      closeModal() {
-        this.showModalAddBill = false;
-        this.showModaledit = false;
-        this.newItemCnt = 1;
-        this.newItemPrice = 0;
-        this.newItemName = "";
-        this.showModalAddProject = false;
-        this.newProjectName = "";
-        this.showModaleditPer = false;
-      },
-      //结算页面，开始生成账单
-      handleSettle() {
-        uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
-        formatAppLog("log", "at pages/PayBill/index.vue:380", "当前项目的结算数据:", this.currentItems);
-        formatAppLog("log", "at pages/PayBill/index.vue:381", "存入的project ", uni.getStorageSync(STORAGE_KEYS.nowproject));
-        uni.navigateTo({
-          url: "/pages/settleBill/settleBill"
-        });
-      },
-      //编辑项目：生成弹窗，里面可以编辑也可以删除
-      editProject() {
-        this.showModaledit = true;
-      },
-      //更新项目
-      updateProjectToDB() {
-        const selectedProjectId = this.projects[this.selectedProjectIndex].id;
-        this.projects[this.selectedProjectIndex].projectName;
-        project.modifyInformation("project", "projectName", this.updateProjectName, "id", selectedProjectId);
-        this.selectProjects().then(() => this.updateprojectBill());
-        this.closeModal();
-      },
-      //删除项目
-      deleteProjectToDB() {
-        const selectedProjectId = this.projects[this.selectedProjectIndex].id;
-        this.projects[this.selectedProjectIndex].projectName;
-        project.deleteInformationType("project", "id", selectedProjectId);
-        this.currentItems.forEach((obj) => {
-          BillUser.deleteInformationType("BillUser", "Billid", obj.id);
-        });
-        Bill.deleteInformationType("Bill", "projectId", selectedProjectId);
-        this.selectProjects().then(() => this.updateprojectBill());
-        this.closeModal();
-      }
-    }
-  };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
-    var _a;
-    const _component_GoodItem = resolveEasycom(vue.resolveDynamicComponent("GoodItem"), __easycom_0$2);
-    const _component_uni_th = resolveEasycom(vue.resolveDynamicComponent("uni-th"), __easycom_1$2);
-    const _component_uni_tr = resolveEasycom(vue.resolveDynamicComponent("uni-tr"), __easycom_2$1);
-    const _component_uni_td = resolveEasycom(vue.resolveDynamicComponent("uni-td"), __easycom_3$1);
-    const _component_uni_table = resolveEasycom(vue.resolveDynamicComponent("uni-table"), __easycom_4);
-    return vue.openBlock(), vue.createElementBlock("view", { class: "main-container" }, [
-      vue.createCommentVNode(" 顶部选择框和添加按钮 "),
-      vue.createElementVNode("view", { class: "select-container" }, [
-        $data.projects.length > 0 ? (vue.openBlock(), vue.createElementBlock("picker", {
-          key: 0,
-          value: $data.selectedProjectIndex,
-          range: $data.projectNames,
-          onChange: _cache[0] || (_cache[0] = (...args) => $options.handleProjectChange && $options.handleProjectChange(...args))
-        }, [
-          vue.createElementVNode(
-            "view",
-            { class: "picker" },
-            " 当前项目：" + vue.toDisplayString(((_a = $data.projects[$data.selectedProjectIndex]) == null ? void 0 : _a.projectName) || " ss"),
-            1
-            /* TEXT */
-          )
-        ], 40, ["value", "range"])) : vue.createCommentVNode("v-if", true),
-        vue.createElementVNode("button", {
-          class: "add-project-button",
-          onClick: _cache[1] || (_cache[1] = (...args) => $options.addProject && $options.addProject(...args))
-        }, "新增项目"),
-        vue.createElementVNode("button", {
-          class: "add-project-button",
-          onClick: _cache[2] || (_cache[2] = (...args) => $options.editProject && $options.editProject(...args))
-        }, "编辑项目")
-      ]),
-      vue.createElementVNode("view", { class: "total-price" }, [
-        vue.createElementVNode("view", null, " 总价： "),
-        vue.createElementVNode(
-          "view",
-          null,
-          vue.toDisplayString($options.totalPrice),
-          1
-          /* TEXT */
-        )
-      ]),
-      vue.createCommentVNode(" 列表 "),
-      vue.createElementVNode("view", { class: "item-container" }, [
-        (vue.openBlock(true), vue.createElementBlock(
-          vue.Fragment,
-          null,
-          vue.renderList($options.currentItems, (item, idx) => {
-            return vue.openBlock(), vue.createBlock(_component_GoodItem, {
-              key: item.id,
-              index: idx,
-              showData: item,
-              onDeleteItem: $options.handleDelete,
-              onUpdateItem: $options.handleUpdate,
-              onEditPer: $options.editPer
-            }, null, 8, ["index", "showData", "onDeleteItem", "onUpdateItem", "onEditPer"]);
-          }),
-          128
-          /* KEYED_FRAGMENT */
-        ))
-      ]),
-      vue.createCommentVNode(" 底部固定按钮 "),
-      vue.createElementVNode("view", { class: "fixed-button-container" }, [
-        vue.createElementVNode("view", {
-          class: "fixed-button",
-          onClick: _cache[3] || (_cache[3] = (...args) => $options.handleSettle && $options.handleSettle(...args))
-        }, "结算"),
-        vue.createElementVNode("view", {
-          class: "add-button",
-          onClick: _cache[4] || (_cache[4] = (...args) => $options.handleAdd && $options.handleAdd(...args))
-        }, "记一笔")
-      ]),
-      vue.createCommentVNode(" 弹窗 "),
-      $data.showModalAddProject ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 0,
-        class: "modal-overlay"
-      }, [
-        vue.createElementVNode("view", { class: "modal-content" }, [
-          vue.createElementVNode("view", { class: "modal-header" }, "添加项目"),
-          vue.createElementVNode("view", { class: "modal-body" }, [
-            vue.withDirectives(vue.createElementVNode(
-              "input",
-              {
-                class: "input",
-                type: "text",
-                placeholder: "请输入项目名称",
-                "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.newProjectName = $event)
-              },
-              null,
-              512
-              /* NEED_PATCH */
-            ), [
-              [vue.vModelText, $data.newProjectName]
-            ])
-          ]),
-          vue.createElementVNode("view", { class: "modal-footer" }, [
-            vue.createElementVNode("button", {
-              class: "btn",
-              onClick: _cache[6] || (_cache[6] = (...args) => $options.addProjectToDB && $options.addProjectToDB(...args))
-            }, "确认"),
-            vue.createElementVNode("button", {
-              class: "btn",
-              onClick: _cache[7] || (_cache[7] = (...args) => $options.closeModal && $options.closeModal(...args))
-            }, "取消")
-          ])
-        ])
-      ])) : vue.createCommentVNode("v-if", true),
-      vue.createCommentVNode(" 新增账单 "),
-      $data.showModalAddBill ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 1,
-        class: "modal-overlay"
-      }, [
-        vue.createElementVNode("view", { class: "modal-content" }, [
-          vue.createElementVNode("view", { class: "modal-header" }, "添加账目"),
-          vue.createElementVNode("view", { class: "modal-body" }, [
-            vue.withDirectives(vue.createElementVNode(
-              "input",
-              {
-                class: "input",
-                type: "text",
-                placeholder: "请输入名称",
-                "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => $data.newItemName = $event)
-              },
-              null,
-              512
-              /* NEED_PATCH */
-            ), [
-              [vue.vModelText, $data.newItemName]
-            ]),
-            vue.withDirectives(vue.createElementVNode(
-              "input",
-              {
-                class: "input",
-                type: "text",
-                placeholder: "请输入数量",
-                "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => $data.newItemCnt = $event)
-              },
-              null,
-              512
-              /* NEED_PATCH */
-            ), [
-              [vue.vModelText, $data.newItemCnt]
-            ]),
-            vue.withDirectives(vue.createElementVNode(
-              "input",
-              {
-                class: "input",
-                type: "text",
-                placeholder: "请输入价格",
-                "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => $data.newItemPrice = $event)
-              },
-              null,
-              512
-              /* NEED_PATCH */
-            ), [
-              [vue.vModelText, $data.newItemPrice]
-            ])
-          ]),
-          vue.createElementVNode("view", { class: "modal-footer" }, [
-            vue.createElementVNode("button", {
-              class: "btn",
-              onClick: _cache[11] || (_cache[11] = (...args) => $options.addBillsToDB && $options.addBillsToDB(...args))
-            }, "确认"),
-            vue.createElementVNode("button", {
-              class: "btn",
-              onClick: _cache[12] || (_cache[12] = (...args) => $options.closeModal && $options.closeModal(...args))
-            }, "取消")
-          ])
-        ])
-      ])) : vue.createCommentVNode("v-if", true),
-      vue.createCommentVNode(" 编辑项目 "),
-      $data.showModaledit ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 2,
-        class: "modal-overlay"
-      }, [
-        vue.createElementVNode("view", { class: "modal-content" }, [
-          vue.createElementVNode("view", { class: "modal-header" }, "添加项目"),
-          vue.createElementVNode("view", { class: "modal-body" }, [
-            vue.withDirectives(vue.createElementVNode(
-              "input",
-              {
-                class: "input",
-                type: "text",
-                placeholder: "请输入项目名称",
-                "onUpdate:modelValue": _cache[13] || (_cache[13] = ($event) => $data.updateProjectName = $event)
-              },
-              null,
-              512
-              /* NEED_PATCH */
-            ), [
-              [vue.vModelText, $data.updateProjectName]
-            ])
-          ]),
-          vue.createElementVNode("view", { class: "modal-footer" }, [
-            vue.createElementVNode("button", {
-              class: "btn",
-              style: { "background-color": "red" },
-              onClick: _cache[14] || (_cache[14] = (...args) => $options.deleteProjectToDB && $options.deleteProjectToDB(...args))
-            }, "删除"),
-            vue.createElementVNode("button", {
-              class: "btn",
-              style: {},
-              onClick: _cache[15] || (_cache[15] = (...args) => $options.updateProjectToDB && $options.updateProjectToDB(...args))
-            }, "确认"),
-            vue.createElementVNode("button", {
-              class: "btn",
-              style: {},
-              onClick: _cache[16] || (_cache[16] = (...args) => $options.closeModal && $options.closeModal(...args))
-            }, "取消")
-          ])
-        ])
-      ])) : vue.createCommentVNode("v-if", true),
-      vue.createCommentVNode(" 编辑账单人员 "),
-      $data.showModaleditPer ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 3,
-        class: "modal-overlay"
-      }, [
-        vue.createElementVNode("view", { class: "modal-content" }, [
-          vue.createElementVNode("view", { class: "modal-header" }, "编辑人员"),
-          vue.createCommentVNode(" 人员列表 "),
-          vue.createVNode(_component_uni_table, {
-            ref: "tableRef",
-            border: "",
-            stripe: "",
-            emptyText: "暂无更多数据",
-            type: "selection",
-            onSelectionChange: $options.selectionChange
-          }, {
-            default: vue.withCtx(() => [
-              vue.createCommentVNode(" 表头行 "),
-              vue.createVNode(_component_uni_tr, null, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(_component_uni_th, { align: "center" }, {
-                    default: vue.withCtx(() => [
-                      vue.createTextVNode("姓名")
-                    ]),
-                    _: 1
-                    /* STABLE */
-                  })
-                ]),
-                _: 1
-                /* STABLE */
-              }),
-              vue.createCommentVNode(" 表格数据行 "),
-              (vue.openBlock(true), vue.createElementBlock(
-                vue.Fragment,
-                null,
-                vue.renderList(this.AllPerson, (item, index2) => {
-                  return vue.openBlock(), vue.createBlock(
-                    _component_uni_tr,
-                    { key: index2 },
-                    {
-                      default: vue.withCtx(() => [
-                        vue.createVNode(
-                          _component_uni_td,
-                          null,
-                          {
-                            default: vue.withCtx(() => [
-                              vue.createTextVNode(
-                                vue.toDisplayString(item.name),
-                                1
-                                /* TEXT */
-                              )
-                            ]),
-                            _: 2
-                            /* DYNAMIC */
-                          },
-                          1024
-                          /* DYNAMIC_SLOTS */
-                        )
-                      ]),
-                      _: 2
-                      /* DYNAMIC */
-                    },
-                    1024
-                    /* DYNAMIC_SLOTS */
-                  );
-                }),
-                128
-                /* KEYED_FRAGMENT */
-              ))
-            ]),
-            _: 1
-            /* STABLE */
-          }, 8, ["onSelectionChange"]),
-          vue.createElementVNode("view", {
-            class: "modal-footer",
-            style: { "margin-top": "20rpx" }
-          }, [
-            vue.createElementVNode("button", {
-              class: "btn",
-              style: {},
-              onClick: _cache[17] || (_cache[17] = (...args) => $options.updateBillUserToDB && $options.updateBillUserToDB(...args))
-            }, "确认"),
-            vue.createElementVNode("button", {
-              class: "btn",
-              style: {},
-              onClick: _cache[18] || (_cache[18] = (...args) => $options.closeModal && $options.closeModal(...args))
-            }, "取消")
-          ])
-        ])
-      ])) : vue.createCommentVNode("v-if", true)
-    ]);
-  }
-  const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-1fc7d2ef"], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
-  const _sfc_main$9 = {
-    data() {
-      return {
-        // odb:'',
-        dbName: "travel",
-        dbPath: "_doc/travel.db",
-        dbTable: "user",
-        dbIsOpen: false,
-        chatText: {
-          id: 1,
-          fromId: "123",
-          toId: "321",
-          content: "你好!",
-          flag: 1
-        },
-        project1: {
-          id: 1,
-          name: "南京"
-        }
-      };
-    },
-    onLoad() {
-    },
-    methods: {
-      clearBillUser() {
-        BillUser.clear("BillUser").then((result) => {
-          uni.showToast({
-            title: "数据库清除成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:60", "数据库清除成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "数据库清除失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:68", "数据库清除失败：", error2);
-        });
-      },
-      dropTable() {
-        util.dropTable().then((result) => {
-          uni.showToast({
-            title: "数据库删除成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:78", "表格删除成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "数据库删除失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:86", "表格删除失败：", error2);
-        });
-      },
-      isopenDB() {
-        util.openSqlite().then((result) => {
-          uni.showToast({
-            title: "数据库打开成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:96", "表格创建成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "数据库打开失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:104", "表格创建失败：", error2);
-        });
-      },
-      createBillTable() {
-        uni.showToast({
-          title: "测试",
-          icon: "success",
-          duration: 2e3
-        });
-        util.CreateBillSQL().then((result) => {
-          uni.showToast({
-            title: "表格创建成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:120", "表格创建成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "表格创建失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:128", "表格创建失败：", error2);
-        });
-      },
-      createBillUserTable() {
-        uni.showToast({
-          title: "测试",
-          icon: "success",
-          duration: 2e3
-        });
-        util.CreateBillUserSQL().then((result) => {
-          uni.showToast({
-            title: "BillUser表格创建成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:144", "表格创建成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "表格创建失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:152", "表格创建失败：", error2);
-        });
-      },
-      createUserTable() {
-        uni.showToast({
-          title: "测试",
-          icon: "success",
-          duration: 2e3
-        });
-        util.CreateUserSQL().then((result) => {
-          uni.showToast({
-            title: "BillUser表格创建成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:168", "表格创建成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "表格创建失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:176", "表格创建失败：", error2);
-        });
-      },
-      createProjectTable() {
-        uni.showToast({
-          title: "测试",
-          icon: "success",
-          duration: 2e3
-        });
-        util.CreateProjectSQL().then((result) => {
-          uni.showToast({
-            title: "Project表格创建成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:192", "Project表格成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "Project表格失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:200", "Project表格失败：", error2);
-        });
-      },
-      updateTable() {
-        util.updateTableStructure("Bill", "project", "INTEGER");
-      },
-      deleteTable() {
-        uni.showToast({
-          title: "测试",
-          icon: "success",
-          duration: 2e3
-        });
-        util.deleteTable("Bill").then((result) => {
-          uni.showToast({
-            title: "Bill表格删除成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:220", "表格创建成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "表格创建失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:228", "表格创建失败：", error2);
-        });
-      },
-      addproject(id, name) {
-        const obj = this.project1;
-        project.addUser(obj).then((result) => {
-          uni.showToast({
-            title: "Project插入成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:239", "Project插入成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "Project插入失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:247", "Project插入失败：", error2);
-        });
-      },
-      selectproject() {
-        project.selectInformationType("project").then((result) => {
-          uni.showToast({
-            title: "Project查询成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:257", "Project查询成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "Project查询失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:265", "Project查询失败：", error2);
-        });
-      },
-      deleteproject() {
-        project.deleteInformationType("project").then((result) => {
-          uni.showToast({
-            title: "Project删除成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/sql/sql.vue:275", "Project删除成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "Project删除失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/sql/sql.vue:283", "Project查询失败：", error2);
-        });
-      }
-    }
-  };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "" }, [
-      vue.createCommentVNode(" <div>{{odb}}</div> "),
-      vue.createElementVNode("div", null, [
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[0] || (_cache[0] = (...args) => $options.createBillTable && $options.createBillTable(...args))
-        }, "新建Bill库"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[1] || (_cache[1] = (...args) => $options.isopenDB && $options.isopenDB(...args))
-        }, "判断数据库是否打开"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[2] || (_cache[2] = (...args) => $options.createBillUserTable && $options.createBillUserTable(...args))
-        }, "新建BillUser库"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[3] || (_cache[3] = (...args) => $options.createUserTable && $options.createUserTable(...args))
-        }, "新建User库"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[4] || (_cache[4] = (...args) => $options.createProjectTable && $options.createProjectTable(...args))
-        }, "新建Project库"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[5] || (_cache[5] = (...args) => $options.updateTable && $options.updateTable(...args))
-        }, "更新表结构库"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[6] || (_cache[6] = (...args) => $options.deleteTable && $options.deleteTable(...args))
-        }, "删除表"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[7] || (_cache[7] = (...args) => $options.addproject && $options.addproject(...args))
-        }, "插入数据到project"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[8] || (_cache[8] = (...args) => $options.selectproject && $options.selectproject(...args))
-        }, "查询project"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[9] || (_cache[9] = (...args) => $options.deleteproject && $options.deleteproject(...args))
-        }, "删除project"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[10] || (_cache[10] = ($event) => $options.dropTable())
-        }, "删除BillUser"),
-        vue.createElementVNode("button", {
-          type: "default",
-          onClick: _cache[11] || (_cache[11] = ($event) => $options.clearBillUser())
-        }, "清除BillUser")
-      ])
-    ]);
-  }
-  const PagesSqlSql = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "D:/uni/travel-new/pages/sql/sql.vue"]]);
-  const icons = {
-    "uicon-level": "",
-    "uicon-column-line": "",
-    "uicon-checkbox-mark": "",
-    "uicon-folder": "",
-    "uicon-movie": "",
-    "uicon-star-fill": "",
-    "uicon-star": "",
-    "uicon-phone-fill": "",
-    "uicon-phone": "",
-    "uicon-apple-fill": "",
-    "uicon-chrome-circle-fill": "",
-    "uicon-backspace": "",
-    "uicon-attach": "",
-    "uicon-cut": "",
-    "uicon-empty-car": "",
-    "uicon-empty-coupon": "",
-    "uicon-empty-address": "",
-    "uicon-empty-favor": "",
-    "uicon-empty-permission": "",
-    "uicon-empty-news": "",
-    "uicon-empty-search": "",
-    "uicon-github-circle-fill": "",
-    "uicon-rmb": "",
-    "uicon-person-delete-fill": "",
-    "uicon-reload": "",
-    "uicon-order": "",
-    "uicon-server-man": "",
-    "uicon-search": "",
-    "uicon-fingerprint": "",
-    "uicon-more-dot-fill": "",
-    "uicon-scan": "",
-    "uicon-share-square": "",
-    "uicon-map": "",
-    "uicon-map-fill": "",
-    "uicon-tags": "",
-    "uicon-tags-fill": "",
-    "uicon-bookmark-fill": "",
-    "uicon-bookmark": "",
-    "uicon-eye": "",
-    "uicon-eye-fill": "",
-    "uicon-mic": "",
-    "uicon-mic-off": "",
-    "uicon-calendar": "",
-    "uicon-calendar-fill": "",
-    "uicon-trash": "",
-    "uicon-trash-fill": "",
-    "uicon-play-left": "",
-    "uicon-play-right": "",
-    "uicon-minus": "",
-    "uicon-plus": "",
-    "uicon-info": "",
-    "uicon-info-circle": "",
-    "uicon-info-circle-fill": "",
-    "uicon-question": "",
-    "uicon-error": "",
-    "uicon-close": "",
-    "uicon-checkmark": "",
-    "uicon-android-circle-fill": "",
-    "uicon-android-fill": "",
-    "uicon-ie": "",
-    "uicon-IE-circle-fill": "",
-    "uicon-google": "",
-    "uicon-google-circle-fill": "",
-    "uicon-setting-fill": "",
-    "uicon-setting": "",
-    "uicon-minus-square-fill": "",
-    "uicon-plus-square-fill": "",
-    "uicon-heart": "",
-    "uicon-heart-fill": "",
-    "uicon-camera": "",
-    "uicon-camera-fill": "",
-    "uicon-more-circle": "",
-    "uicon-more-circle-fill": "",
-    "uicon-chat": "",
-    "uicon-chat-fill": "",
-    "uicon-bag-fill": "",
-    "uicon-bag": "",
-    "uicon-error-circle-fill": "",
-    "uicon-error-circle": "",
-    "uicon-close-circle": "",
-    "uicon-close-circle-fill": "",
-    "uicon-checkmark-circle": "",
-    "uicon-checkmark-circle-fill": "",
-    "uicon-question-circle-fill": "",
-    "uicon-question-circle": "",
-    "uicon-share": "",
-    "uicon-share-fill": "",
-    "uicon-shopping-cart": "",
-    "uicon-shopping-cart-fill": "",
-    "uicon-bell": "",
-    "uicon-bell-fill": "",
-    "uicon-list": "",
-    "uicon-list-dot": "",
-    "uicon-zhihu": "",
-    "uicon-zhihu-circle-fill": "",
-    "uicon-zhifubao": "",
-    "uicon-zhifubao-circle-fill": "",
-    "uicon-weixin-circle-fill": "",
-    "uicon-weixin-fill": "",
-    "uicon-twitter-circle-fill": "",
-    "uicon-twitter": "",
-    "uicon-taobao-circle-fill": "",
-    "uicon-taobao": "",
-    "uicon-weibo-circle-fill": "",
-    "uicon-weibo": "",
-    "uicon-qq-fill": "",
-    "uicon-qq-circle-fill": "",
-    "uicon-moments-circel-fill": "",
-    "uicon-moments": "",
-    "uicon-qzone": "",
-    "uicon-qzone-circle-fill": "",
-    "uicon-baidu-circle-fill": "",
-    "uicon-baidu": "",
-    "uicon-facebook-circle-fill": "",
-    "uicon-facebook": "",
-    "uicon-car": "",
-    "uicon-car-fill": "",
-    "uicon-warning-fill": "",
-    "uicon-warning": "",
-    "uicon-clock-fill": "",
-    "uicon-clock": "",
-    "uicon-edit-pen": "",
-    "uicon-edit-pen-fill": "",
-    "uicon-email": "",
-    "uicon-email-fill": "",
-    "uicon-minus-circle": "",
-    "uicon-minus-circle-fill": "",
-    "uicon-plus-circle": "",
-    "uicon-plus-circle-fill": "",
-    "uicon-file-text": "",
-    "uicon-file-text-fill": "",
-    "uicon-pushpin": "",
-    "uicon-pushpin-fill": "",
-    "uicon-grid": "",
-    "uicon-grid-fill": "",
-    "uicon-play-circle": "",
-    "uicon-play-circle-fill": "",
-    "uicon-pause-circle-fill": "",
-    "uicon-pause": "",
-    "uicon-pause-circle": "",
-    "uicon-eye-off": "",
-    "uicon-eye-off-outline": "",
-    "uicon-gift-fill": "",
-    "uicon-gift": "",
-    "uicon-rmb-circle-fill": "",
-    "uicon-rmb-circle": "",
-    "uicon-kefu-ermai": "",
-    "uicon-server-fill": "",
-    "uicon-coupon-fill": "",
-    "uicon-coupon": "",
-    "uicon-integral": "",
-    "uicon-integral-fill": "",
-    "uicon-home-fill": "",
-    "uicon-home": "",
-    "uicon-hourglass-half-fill": "",
-    "uicon-hourglass": "",
-    "uicon-account": "",
-    "uicon-plus-people-fill": "",
-    "uicon-minus-people-fill": "",
-    "uicon-account-fill": "",
-    "uicon-thumb-down-fill": "",
-    "uicon-thumb-down": "",
-    "uicon-thumb-up": "",
-    "uicon-thumb-up-fill": "",
-    "uicon-lock-fill": "",
-    "uicon-lock-open": "",
-    "uicon-lock-opened-fill": "",
-    "uicon-lock": "",
-    "uicon-red-packet-fill": "",
-    "uicon-photo-fill": "",
-    "uicon-photo": "",
-    "uicon-volume-off-fill": "",
-    "uicon-volume-off": "",
-    "uicon-volume-fill": "",
-    "uicon-volume": "",
-    "uicon-red-packet": "",
-    "uicon-download": "",
-    "uicon-arrow-up-fill": "",
-    "uicon-arrow-down-fill": "",
-    "uicon-play-left-fill": "",
-    "uicon-play-right-fill": "",
-    "uicon-rewind-left-fill": "",
-    "uicon-rewind-right-fill": "",
-    "uicon-arrow-downward": "",
-    "uicon-arrow-leftward": "",
-    "uicon-arrow-rightward": "",
-    "uicon-arrow-upward": "",
-    "uicon-arrow-down": "",
-    "uicon-arrow-right": "",
-    "uicon-arrow-left": "",
-    "uicon-arrow-up": "",
-    "uicon-skip-back-left": "",
-    "uicon-skip-forward-right": "",
-    "uicon-rewind-right": "",
-    "uicon-rewind-left": "",
-    "uicon-arrow-right-double": "",
-    "uicon-arrow-left-double": "",
-    "uicon-wifi-off": "",
-    "uicon-wifi": "",
-    "uicon-empty-data": "",
-    "uicon-empty-history": "",
-    "uicon-empty-list": "",
-    "uicon-empty-page": "",
-    "uicon-empty-order": "",
-    "uicon-man": "",
-    "uicon-woman": "",
-    "uicon-man-add": "",
-    "uicon-man-add-fill": "",
-    "uicon-man-delete": "",
-    "uicon-man-delete-fill": "",
-    "uicon-zh": "",
-    "uicon-en": ""
-  };
+  const __easycom_1$3 = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-3f050360"], ["__file", "D:/uni/travel-new/uni_modules/uni-collapse/components/uni-collapse/uni-collapse.vue"]]);
   const defineMixin = (options) => {
     return options;
   };
@@ -5554,7 +3320,7 @@ if (uni.restoreGlobal) {
       previewImage: true
     }
   };
-  const props$6 = {
+  const props$7 = {
     ...ActionSheet,
     ...Album,
     ...Alert,
@@ -5644,92 +3410,36 @@ if (uni.restoreGlobal) {
     ...Transition,
     ...Upload
   };
-  const props$5 = defineMixin({
+  const props$6 = defineMixin({
     props: {
-      // 图标类名
-      name: {
-        type: String,
-        default: () => props$6.icon.name
-      },
-      // 图标颜色，可接受主题色
       color: {
         type: String,
-        default: () => props$6.icon.color
+        default: () => props$7.line.color
       },
-      // 字体大小，单位px
-      size: {
+      // 长度，竖向时表现为高度，横向时表现为长度，可以为百分比，带px单位的值等
+      length: {
         type: [String, Number],
-        default: () => props$6.icon.size
+        default: () => props$7.line.length
       },
-      // 是否显示粗体
-      bold: {
+      // 线条方向，col-竖向，row-横向
+      direction: {
+        type: String,
+        default: () => props$7.line.direction
+      },
+      // 是否显示细边框
+      hairline: {
         type: Boolean,
-        default: () => props$6.icon.bold
+        default: () => props$7.line.hairline
       },
-      // 点击图标的时候传递事件出去的index（用于区分点击了哪一个）
-      index: {
+      // 线条与上下左右元素的间距，字符串形式，如"30px"、"20px 30px"
+      margin: {
         type: [String, Number],
-        default: () => props$6.icon.index
+        default: () => props$7.line.margin
       },
-      // 触摸图标时的类名
-      hoverClass: {
-        type: String,
-        default: () => props$6.icon.hoverClass
-      },
-      // 自定义扩展前缀，方便用户扩展自己的图标库
-      customPrefix: {
-        type: String,
-        default: () => props$6.icon.customPrefix
-      },
-      // 图标右边或者下面的文字
-      label: {
-        type: [String, Number],
-        default: () => props$6.icon.label
-      },
-      // label的位置，只能右边或者下边
-      labelPos: {
-        type: String,
-        default: () => props$6.icon.labelPos
-      },
-      // label的大小
-      labelSize: {
-        type: [String, Number],
-        default: () => props$6.icon.labelSize
-      },
-      // label的颜色
-      labelColor: {
-        type: String,
-        default: () => props$6.icon.labelColor
-      },
-      // label与图标的距离
-      space: {
-        type: [String, Number],
-        default: () => props$6.icon.space
-      },
-      // 图片的mode
-      imgMode: {
-        type: String,
-        default: () => props$6.icon.imgMode
-      },
-      // 用于显示图片小图标时，图片的宽度
-      width: {
-        type: [String, Number],
-        default: () => props$6.icon.width
-      },
-      // 用于显示图片小图标时，图片的高度
-      height: {
-        type: [String, Number],
-        default: () => props$6.icon.height
-      },
-      // 用于解决某些情况下，让图标垂直居中的用途
-      top: {
-        type: [String, Number],
-        default: () => props$6.icon.top
-      },
-      // 是否阻止事件传播
-      stop: {
+      // 是否虚线，true-虚线，false-实线
+      dashed: {
         type: Boolean,
-        default: () => props$6.icon.stop
+        default: () => props$7.line.dashed
       }
     }
   });
@@ -6715,13 +4425,2578 @@ if (uni.restoreGlobal) {
       }
     }
   });
+  const _sfc_main$h = {
+    name: "u-line",
+    mixins: [mpMixin, mixin, props$6],
+    computed: {
+      lineStyle() {
+        const style = {};
+        style.margin = this.margin;
+        if (this.direction === "row") {
+          style.borderBottomWidth = "1px";
+          style.borderBottomStyle = this.dashed ? "dashed" : "solid";
+          style.width = addUnit(this.length);
+          if (this.hairline)
+            style.transform = "scaleY(0.5)";
+        } else {
+          style.borderLeftWidth = "1px";
+          style.borderLeftStyle = this.dashed ? "dashed" : "solid";
+          style.height = addUnit(this.length);
+          if (this.hairline)
+            style.transform = "scaleX(0.5)";
+        }
+        style.borderColor = this.color;
+        return deepMerge$1(style, addStyle(this.customStyle));
+      }
+    }
+  };
+  function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: "u-line",
+        style: vue.normalizeStyle([$options.lineStyle])
+      },
+      null,
+      4
+      /* STYLE */
+    );
+  }
+  const __easycom_1$2 = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-bbd9963c"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-line/u-line.vue"]]);
+  const props$5 = defineMixin({
+    props: {
+      // 是否虚线
+      dashed: {
+        type: Boolean,
+        default: () => props$7.divider.dashed
+      },
+      // 是否细线
+      hairline: {
+        type: Boolean,
+        default: () => props$7.divider.hairline
+      },
+      // 是否以点替代文字，优先于text字段起作用
+      dot: {
+        type: Boolean,
+        default: () => props$7.divider.dot
+      },
+      // 内容文本的位置，left-左边，center-中间，right-右边
+      textPosition: {
+        type: String,
+        default: () => props$7.divider.textPosition
+      },
+      // 文本内容
+      text: {
+        type: [String, Number],
+        default: () => props$7.divider.text
+      },
+      // 文本大小
+      textSize: {
+        type: [String, Number],
+        default: () => props$7.divider.textSize
+      },
+      // 文本颜色
+      textColor: {
+        type: String,
+        default: () => props$7.divider.textColor
+      },
+      // 线条颜色
+      lineColor: {
+        type: String,
+        default: () => props$7.divider.lineColor
+      }
+    }
+  });
+  const _sfc_main$g = {
+    name: "u-divider",
+    mixins: [mpMixin, mixin, props$5],
+    computed: {
+      textStyle() {
+        const style = {};
+        style.fontSize = addUnit(this.textSize);
+        style.color = this.textColor;
+        return style;
+      },
+      // 左边线条的的样式
+      leftLineStyle() {
+        const style = {};
+        if (this.textPosition === "left") {
+          style.width = "80rpx";
+        } else {
+          style.flex = 1;
+        }
+        return style;
+      },
+      // 右边线条的的样式
+      rightLineStyle() {
+        const style = {};
+        if (this.textPosition === "right") {
+          style.width = "80rpx";
+        } else {
+          style.flex = 1;
+        }
+        return style;
+      }
+    },
+    emits: ["click"],
+    methods: {
+      addStyle,
+      // divider组件被点击时触发
+      click() {
+        this.$emit("click");
+      }
+    }
+  };
+  function _sfc_render$f(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$2);
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: "u-divider",
+        style: vue.normalizeStyle([$options.addStyle(_ctx.customStyle)]),
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.click && $options.click(...args))
+      },
+      [
+        vue.createVNode(_component_u_line, {
+          color: _ctx.lineColor,
+          customStyle: $options.leftLineStyle,
+          hairline: _ctx.hairline,
+          dashed: _ctx.dashed
+        }, null, 8, ["color", "customStyle", "hairline", "dashed"]),
+        _ctx.dot ? (vue.openBlock(), vue.createElementBlock("text", {
+          key: 0,
+          class: "u-divider__dot"
+        }, "●")) : _ctx.text ? (vue.openBlock(), vue.createElementBlock(
+          "text",
+          {
+            key: 1,
+            class: "u-divider__text",
+            style: vue.normalizeStyle([$options.textStyle])
+          },
+          vue.toDisplayString(_ctx.text),
+          5
+          /* TEXT, STYLE */
+        )) : vue.createCommentVNode("v-if", true),
+        vue.createVNode(_component_u_line, {
+          color: _ctx.lineColor,
+          customStyle: $options.rightLineStyle,
+          hairline: _ctx.hairline,
+          dashed: _ctx.dashed
+        }, null, 8, ["color", "customStyle", "hairline", "dashed"])
+      ],
+      4
+      /* STYLE */
+    );
+  }
+  const __easycom_2$2 = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-363a2c1a"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-divider/u-divider.vue"]]);
+  const STORAGE_KEYS = {
+    CURRENTITEMS: "currentItems",
+    // 用户信息
+    AllPerson: "AllPerson",
+    // 认证令牌
+    nowproject: "nowproject"
+    // 应用设置
+  };
+  const _imports_0$1 = "/static/GoodItem/edit.png";
+  const _imports_1 = "/static/GoodItem/delete.png";
+  const _sfc_main$f = {
+    name: "GoodItem",
+    props: {
+      index: {
+        type: Number,
+        // 父组件传入的索引，用于标识具体的卡片
+        required: true
+      },
+      showData: {
+        type: Object,
+        required: true
+        // 从父组件接收数据
+      }
+    },
+    inheritAttrs: false,
+    data() {
+      return {
+        isExpanded: false,
+        loading: true,
+        Persons: [],
+        update: false,
+        value: ["0"],
+        showModal: false,
+        // 控制弹窗显示
+        contentHeight: "auto",
+        // 动态内容高度
+        formData: {
+          ...this.showData
+        }
+      };
+    },
+    mounted() {
+      this.selectBillUser();
+    },
+    methods: {
+      showPer() {
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:104", "跳转");
+        uni.navigateTo({
+          url: "/pages/showPer/showPer"
+        });
+      },
+      toggleModal() {
+        this.showModal = !this.showModal;
+      },
+      submitForm() {
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:115", "提交的表单数据:", this.formData);
+        this.$emit("update-item", this.index, {
+          ...this.formData
+        });
+        this.update = true;
+        this.toggleModal();
+      },
+      async toggleCollapse(isExpanded) {
+        this.update = false;
+        this.isExpanded = !this.isExpanded;
+        if (this.isExpanded) {
+          await this.selectBillUser();
+          uni.createSelectorQuery().in(this);
+          const query1 = uni.createSelectorQuery().in(this);
+          query1.select(".Item-container").boundingClientRect((itemData) => {
+            if (!itemData)
+              return;
+            formatAppLog("log", "at components/GoodItem/GoodItem.vue:144", "Item-container: " + itemData.height);
+            this.contentHeight = `${this.pxToRpx(this.Persons.length * 15 + 132 + 20)}rpx`;
+            formatAppLog("log", "at components/GoodItem/GoodItem.vue:148", "调整后的高度:", this.contentHeight);
+          }).exec();
+        } else {
+          this.contentHeight = "auto";
+        }
+      },
+      pxToRpx(px) {
+        const screenWidth = uni.getSystemInfoSync().screenWidth;
+        return 750 / screenWidth * px;
+      },
+      async selectBillUser() {
+        this.loading = true;
+        const currentItems = uni.getStorageSync(STORAGE_KEYS.CURRENTITEMS);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:168", "GOODITEM-SELECTBILLUSER-START");
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:169", currentItems[this.index]);
+        const result = await BillUser.selectInformationType("BillUser", "Billid", currentItems[this.index].id);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:174", "nowBillPerson: ", result);
+        this.Persons = [];
+        for (const obj of result) {
+          try {
+            const result1 = await util.selectInformationType(
+              "user",
+              // 表名
+              "id",
+              // 查询字段
+              `'${obj.userid}'`
+              // 查询值，注意加上单引号
+            );
+            formatAppLog("log", "at components/GoodItem/GoodItem.vue:188", "result: ", result1);
+            this.Persons.push(...result1);
+          } catch (error2) {
+            formatAppLog("error", "at components/GoodItem/GoodItem.vue:193", "查询用户失败:", error2);
+          } finally {
+            this.loading = false;
+          }
+        }
+        this.loading = false;
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:200", "Persons: ", this.Persons);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:201", "loading ", this.loading);
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:202", "GOODITEM-SELECTBILLUSER-END");
+      },
+      editPer() {
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:206", "触发增加人员");
+        this.$emit("edit-per", this.index);
+      },
+      deleteSelf() {
+        formatAppLog("log", "at components/GoodItem/GoodItem.vue:210", this.index);
+        this.$emit("delete-item", this.index);
+      }
+    }
+  };
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_uni_collapse_item = resolveEasycom(vue.resolveDynamicComponent("uni-collapse-item"), __easycom_0$3);
+    const _component_uni_collapse = resolveEasycom(vue.resolveDynamicComponent("uni-collapse"), __easycom_1$3);
+    const _component_up_divider = resolveEasycom(vue.resolveDynamicComponent("up-divider"), __easycom_2$2);
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        vue.createCommentVNode(" 卡片 "),
+        vue.createElementVNode(
+          "view",
+          {
+            class: "Item-container",
+            style: vue.normalizeStyle({ height: $data.contentHeight })
+          },
+          [
+            vue.createElementVNode("view", { class: "card" }, [
+              vue.createElementVNode("view", {
+                class: "top-bar",
+                onClick: _cache[1] || (_cache[1] = (...args) => $options.toggleModal && $options.toggleModal(...args))
+              }, [
+                vue.createElementVNode("view", {
+                  style: { "font-size": "25rpx", "width": "200rpx" },
+                  class: "text"
+                }, "名称"),
+                vue.createElementVNode("view", {
+                  style: { "font-size": "25rpx", "width": "200rpx" },
+                  class: "text"
+                }, "数量"),
+                vue.createElementVNode("view", {
+                  style: { "font-size": "25rpx", "width": "200rpx" },
+                  class: "text"
+                }, "价格"),
+                vue.createElementVNode("image", {
+                  onClick: _cache[0] || (_cache[0] = (...args) => $options.toggleModal && $options.toggleModal(...args)),
+                  src: _imports_0$1,
+                  class: "set-info"
+                })
+              ]),
+              vue.createElementVNode("view", { class: "top-bar bot-bar" }, [
+                vue.createElementVNode(
+                  "view",
+                  {
+                    class: "input-item name",
+                    onClick: _cache[2] || (_cache[2] = (...args) => $options.toggleModal && $options.toggleModal(...args)),
+                    style: { "font-size": "25rpx", "width": "200rpx" }
+                  },
+                  vue.toDisplayString($props.showData.name),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "view",
+                  {
+                    class: "input-item cnt",
+                    onClick: _cache[3] || (_cache[3] = (...args) => $options.toggleModal && $options.toggleModal(...args)),
+                    style: { "font-size": "25rpx", "width": "200rpx" }
+                  },
+                  vue.toDisplayString($props.showData.cnt),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode(
+                  "view",
+                  {
+                    class: "input-item price",
+                    onClick: _cache[4] || (_cache[4] = (...args) => $options.toggleModal && $options.toggleModal(...args)),
+                    style: { "font-size": "25rpx", "width": "200rpx" }
+                  },
+                  vue.toDisplayString($props.showData.price),
+                  1
+                  /* TEXT */
+                ),
+                vue.createElementVNode("image", {
+                  onClick: _cache[5] || (_cache[5] = (...args) => $options.deleteSelf && $options.deleteSelf(...args)),
+                  src: _imports_1,
+                  class: "set-info"
+                })
+              ]),
+              vue.createVNode(_component_uni_collapse, { class: "collapse" }, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uni_collapse_item, {
+                    class: "showPer",
+                    title: "查看人员",
+                    onClick: $options.toggleCollapse
+                  }, {
+                    default: vue.withCtx(() => [
+                      vue.createElementVNode("view", { class: "content" }, [
+                        $data.loading ? (vue.openBlock(), vue.createElementBlock("view", { key: 0 }, "加载中...")) : $data.Persons.length === 0 ? (vue.openBlock(), vue.createElementBlock("view", { key: 1 }, "暂无人员")) : vue.createCommentVNode("v-if", true),
+                        (vue.openBlock(true), vue.createElementBlock(
+                          vue.Fragment,
+                          null,
+                          vue.renderList($data.Persons, (person, index2) => {
+                            return vue.openBlock(), vue.createElementBlock(
+                              "view",
+                              {
+                                key: index2,
+                                class: "list-item"
+                              },
+                              vue.toDisplayString(person.name),
+                              1
+                              /* TEXT */
+                            );
+                          }),
+                          128
+                          /* KEYED_FRAGMENT */
+                        ))
+                      ])
+                    ]),
+                    _: 1
+                    /* STABLE */
+                  }, 8, ["onClick"])
+                ]),
+                _: 1
+                /* STABLE */
+              })
+            ])
+          ],
+          4
+          /* STYLE */
+        ),
+        vue.createCommentVNode(" 弹窗编辑部分 "),
+        $data.showModal ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "modal"
+        }, [
+          vue.createElementVNode("view", { class: "modal-content" }, [
+            vue.createElementVNode("view", { class: "modal-header" }, [
+              vue.createElementVNode("text", { style: { "font-size": "40rpx", "margin-top": "10rpx", "color": "#014520" } }, "填写内容"),
+              vue.createElementVNode("view", {
+                class: "close-button",
+                onClick: _cache[6] || (_cache[6] = (...args) => $options.toggleModal && $options.toggleModal(...args))
+              }, "×")
+            ]),
+            vue.createVNode(_component_up_divider),
+            vue.createCommentVNode(" 表单内容 "),
+            vue.createElementVNode(
+              "form",
+              {
+                onSubmit: _cache[12] || (_cache[12] = vue.withModifiers((...args) => $options.submitForm && $options.submitForm(...args), ["prevent"]))
+              },
+              [
+                vue.createElementVNode("view", { class: "form-group" }, [
+                  vue.createElementVNode("text", null, "名称："),
+                  vue.withDirectives(vue.createElementVNode(
+                    "input",
+                    {
+                      type: "text",
+                      "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => $data.formData.name = $event),
+                      placeholder: "请输入名称"
+                    },
+                    null,
+                    512
+                    /* NEED_PATCH */
+                  ), [
+                    [vue.vModelText, $data.formData.name]
+                  ])
+                ]),
+                vue.createElementVNode("view", { class: "form-group" }, [
+                  vue.createElementVNode("text", null, "数量："),
+                  vue.withDirectives(vue.createElementVNode(
+                    "input",
+                    {
+                      type: "number",
+                      "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => $data.formData.cnt = $event),
+                      placeholder: "请输入数量"
+                    },
+                    null,
+                    512
+                    /* NEED_PATCH */
+                  ), [
+                    [vue.vModelText, $data.formData.cnt]
+                  ])
+                ]),
+                vue.createElementVNode("view", { class: "form-group" }, [
+                  vue.createElementVNode("text", null, "价格："),
+                  vue.withDirectives(vue.createElementVNode(
+                    "input",
+                    {
+                      type: "number",
+                      "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => $data.formData.price = $event),
+                      placeholder: "请输入价格"
+                    },
+                    null,
+                    512
+                    /* NEED_PATCH */
+                  ), [
+                    [vue.vModelText, $data.formData.price]
+                  ])
+                ]),
+                vue.createElementVNode("button", {
+                  type: "button",
+                  onClick: _cache[10] || (_cache[10] = (...args) => $options.submitForm && $options.submitForm(...args)),
+                  class: "submit-button"
+                }, "提交"),
+                vue.createElementVNode("button", {
+                  type: "button",
+                  onClick: _cache[11] || (_cache[11] = (...args) => $options.editPer && $options.editPer(...args)),
+                  class: "submit-button",
+                  style: { "margin-top": "20rpx" }
+                }, "增加人员")
+              ],
+              32
+              /* NEED_HYDRATION */
+            )
+          ])
+        ])) : vue.createCommentVNode("v-if", true)
+      ],
+      64
+      /* STABLE_FRAGMENT */
+    );
+  }
+  const __easycom_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-c7245072"], ["__file", "D:/uni/travel-new/components/GoodItem/GoodItem.vue"]]);
+  const _sfc_main$e = {
+    name: "uniTh",
+    options: {
+      virtualHost: true
+    },
+    components: {},
+    emits: ["sort-change", "filter-change"],
+    props: {
+      width: {
+        type: [String, Number],
+        default: ""
+      },
+      align: {
+        type: String,
+        default: "left"
+      },
+      rowspan: {
+        type: [Number, String],
+        default: 1
+      },
+      colspan: {
+        type: [Number, String],
+        default: 1
+      },
+      sortable: {
+        type: Boolean,
+        default: false
+      },
+      filterType: {
+        type: String,
+        default: ""
+      },
+      filterData: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      filterDefaultValue: {
+        type: [Array, String],
+        default() {
+          return "";
+        }
+      }
+    },
+    data() {
+      return {
+        border: false,
+        ascending: false,
+        descending: false
+      };
+    },
+    computed: {
+      // 根据props中的width属性 自动匹配当前th的宽度(px)
+      customWidth() {
+        if (typeof this.width === "number") {
+          return this.width;
+        } else if (typeof this.width === "string") {
+          let regexHaveUnitPx = new RegExp(/^[1-9][0-9]*px$/g);
+          let regexHaveUnitRpx = new RegExp(/^[1-9][0-9]*rpx$/g);
+          let regexHaveNotUnit = new RegExp(/^[1-9][0-9]*$/g);
+          if (this.width.match(regexHaveUnitPx) !== null) {
+            return this.width.replace("px", "");
+          } else if (this.width.match(regexHaveUnitRpx) !== null) {
+            let numberRpx = Number(this.width.replace("rpx", ""));
+            let widthCoe = uni.getSystemInfoSync().screenWidth / 750;
+            return Math.round(numberRpx * widthCoe);
+          } else if (this.width.match(regexHaveNotUnit) !== null) {
+            return this.width;
+          } else {
+            return "";
+          }
+        } else {
+          return "";
+        }
+      },
+      contentAlign() {
+        let align = "left";
+        switch (this.align) {
+          case "left":
+            align = "flex-start";
+            break;
+          case "center":
+            align = "center";
+            break;
+          case "right":
+            align = "flex-end";
+            break;
+        }
+        return align;
+      }
+    },
+    created() {
+      this.root = this.getTable("uniTable");
+      this.rootTr = this.getTable("uniTr");
+      this.rootTr.minWidthUpdate(this.customWidth ? this.customWidth : 140);
+      this.border = this.root.border;
+      this.root.thChildren.push(this);
+    },
+    methods: {
+      sort() {
+        if (!this.sortable)
+          return;
+        this.clearOther();
+        if (!this.ascending && !this.descending) {
+          this.ascending = true;
+          this.$emit("sort-change", { order: "ascending" });
+          return;
+        }
+        if (this.ascending && !this.descending) {
+          this.ascending = false;
+          this.descending = true;
+          this.$emit("sort-change", { order: "descending" });
+          return;
+        }
+        if (!this.ascending && this.descending) {
+          this.ascending = false;
+          this.descending = false;
+          this.$emit("sort-change", { order: null });
+        }
+      },
+      ascendingFn() {
+        this.clearOther();
+        this.ascending = !this.ascending;
+        this.descending = false;
+        this.$emit("sort-change", { order: this.ascending ? "ascending" : null });
+      },
+      descendingFn() {
+        this.clearOther();
+        this.descending = !this.descending;
+        this.ascending = false;
+        this.$emit("sort-change", { order: this.descending ? "descending" : null });
+      },
+      clearOther() {
+        this.root.thChildren.map((item) => {
+          if (item !== this) {
+            item.ascending = false;
+            item.descending = false;
+          }
+          return item;
+        });
+      },
+      ondropdown(e2) {
+        this.$emit("filter-change", e2);
+      },
+      /**
+       * 获取父元素实例
+       */
+      getTable(name) {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== name) {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      }
+    }
+  };
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: vue.normalizeClass(["uni-table-th", { "table--border": $data.border }]),
+        style: vue.normalizeStyle({ width: $options.customWidth + "px", "text-align": $props.align })
+      },
+      [
+        vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+      ],
+      6
+      /* CLASS, STYLE */
+    );
+  }
+  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-bf970acd"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-th/uni-th.vue"]]);
+  const _sfc_main$d = {
+    name: "TableCheckbox",
+    emits: ["checkboxSelected"],
+    props: {
+      indeterminate: {
+        type: Boolean,
+        default: false
+      },
+      checked: {
+        type: [Boolean, String],
+        default: false
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      index: {
+        type: Number,
+        default: -1
+      },
+      cellData: {
+        type: Object,
+        default() {
+          return {};
+        }
+      }
+    },
+    watch: {
+      checked(newVal) {
+        if (typeof this.checked === "boolean") {
+          this.isChecked = newVal;
+        } else {
+          this.isChecked = true;
+        }
+      },
+      indeterminate(newVal) {
+        this.isIndeterminate = newVal;
+      }
+    },
+    data() {
+      return {
+        isChecked: false,
+        isDisabled: false,
+        isIndeterminate: false
+      };
+    },
+    created() {
+      if (typeof this.checked === "boolean") {
+        this.isChecked = this.checked;
+      }
+      this.isDisabled = this.disabled;
+    },
+    methods: {
+      selected() {
+        if (this.isDisabled)
+          return;
+        this.isIndeterminate = false;
+        this.isChecked = !this.isChecked;
+        this.$emit("checkboxSelected", {
+          checked: this.isChecked,
+          data: this.cellData
+        });
+      }
+    }
+  };
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: "uni-table-checkbox",
+      onClick: _cache[0] || (_cache[0] = (...args) => $options.selected && $options.selected(...args))
+    }, [
+      !$props.indeterminate ? (vue.openBlock(), vue.createElementBlock(
+        "view",
+        {
+          key: 0,
+          class: vue.normalizeClass(["checkbox__inner", { "is-checked": $data.isChecked, "is-disable": $data.isDisabled }])
+        },
+        [
+          vue.createElementVNode("view", { class: "checkbox__inner-icon" })
+        ],
+        2
+        /* CLASS */
+      )) : (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "checkbox__inner checkbox--indeterminate"
+      }, [
+        vue.createElementVNode("view", { class: "checkbox__inner-icon" })
+      ]))
+    ]);
+  }
+  const tableCheckbox = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-25e435b1"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-tr/table-checkbox.vue"]]);
+  const _sfc_main$c = {
+    name: "uniTr",
+    components: {
+      tableCheckbox
+    },
+    props: {
+      disabled: {
+        type: Boolean,
+        default: false
+      },
+      keyValue: {
+        type: [String, Number],
+        default: ""
+      }
+    },
+    options: {
+      virtualHost: true
+    },
+    data() {
+      return {
+        value: false,
+        border: false,
+        selection: false,
+        widthThArr: [],
+        ishead: true,
+        checked: false,
+        indeterminate: false
+      };
+    },
+    created() {
+      this.root = this.getTable();
+      this.head = this.getTable("uniThead");
+      if (this.head) {
+        this.ishead = false;
+        this.head.init(this);
+      }
+      this.border = this.root.border;
+      this.selection = this.root.type;
+      this.root.trChildren.push(this);
+      const rowData = this.root.data.find((v) => v[this.root.rowKey] === this.keyValue);
+      if (rowData) {
+        this.rowData = rowData;
+      }
+      this.root.isNodata();
+    },
+    mounted() {
+      if (this.widthThArr.length > 0) {
+        const selectionWidth = this.selection === "selection" ? 50 : 0;
+        this.root.minWidth = Number(this.widthThArr.reduce((a2, b) => Number(a2) + Number(b))) + selectionWidth;
+      }
+    },
+    unmounted() {
+      const index2 = this.root.trChildren.findIndex((i2) => i2 === this);
+      this.root.trChildren.splice(index2, 1);
+      this.root.isNodata();
+    },
+    methods: {
+      minWidthUpdate(width) {
+        this.widthThArr.push(width);
+        if (this.widthThArr.length > 0) {
+          const selectionWidth = this.selection === "selection" ? 50 : 0;
+          this.root.minWidth = Number(this.widthThArr.reduce((a2, b) => Number(a2) + Number(b))) + selectionWidth;
+        }
+      },
+      // 选中
+      checkboxSelected(e2) {
+        let rootData = this.root.data.find((v) => v[this.root.rowKey] === this.keyValue);
+        this.checked = e2.checked;
+        this.root.check(rootData || this, e2.checked, rootData ? this.keyValue : null);
+      },
+      change(e2) {
+        this.root.trChildren.forEach((item) => {
+          if (item === this) {
+            this.root.check(this, e2.detail.value.length > 0 ? true : false);
+          }
+        });
+      },
+      /**
+       * 获取父元素实例
+       */
+      getTable(name = "uniTable") {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== name) {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      }
+    }
+  };
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_table_checkbox = vue.resolveComponent("table-checkbox");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "uni-table-tr" }, [
+      $data.selection === "selection" ? (vue.openBlock(), vue.createElementBlock(
+        "view",
+        {
+          key: 0,
+          class: vue.normalizeClass(["checkbox", { "tr-table--border": $data.border }])
+        },
+        [
+          vue.createVNode(_component_table_checkbox, {
+            checked: $data.checked,
+            indeterminate: $data.indeterminate,
+            disabled: $props.disabled,
+            onCheckboxSelected: $options.checkboxSelected
+          }, null, 8, ["checked", "indeterminate", "disabled", "onCheckboxSelected"])
+        ],
+        2
+        /* CLASS */
+      )) : vue.createCommentVNode("v-if", true),
+      vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+    ]);
+  }
+  const __easycom_2$1 = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-b48b3e32"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-tr/uni-tr.vue"]]);
+  const _sfc_main$b = {
+    name: "uniTd",
+    options: {
+      virtualHost: true
+    },
+    props: {
+      width: {
+        type: [String, Number],
+        default: ""
+      },
+      align: {
+        type: String,
+        default: "left"
+      },
+      rowspan: {
+        type: [Number, String],
+        default: 1
+      },
+      colspan: {
+        type: [Number, String],
+        default: 1
+      }
+    },
+    data() {
+      return {
+        border: false
+      };
+    },
+    created() {
+      this.root = this.getTable();
+      this.border = this.root.border;
+    },
+    methods: {
+      /**
+       * 获取父元素实例
+       */
+      getTable() {
+        let parent = this.$parent;
+        let parentName = parent.$options.name;
+        while (parentName !== "uniTable") {
+          parent = parent.$parent;
+          if (!parent)
+            return false;
+          parentName = parent.$options.name;
+        }
+        return parent;
+      }
+    }
+  };
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      vue.Fragment,
+      null,
+      [
+        vue.createCommentVNode(` :class="{'table--border':border}"  `),
+        vue.createElementVNode(
+          "view",
+          {
+            class: vue.normalizeClass(["uni-table-td", { "table--border": $data.border }]),
+            style: vue.normalizeStyle({ width: $props.width + "px", "text-align": $props.align })
+          },
+          [
+            vue.renderSlot(_ctx.$slots, "default", {}, void 0, true)
+          ],
+          6
+          /* CLASS, STYLE */
+        )
+      ],
+      2112
+      /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
+    );
+  }
+  const __easycom_3$1 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-edae4802"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-td/uni-td.vue"]]);
+  const _sfc_main$a = {
+    name: "uniTable",
+    options: {
+      virtualHost: true
+    },
+    emits: ["selection-change"],
+    props: {
+      data: {
+        type: Array,
+        default() {
+          return [];
+        }
+      },
+      // 是否有竖线
+      border: {
+        type: Boolean,
+        default: false
+      },
+      // 是否显示斑马线
+      stripe: {
+        type: Boolean,
+        default: false
+      },
+      // 多选
+      type: {
+        type: String,
+        default: ""
+      },
+      // 没有更多数据
+      emptyText: {
+        type: String,
+        default: "没有更多数据"
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      },
+      rowKey: {
+        type: String,
+        default: ""
+      }
+    },
+    data() {
+      return {
+        noData: true,
+        minWidth: 0,
+        multiTableHeads: []
+      };
+    },
+    watch: {
+      loading(val) {
+      },
+      data(newVal) {
+        this.theadChildren;
+        if (this.theadChildren) {
+          this.theadChildren.rowspan;
+        }
+        this.noData = false;
+      }
+    },
+    created() {
+      this.trChildren = [];
+      this.thChildren = [];
+      this.theadChildren = null;
+      this.backData = [];
+      this.backIndexData = [];
+    },
+    methods: {
+      isNodata() {
+        this.theadChildren;
+        let rowspan = 1;
+        if (this.theadChildren) {
+          rowspan = this.theadChildren.rowspan;
+        }
+        this.noData = this.trChildren.length - rowspan <= 0;
+      },
+      /**
+       * 选中所有
+       */
+      selectionAll() {
+        let startIndex = 1;
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        } else {
+          startIndex = theadChildren.rowspan - 1;
+        }
+        let isHaveData = this.data && this.data.length > 0;
+        theadChildren.checked = true;
+        theadChildren.indeterminate = false;
+        this.trChildren.forEach((item, index2) => {
+          if (!item.disabled) {
+            item.checked = true;
+            if (isHaveData && item.keyValue) {
+              const row = this.data.find((v) => v[this.rowKey] === item.keyValue);
+              if (!this.backData.find((v) => v[this.rowKey] === row[this.rowKey])) {
+                this.backData.push(row);
+              }
+            }
+            if (index2 > startIndex - 1 && this.backIndexData.indexOf(index2 - startIndex) === -1) {
+              this.backIndexData.push(index2 - startIndex);
+            }
+          }
+        });
+        this.$emit("selection-change", {
+          detail: {
+            value: this.backData,
+            index: this.backIndexData
+          }
+        });
+      },
+      /**
+       * 用于多选表格，切换某一行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中）
+       */
+      toggleRowSelection(row, selected) {
+        row = [].concat(row);
+        formatAppLog("log", "at uni_modules/uni-table/components/uni-table/uni-table.vue:170", "row: " + row);
+        this.trChildren.forEach((item, index2) => {
+          const select = row.findIndex((v) => {
+            if (typeof v === "number") {
+              return v === index2 - 1;
+            } else {
+              return v[this.rowKey] === item.keyValue;
+            }
+          });
+          let ischeck = item.checked;
+          if (select !== -1) {
+            if (typeof selected === "boolean") {
+              item.checked = selected;
+            } else {
+              item.checked = !item.checked;
+            }
+            if (ischeck !== item.checked) {
+              this.check(
+                item.rowData || item,
+                item.checked,
+                item.rowData ? item.keyValue : null,
+                true
+              );
+            }
+          }
+        });
+        this.$emit("selection-change", {
+          detail: {
+            value: this.backData,
+            index: this.backIndexData
+          }
+        });
+      },
+      /**
+       * 用于多选表格，清空用户的选择
+       */
+      clearSelection() {
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        }
+        theadChildren.checked = false;
+        theadChildren.indeterminate = false;
+        this.trChildren.forEach((item) => {
+          item.checked = false;
+        });
+        this.backData = [];
+        this.backIndexData = [];
+        this.$emit("selection-change", {
+          detail: {
+            value: [],
+            index: []
+          }
+        });
+      },
+      /**
+       * 用于多选表格，切换所有行的选中状态
+       */
+      toggleAllSelection() {
+        let list = [];
+        let startIndex = 1;
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        } else {
+          startIndex = theadChildren.rowspan - 1;
+        }
+        this.trChildren.forEach((item, index2) => {
+          if (!item.disabled) {
+            if (index2 > startIndex - 1) {
+              list.push(index2 - startIndex);
+            }
+          }
+        });
+        this.toggleRowSelection(list);
+      },
+      /**
+       * 选中\取消选中
+       * @param {Object} child
+       * @param {Object} check
+       * @param {Object} rowValue
+       */
+      check(child, check, keyValue, emit) {
+        let theadChildren = this.theadChildren;
+        if (!this.theadChildren) {
+          theadChildren = this.trChildren[0];
+        }
+        let childDomIndex = this.trChildren.findIndex((item, index2) => child === item);
+        if (childDomIndex < 0) {
+          childDomIndex = this.data.findIndex((v) => v[this.rowKey] === keyValue) + 1;
+        }
+        this.trChildren.filter((v) => !v.disabled && v.keyValue).length;
+        if (childDomIndex === 0) {
+          check ? this.selectionAll() : this.clearSelection();
+          return;
+        }
+        if (check) {
+          if (keyValue) {
+            this.backData.push(child);
+          }
+          this.backIndexData.push(childDomIndex - 1);
+        } else {
+          const index2 = this.backData.findIndex((v) => v[this.rowKey] === keyValue);
+          const idx = this.backIndexData.findIndex((item) => item === childDomIndex - 1);
+          if (keyValue) {
+            this.backData.splice(index2, 1);
+          }
+          this.backIndexData.splice(idx, 1);
+        }
+        const domCheckAll = this.trChildren.find((item, index2) => index2 > 0 && !item.checked && !item.disabled);
+        if (!domCheckAll) {
+          theadChildren.indeterminate = false;
+          theadChildren.checked = true;
+        } else {
+          theadChildren.indeterminate = true;
+          theadChildren.checked = false;
+        }
+        if (this.backIndexData.length === 0) {
+          theadChildren.indeterminate = false;
+        }
+        if (!emit) {
+          this.$emit("selection-change", {
+            detail: {
+              value: this.backData,
+              index: this.backIndexData
+            }
+          });
+        }
+      }
+    }
+  };
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: vue.normalizeClass(["uni-table-scroll", { "table--border": $props.border, "border-none": !$data.noData }])
+      },
+      [
+        vue.createElementVNode(
+          "view",
+          {
+            class: vue.normalizeClass(["uni-table", { "table--stripe": $props.stripe }]),
+            style: vue.normalizeStyle({ "min-width": $data.minWidth + "px" })
+          },
+          [
+            vue.renderSlot(_ctx.$slots, "default", {}, void 0, true),
+            $data.noData ? (vue.openBlock(), vue.createElementBlock("view", {
+              key: 0,
+              class: "uni-table-loading"
+            }, [
+              vue.createElementVNode(
+                "view",
+                {
+                  class: vue.normalizeClass(["uni-table-text", { "empty-border": $props.border }])
+                },
+                vue.toDisplayString($props.emptyText),
+                3
+                /* TEXT, CLASS */
+              )
+            ])) : vue.createCommentVNode("v-if", true),
+            $props.loading ? (vue.openBlock(), vue.createElementBlock(
+              "view",
+              {
+                key: 1,
+                class: vue.normalizeClass(["uni-table-mask", { "empty-border": $props.border }])
+              },
+              [
+                vue.createElementVNode("div", { class: "uni-table--loader" })
+              ],
+              2
+              /* CLASS */
+            )) : vue.createCommentVNode("v-if", true)
+          ],
+          6
+          /* CLASS, STYLE */
+        )
+      ],
+      2
+      /* CLASS */
+    );
+  }
+  const __easycom_4 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-c1ea9b5d"], ["__file", "D:/uni/travel-new/uni_modules/uni-table/components/uni-table/uni-table.vue"]]);
+  function selectInformationType$1(name, aa, bb, cc, dd) {
+    if (name !== void 0) {
+      if (aa !== void 0 && cc !== void 0) {
+        var sql = "select * from " + name + " where " + aa + "=" + bb + " and " + cc + "=" + dd;
+      }
+      if (aa !== void 0 && cc == void 0) {
+        var sql = "select * from " + name + " where " + aa + "=" + bb;
+      }
+      if (aa == void 0) {
+        var sql = "select * from " + name;
+      }
+      formatAppLog("log", "at common/util/Bill.js:20", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.selectSql({
+          name: "travel",
+          sql,
+          success(e2) {
+            resolve(e2);
+          },
+          fail(e2) {
+            reject(e2);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误查询");
+      });
+    }
+  }
+  function deleteInformationType$1(name, sol, qq, ww, ee) {
+    if (name !== void 0 && sol !== void 0) {
+      if (ww !== void 0) {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '" and ' + ww + "=" + ee;
+      } else {
+        var sql = "delete from " + name + " where " + sol + '="' + qq + '"';
+      }
+      formatAppLog("log", "at common/util/Bill.js:51", sql);
+      return new Promise((resolve, reject) => {
+        plus.sqlite.executeSql({
+          name: "travel",
+          sql,
+          success(e2) {
+            resolve(e2);
+          },
+          fail(e2) {
+            reject(e2);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误删除");
+      });
+    }
+  }
+  function modifyInformation$1(obj) {
+    formatAppLog("log", "at common/util/Bill.js:75", obj);
+    if (obj !== void 0) {
+      var b = JSON.stringify(obj) == "{}";
+      if (!b) {
+        var billid = obj.id || null;
+        var projectId = obj.projectId || null;
+        var name = obj.name || null;
+        var cnt = obj.cnt || null;
+        var price = obj.price;
+        var sql = 'update Bill set name="' + name + '", cnt="' + cnt + '", price="' + price + '" where projectId="' + projectId + '" and id="' + billid + '"';
+        formatAppLog("log", "at common/util/Bill.js:90", sql);
+        return new Promise((resolve, reject) => {
+          plus.sqlite.executeSql({
+            name: "travel",
+            sql,
+            success(e2) {
+              resolve(e2);
+            },
+            fail(e2) {
+              reject(e2);
+            }
+          });
+        });
+      } else {
+        return new Promise((resolve, reject) => {
+          reject("错误添加");
+        });
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误添加");
+      });
+    }
+  }
+  function addBill(obj) {
+    if (obj !== void 0) {
+      var b = JSON.stringify(obj) == "{}";
+      if (!b) {
+        var billid = obj.billid || null;
+        var projectId = obj.projectId || null;
+        var name = obj.name || null;
+        var cnt = obj.cnt || null;
+        var price = obj.price;
+        var sql = 'insert into Bill(billid,projectId,name,cnt,price) values("' + billid + '","' + projectId + '","' + name + '","' + cnt + '","' + price + '")';
+        formatAppLog("log", "at common/util/Bill.js:133", sql);
+        return new Promise((resolve, reject) => {
+          plus.sqlite.executeSql({
+            name: "travel",
+            sql,
+            success(e2) {
+              resolve(e2);
+            },
+            fail(e2) {
+              reject(e2);
+            }
+          });
+        });
+      } else {
+        return new Promise((resolve, reject) => {
+          reject("错误添加");
+        });
+      }
+    } else {
+      return new Promise((resolve, reject) => {
+        reject("错误添加");
+      });
+    }
+  }
+  const Bill = {
+    selectInformationType: selectInformationType$1,
+    deleteInformationType: deleteInformationType$1,
+    modifyInformation: modifyInformation$1,
+    addBill
+  };
+  const _sfc_main$9 = {
+    components: {
+      GoodItem: __easycom_0$2
+    },
+    data() {
+      return {
+        projectItems: {
+          "11": {}
+        },
+        projectNames: [],
+        projects: [{
+          projectName: "默认项目",
+          id: 1
+        }],
+        // 项目名称
+        selectedProjectIndex: 0,
+        // 当前选中的项目索引
+        nextId: 5,
+        // 自动递增的 ID
+        newProjectName: "",
+        showModaleditPer: false,
+        showModaledit: false,
+        showModalAddProject: false,
+        showModalAddBill: false,
+        newItemName: "",
+        newItemCnt: 1,
+        newItemPrice: 0,
+        updateProjectName: "",
+        AllPerson: [],
+        nowBillPerson: [],
+        nowBillId: ""
+      };
+    },
+    computed: {
+      currentItems() {
+        var _a;
+        if (!this.projects.length) {
+          formatAppLog("warn", "at pages/PayBill/index.vue:165", "当前项目列表为空");
+          return [];
+        }
+        const selectedProject = ((_a = this.projects[this.selectedProjectIndex]) == null ? void 0 : _a.projectName) || "默认项目";
+        formatAppLog("log", "at pages/PayBill/index.vue:169", "当前project:" + selectedProject);
+        formatAppLog("log", "at pages/PayBill/index.vue:170", "看看账单：" + this.projectItems[selectedProject]);
+        uni.setStorageSync(STORAGE_KEYS.CURRENTITEMS, this.projectItems[selectedProject] || []);
+        return this.projectItems[selectedProject] || [];
+      },
+      totalPrice() {
+        return this.currentItems.reduce((sum, item) => {
+          return sum + Number(item.price);
+        }, 0);
+      }
+    },
+    mounted() {
+      this.reloadData();
+    },
+    methods: {
+      async reloadData() {
+        try {
+          utils.initializeDB();
+          formatAppLog("log", "at pages/PayBill/index.vue:195", "重新加载数据...");
+          await this.selectProjects();
+          await this.updateprojectBill();
+          await this.selectAllPer();
+          formatAppLog("log", "at pages/PayBill/index.vue:199", "数据重新加载完成");
+        } catch (error2) {
+          formatAppLog("error", "at pages/PayBill/index.vue:201", "重新加载数据时出错：", error2);
+        }
+      },
+      //选中人员
+      selectionChange(selectedRows) {
+        formatAppLog("log", "at pages/PayBill/index.vue:206", "选中的行", selectedRows);
+        const selectedRow = selectedRows.detail.index || [];
+        this.nowBillPerson = selectedRow;
+      },
+      setDefaultSelection() {
+        const selectedUserIds = this.nowBillPerson.map((person) => person.userid);
+        formatAppLog("log", "at pages/PayBill/index.vue:214", "selectedUserIds ", selectedUserIds);
+        const matchedDetails = this.AllPerson.map((person, index3) => ({
+          person,
+          index: index3
+        })).filter(({
+          person
+        }) => selectedUserIds.includes(person.id));
+        formatAppLog("log", "at pages/PayBill/index.vue:226", "matchedDetails ", matchedDetails);
+        const index2 = matchedDetails.map(({
+          index: index3
+        }) => index3);
+        formatAppLog("log", "at pages/PayBill/index.vue:234", "detail ", index2);
+        this.$refs.tableRef.toggleRowSelection(index2, true);
+      },
+      //编辑账单人员
+      async selectAllPer() {
+        const result = await util.selectInformationType("user");
+        formatAppLog("log", "at pages/PayBill/index.vue:242", "找出的AllPerson", result);
+        this.AllPerson = result;
+        uni.setStorageSync(STORAGE_KEYS.AllPerson, result);
+      },
+      editPer(index2) {
+        this.showModaleditPer = true;
+        this.selectAllPer().then(() => this.selectBillUser(index2).then(() => this.setDefaultSelection()));
+      },
+      async selectBillUser(index2) {
+        formatAppLog("log", "at pages/PayBill/index.vue:251", this.currentItems[index2]);
+        const result = await BillUser.selectInformationType("BillUser", "Billid", this.currentItems[index2].id);
+        formatAppLog("log", "at pages/PayBill/index.vue:253", "当前账单: " + this.currentItems[index2] + "result: ", result);
+        this.nowBillId = this.currentItems[index2].id;
+        this.nowBillPerson = result;
+        formatAppLog("log", "at pages/PayBill/index.vue:256", "nowBillPerson: ", result);
+      },
+      updateBillUserToDB() {
+        formatAppLog("log", "at pages/PayBill/index.vue:261", this.nowBillPerson);
+        const result = this.nowBillPerson.map((index2) => this.AllPerson[index2].id);
+        formatAppLog("log", "at pages/PayBill/index.vue:265", "选中的用户id:", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:266", "当前账单Id:", this.nowBillId);
+        const result1 = result.map((userId) => {
+          return {
+            userid: userId,
+            // 用户 id
+            billid: this.nowBillId
+            // 当前账单 id
+          };
+        });
+        BillUser.deleteInformationType("BillUser", "Billid", this.nowBillId);
+        formatAppLog("log", "at pages/PayBill/index.vue:276", "选中的用户与账单合成对象:", result1);
+        result1.forEach((obj) => {
+          BillUser.addUser(obj);
+        });
+        this.closeModal();
+      },
+      // 处理项目
+      async selectProjects() {
+        const result = await project.selectInformationType("project");
+        if (result.length > 0)
+          this.projects = result;
+        formatAppLog("log", "at pages/PayBill/index.vue:287", "SELECTPROJECTS: ", this.projects);
+        this.projectNames = this.projects.map(
+          (project2) => `${project2.id}: ${project2.projectName}`
+        );
+        this.selectedProjectIndex = 0;
+        formatAppLog("log", "at pages/PayBill/index.vue:292", this.projects);
+      },
+      handleProjectChange(e2) {
+        formatAppLog("log", "at pages/PayBill/index.vue:295", "e" + e2);
+        this.selectedProjectIndex = parseInt(e2.detail.value, 10);
+        uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
+        formatAppLog("log", "at pages/PayBill/index.vue:298", "测试本地缓存", uni.getStorageSync(STORAGE_KEYS.nowproject));
+        formatAppLog("log", "at pages/PayBill/index.vue:299", "切换到项目:", this.projects[this.selectedProjectIndex].projectName);
+        this.updateprojectBill();
+      },
+      //更新Item
+      handleDelete(index2) {
+        this.projects[this.selectedProjectIndex].id;
+        formatAppLog("log", "at pages/PayBill/index.vue:305", this.currentItems[index2]);
+        Bill.deleteInformationType("Bill", "id", this.currentItems[index2].id).then(() => this.updateprojectBill());
+        BillUser.deleteInformationType("BillUser", "Billid", this.currentItems[index2].id);
+      },
+      handleUpdate(index2, updatedItem) {
+        formatAppLog("log", "at pages/PayBill/index.vue:312", "更新索引：", index2, "更新数据：", updatedItem);
+        this.projects[this.selectedProjectIndex].projectName;
+        Bill.modifyInformation(updatedItem).then(() => this.updateprojectBill());
+      },
+      //新增project内的items
+      handleAdd() {
+        this.showModalAddBill = true;
+      },
+      addBillsToDB() {
+        const selectedProjectId = this.projects[this.selectedProjectIndex].id;
+        const newItem = {
+          billid: this.nextId++,
+          projectId: selectedProjectId,
+          name: this.newItemName,
+          cnt: this.newItemCnt,
+          price: this.newItemPrice
+        };
+        this.addprojectBill(newItem);
+      },
+      addprojectBill(newItem) {
+        Bill.addBill(newItem);
+        this.updateprojectBill();
+        this.closeModal();
+      },
+      //更新项目账单
+      async updateprojectBill() {
+        formatAppLog("log", "at pages/PayBill/index.vue:348", "当前index: " + this.selectedProjectIndex);
+        const selectedProjectId = this.projects[this.selectedProjectIndex].id;
+        const selectedProject = this.projects[this.selectedProjectIndex].projectName;
+        formatAppLog("log", "at pages/PayBill/index.vue:351", "当前projects:", this.projects);
+        const result = await Bill.selectInformationType("Bill", "projectId", selectedProjectId);
+        formatAppLog("log", "at pages/PayBill/index.vue:353", "更新项目账单： ", result);
+        this.projectItems[selectedProject] = result;
+      },
+      //新增project
+      addProject() {
+        this.showModalAddProject = true;
+      },
+      addProjectToDB() {
+        const obj = {
+          id: 1,
+          name: this.newProjectName
+        };
+        project.addUser(obj);
+        this.selectProjects();
+        formatAppLog("log", "at pages/PayBill/index.vue:369", "添加新项目:", this.newProjectName);
+        this.closeModal();
+      },
+      closeModal() {
+        this.showModalAddBill = false;
+        this.showModaledit = false;
+        this.newItemCnt = 1;
+        this.newItemPrice = 0;
+        this.newItemName = "";
+        this.showModalAddProject = false;
+        this.newProjectName = "";
+        this.showModaleditPer = false;
+      },
+      //结算页面，开始生成账单
+      handleSettle() {
+        uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
+        formatAppLog("log", "at pages/PayBill/index.vue:387", "当前项目的结算数据:", this.currentItems);
+        formatAppLog("log", "at pages/PayBill/index.vue:388", "存入的project ", uni.getStorageSync(STORAGE_KEYS.nowproject));
+        uni.navigateTo({
+          url: "/pages/settleBill/settleBill"
+        });
+      },
+      //编辑项目：生成弹窗，里面可以编辑也可以删除
+      editProject() {
+        this.showModaledit = true;
+      },
+      //更新项目
+      updateProjectToDB() {
+        const selectedProjectId = this.projects[this.selectedProjectIndex].id;
+        this.projects[this.selectedProjectIndex].projectName;
+        project.modifyInformation("project", "projectName", this.updateProjectName, "id", selectedProjectId);
+        this.selectProjects().then(() => this.updateprojectBill());
+        this.closeModal();
+      },
+      //删除项目
+      deleteProjectToDB() {
+        const selectedProjectId = this.projects[this.selectedProjectIndex].id;
+        this.projects[this.selectedProjectIndex].projectName;
+        project.deleteInformationType("project", "id", selectedProjectId);
+        this.currentItems.forEach((obj) => {
+          BillUser.deleteInformationType("BillUser", "Billid", obj.id);
+        });
+        Bill.deleteInformationType("Bill", "projectId", selectedProjectId);
+        this.selectProjects().then(() => this.updateprojectBill());
+        this.closeModal();
+      }
+    }
+  };
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+    var _a;
+    const _component_GoodItem = resolveEasycom(vue.resolveDynamicComponent("GoodItem"), __easycom_0$2);
+    const _component_uni_th = resolveEasycom(vue.resolveDynamicComponent("uni-th"), __easycom_1$1);
+    const _component_uni_tr = resolveEasycom(vue.resolveDynamicComponent("uni-tr"), __easycom_2$1);
+    const _component_uni_td = resolveEasycom(vue.resolveDynamicComponent("uni-td"), __easycom_3$1);
+    const _component_uni_table = resolveEasycom(vue.resolveDynamicComponent("uni-table"), __easycom_4);
+    return vue.openBlock(), vue.createElementBlock("view", { class: "main-container" }, [
+      vue.createCommentVNode(" 顶部选择框和添加按钮 "),
+      vue.createElementVNode("view", { class: "select-container" }, [
+        $data.projects.length > 0 ? (vue.openBlock(), vue.createElementBlock("picker", {
+          key: 0,
+          value: $data.selectedProjectIndex,
+          range: $data.projectNames,
+          onChange: _cache[0] || (_cache[0] = (...args) => $options.handleProjectChange && $options.handleProjectChange(...args))
+        }, [
+          vue.createElementVNode(
+            "view",
+            { class: "picker" },
+            " 当前项目：" + vue.toDisplayString(((_a = $data.projects[$data.selectedProjectIndex]) == null ? void 0 : _a.projectName) || " ss"),
+            1
+            /* TEXT */
+          )
+        ], 40, ["value", "range"])) : vue.createCommentVNode("v-if", true),
+        vue.createElementVNode("button", {
+          class: "add-project-button",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.addProject && $options.addProject(...args))
+        }, "新增项目"),
+        vue.createElementVNode("button", {
+          class: "add-project-button",
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.editProject && $options.editProject(...args))
+        }, "编辑项目")
+      ]),
+      vue.createElementVNode("view", { class: "total-price" }, [
+        vue.createElementVNode("view", null, " 总价： "),
+        vue.createElementVNode(
+          "view",
+          null,
+          vue.toDisplayString($options.totalPrice),
+          1
+          /* TEXT */
+        )
+      ]),
+      vue.createCommentVNode(" 列表 "),
+      vue.createElementVNode("view", { class: "item-container" }, [
+        (vue.openBlock(true), vue.createElementBlock(
+          vue.Fragment,
+          null,
+          vue.renderList($options.currentItems, (item, idx) => {
+            return vue.openBlock(), vue.createBlock(_component_GoodItem, {
+              key: item.id,
+              index: idx,
+              showData: item,
+              onDeleteItem: $options.handleDelete,
+              onUpdateItem: $options.handleUpdate,
+              onEditPer: $options.editPer
+            }, null, 8, ["index", "showData", "onDeleteItem", "onUpdateItem", "onEditPer"]);
+          }),
+          128
+          /* KEYED_FRAGMENT */
+        ))
+      ]),
+      vue.createCommentVNode(" 底部固定按钮 "),
+      vue.createElementVNode("view", { class: "fixed-button-container" }, [
+        vue.createElementVNode("view", {
+          class: "fixed-button",
+          onClick: _cache[3] || (_cache[3] = (...args) => $options.handleSettle && $options.handleSettle(...args))
+        }, "结算"),
+        vue.createElementVNode("view", {
+          class: "add-button",
+          onClick: _cache[4] || (_cache[4] = (...args) => $options.handleAdd && $options.handleAdd(...args))
+        }, "记一笔")
+      ]),
+      vue.createCommentVNode(" 弹窗 "),
+      $data.showModalAddProject ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "modal-overlay"
+      }, [
+        vue.createElementVNode("view", { class: "modal-content" }, [
+          vue.createElementVNode("view", {
+            class: "modal-header",
+            style: { "color": "#014520" }
+          }, "添加项目"),
+          vue.createElementVNode("view", { class: "modal-body" }, [
+            vue.withDirectives(vue.createElementVNode(
+              "input",
+              {
+                class: "input",
+                type: "text",
+                placeholder: "请输入项目名称",
+                "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.newProjectName = $event)
+              },
+              null,
+              512
+              /* NEED_PATCH */
+            ), [
+              [vue.vModelText, $data.newProjectName]
+            ])
+          ]),
+          vue.createElementVNode("view", { class: "modal-footer" }, [
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[6] || (_cache[6] = (...args) => $options.addProjectToDB && $options.addProjectToDB(...args))
+            }, "确认"),
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[7] || (_cache[7] = (...args) => $options.closeModal && $options.closeModal(...args))
+            }, "取消")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createCommentVNode(" 新增账单 "),
+      $data.showModalAddBill ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 1,
+        class: "modal-overlay"
+      }, [
+        vue.createElementVNode("view", { class: "modal-content" }, [
+          vue.createElementVNode("view", {
+            class: "modal-header",
+            style: { "color": "#014520" }
+          }, "添加账目"),
+          vue.createElementVNode("view", { class: "modal-body" }, [
+            vue.createElementVNode("view", { style: { "margin-top": "30rpx", "color": "#014520" } }, [
+              vue.createElementVNode("text", { style: { "margin-right": "500rpx", "color": "#014520" } }, "名称"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input",
+                  type: "text",
+                  placeholder: "请输入名称",
+                  "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => $data.newItemName = $event)
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.newItemName]
+              ])
+            ]),
+            vue.createElementVNode("view", { style: { "margin-top": "30rpx", "color": "#014520" } }, [
+              vue.createElementVNode("text", { style: { "margin-right": "500rpx" } }, "数量"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input",
+                  type: "text",
+                  placeholder: "请输入数量",
+                  "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => $data.newItemCnt = $event)
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.newItemCnt]
+              ])
+            ]),
+            vue.createElementVNode("view", { style: { "margin-top": "30rpx", "color": "#014520" } }, [
+              vue.createElementVNode("text", { style: { "margin-right": "500rpx" } }, "价格"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input",
+                  type: "text",
+                  placeholder: "请输入价格",
+                  "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => $data.newItemPrice = $event)
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.newItemPrice]
+              ])
+            ])
+          ]),
+          vue.createElementVNode("view", { class: "modal-footer" }, [
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[11] || (_cache[11] = (...args) => $options.addBillsToDB && $options.addBillsToDB(...args))
+            }, "确认"),
+            vue.createElementVNode("button", {
+              class: "btn",
+              onClick: _cache[12] || (_cache[12] = (...args) => $options.closeModal && $options.closeModal(...args))
+            }, "取消")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createCommentVNode(" 编辑项目 "),
+      $data.showModaledit ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 2,
+        class: "modal-overlay"
+      }, [
+        vue.createElementVNode("view", { class: "modal-content" }, [
+          vue.createElementVNode("view", {
+            class: "modal-header",
+            style: { "color": "#014520" }
+          }, "编辑项目"),
+          vue.createElementVNode("view", { class: "modal-body" }, [
+            vue.withDirectives(vue.createElementVNode(
+              "input",
+              {
+                class: "input",
+                type: "text",
+                placeholder: "请输入项目名称",
+                "onUpdate:modelValue": _cache[13] || (_cache[13] = ($event) => $data.updateProjectName = $event)
+              },
+              null,
+              512
+              /* NEED_PATCH */
+            ), [
+              [vue.vModelText, $data.updateProjectName]
+            ])
+          ]),
+          vue.createElementVNode("view", { class: "modal-footer" }, [
+            vue.createElementVNode("button", {
+              class: "btn",
+              style: { "background-color": "red" },
+              onClick: _cache[14] || (_cache[14] = (...args) => $options.deleteProjectToDB && $options.deleteProjectToDB(...args))
+            }, "删除"),
+            vue.createElementVNode("button", {
+              class: "btn",
+              style: {},
+              onClick: _cache[15] || (_cache[15] = (...args) => $options.updateProjectToDB && $options.updateProjectToDB(...args))
+            }, "确认"),
+            vue.createElementVNode("button", {
+              class: "btn",
+              style: {},
+              onClick: _cache[16] || (_cache[16] = (...args) => $options.closeModal && $options.closeModal(...args))
+            }, "取消")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createCommentVNode(" 编辑账单人员 "),
+      $data.showModaleditPer ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 3,
+        class: "modal-overlay"
+      }, [
+        vue.createElementVNode("view", { class: "modal-content" }, [
+          vue.createElementVNode("view", {
+            class: "modal-header",
+            style: { "color": "#014520" }
+          }, "编辑人员"),
+          vue.createCommentVNode(" 人员列表 "),
+          vue.createVNode(_component_uni_table, {
+            ref: "tableRef",
+            border: "",
+            stripe: "",
+            emptyText: "暂无更多数据",
+            type: "selection",
+            onSelectionChange: $options.selectionChange
+          }, {
+            default: vue.withCtx(() => [
+              vue.createCommentVNode(" 表头行 "),
+              vue.createVNode(_component_uni_tr, null, {
+                default: vue.withCtx(() => [
+                  vue.createVNode(_component_uni_th, { align: "center" }, {
+                    default: vue.withCtx(() => [
+                      vue.createTextVNode("姓名")
+                    ]),
+                    _: 1
+                    /* STABLE */
+                  })
+                ]),
+                _: 1
+                /* STABLE */
+              }),
+              vue.createCommentVNode(" 表格数据行 "),
+              (vue.openBlock(true), vue.createElementBlock(
+                vue.Fragment,
+                null,
+                vue.renderList(this.AllPerson, (item, index2) => {
+                  return vue.openBlock(), vue.createBlock(
+                    _component_uni_tr,
+                    { key: index2 },
+                    {
+                      default: vue.withCtx(() => [
+                        vue.createVNode(
+                          _component_uni_td,
+                          null,
+                          {
+                            default: vue.withCtx(() => [
+                              vue.createTextVNode(
+                                vue.toDisplayString(item.name),
+                                1
+                                /* TEXT */
+                              )
+                            ]),
+                            _: 2
+                            /* DYNAMIC */
+                          },
+                          1024
+                          /* DYNAMIC_SLOTS */
+                        )
+                      ]),
+                      _: 2
+                      /* DYNAMIC */
+                    },
+                    1024
+                    /* DYNAMIC_SLOTS */
+                  );
+                }),
+                128
+                /* KEYED_FRAGMENT */
+              ))
+            ]),
+            _: 1
+            /* STABLE */
+          }, 8, ["onSelectionChange"]),
+          vue.createElementVNode("view", {
+            class: "modal-footer",
+            style: { "margin-top": "20rpx" }
+          }, [
+            vue.createElementVNode("button", {
+              class: "btn",
+              style: {},
+              onClick: _cache[17] || (_cache[17] = (...args) => $options.updateBillUserToDB && $options.updateBillUserToDB(...args))
+            }, "确认"),
+            vue.createElementVNode("button", {
+              class: "btn",
+              style: {},
+              onClick: _cache[18] || (_cache[18] = (...args) => $options.closeModal && $options.closeModal(...args))
+            }, "取消")
+          ])
+        ])
+      ])) : vue.createCommentVNode("v-if", true)
+    ]);
+  }
+  const PagesPayBillIndex = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-1fc7d2ef"], ["__file", "D:/uni/travel-new/pages/PayBill/index.vue"]]);
   const _sfc_main$8 = {
+    data() {
+      return {
+        // odb:'',
+        dbName: "travel",
+        dbPath: "_doc/travel.db",
+        dbTable: "user",
+        dbIsOpen: false,
+        chatText: {
+          id: 1,
+          fromId: "123",
+          toId: "321",
+          content: "你好!",
+          flag: 1
+        },
+        project1: {
+          id: 1,
+          name: "南京"
+        }
+      };
+    },
+    onLoad() {
+    },
+    methods: {
+      clearBillUser() {
+        BillUser.clear("BillUser").then((result) => {
+          uni.showToast({
+            title: "数据库清除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:60", "数据库清除成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "数据库清除失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:68", "数据库清除失败：", error2);
+        });
+      },
+      dropTable() {
+        util.dropTable().then((result) => {
+          uni.showToast({
+            title: "数据库删除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:78", "表格删除成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "数据库删除失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:86", "表格删除失败：", error2);
+        });
+      },
+      isopenDB() {
+        util.openSqlite().then((result) => {
+          uni.showToast({
+            title: "数据库打开成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:96", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "数据库打开失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:104", "表格创建失败：", error2);
+        });
+      },
+      createBillTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
+        });
+        util.CreateBillSQL().then((result) => {
+          uni.showToast({
+            title: "表格创建成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:120", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:128", "表格创建失败：", error2);
+        });
+      },
+      createBillUserTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
+        });
+        util.CreateBillUserSQL().then((result) => {
+          uni.showToast({
+            title: "BillUser表格创建成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:144", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:152", "表格创建失败：", error2);
+        });
+      },
+      createUserTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
+        });
+        util.CreateUserSQL().then((result) => {
+          uni.showToast({
+            title: "BillUser表格创建成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:168", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:176", "表格创建失败：", error2);
+        });
+      },
+      createProjectTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
+        });
+        util.CreateProjectSQL().then((result) => {
+          uni.showToast({
+            title: "Project表格创建成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:192", "Project表格成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "Project表格失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:200", "Project表格失败：", error2);
+        });
+      },
+      updateTable() {
+        util.updateTableStructure("Bill", "project", "INTEGER");
+      },
+      deleteTable() {
+        uni.showToast({
+          title: "测试",
+          icon: "success",
+          duration: 2e3
+        });
+        util.deleteTable("Bill").then((result) => {
+          uni.showToast({
+            title: "Bill表格删除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:220", "表格创建成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "表格创建失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:228", "表格创建失败：", error2);
+        });
+      },
+      addproject(id, name) {
+        const obj = this.project1;
+        project.addUser(obj).then((result) => {
+          uni.showToast({
+            title: "Project插入成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:239", "Project插入成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "Project插入失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:247", "Project插入失败：", error2);
+        });
+      },
+      selectproject() {
+        project.selectInformationType("project").then((result) => {
+          uni.showToast({
+            title: "Project查询成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:257", "Project查询成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "Project查询失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:265", "Project查询失败：", error2);
+        });
+      },
+      deleteproject() {
+        project.deleteInformationType("project").then((result) => {
+          uni.showToast({
+            title: "Project删除成功",
+            icon: "success",
+            duration: 2e3
+          });
+          formatAppLog("log", "at pages/sql/sql.vue:275", "Project删除成功：", result);
+        }).catch((error2) => {
+          uni.showToast({
+            title: "Project删除失败",
+            icon: "error",
+            duration: 2e3
+          });
+          formatAppLog("error", "at pages/sql/sql.vue:283", "Project查询失败：", error2);
+        });
+      }
+    }
+  };
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "" }, [
+      vue.createCommentVNode(" <div>{{odb}}</div> "),
+      vue.createElementVNode("div", null, [
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.createBillTable && $options.createBillTable(...args))
+        }, "新建Bill库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.isopenDB && $options.isopenDB(...args))
+        }, "判断数据库是否打开"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[2] || (_cache[2] = (...args) => $options.createBillUserTable && $options.createBillUserTable(...args))
+        }, "新建BillUser库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[3] || (_cache[3] = (...args) => $options.createUserTable && $options.createUserTable(...args))
+        }, "新建User库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[4] || (_cache[4] = (...args) => $options.createProjectTable && $options.createProjectTable(...args))
+        }, "新建Project库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[5] || (_cache[5] = (...args) => $options.updateTable && $options.updateTable(...args))
+        }, "更新表结构库"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[6] || (_cache[6] = (...args) => $options.deleteTable && $options.deleteTable(...args))
+        }, "删除表"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[7] || (_cache[7] = (...args) => $options.addproject && $options.addproject(...args))
+        }, "插入数据到project"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[8] || (_cache[8] = (...args) => $options.selectproject && $options.selectproject(...args))
+        }, "查询project"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[9] || (_cache[9] = (...args) => $options.deleteproject && $options.deleteproject(...args))
+        }, "删除project"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[10] || (_cache[10] = ($event) => $options.dropTable())
+        }, "删除BillUser"),
+        vue.createElementVNode("button", {
+          type: "default",
+          onClick: _cache[11] || (_cache[11] = ($event) => $options.clearBillUser())
+        }, "清除BillUser")
+      ])
+    ]);
+  }
+  const PagesSqlSql = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__file", "D:/uni/travel-new/pages/sql/sql.vue"]]);
+  const icons = {
+    "uicon-level": "",
+    "uicon-column-line": "",
+    "uicon-checkbox-mark": "",
+    "uicon-folder": "",
+    "uicon-movie": "",
+    "uicon-star-fill": "",
+    "uicon-star": "",
+    "uicon-phone-fill": "",
+    "uicon-phone": "",
+    "uicon-apple-fill": "",
+    "uicon-chrome-circle-fill": "",
+    "uicon-backspace": "",
+    "uicon-attach": "",
+    "uicon-cut": "",
+    "uicon-empty-car": "",
+    "uicon-empty-coupon": "",
+    "uicon-empty-address": "",
+    "uicon-empty-favor": "",
+    "uicon-empty-permission": "",
+    "uicon-empty-news": "",
+    "uicon-empty-search": "",
+    "uicon-github-circle-fill": "",
+    "uicon-rmb": "",
+    "uicon-person-delete-fill": "",
+    "uicon-reload": "",
+    "uicon-order": "",
+    "uicon-server-man": "",
+    "uicon-search": "",
+    "uicon-fingerprint": "",
+    "uicon-more-dot-fill": "",
+    "uicon-scan": "",
+    "uicon-share-square": "",
+    "uicon-map": "",
+    "uicon-map-fill": "",
+    "uicon-tags": "",
+    "uicon-tags-fill": "",
+    "uicon-bookmark-fill": "",
+    "uicon-bookmark": "",
+    "uicon-eye": "",
+    "uicon-eye-fill": "",
+    "uicon-mic": "",
+    "uicon-mic-off": "",
+    "uicon-calendar": "",
+    "uicon-calendar-fill": "",
+    "uicon-trash": "",
+    "uicon-trash-fill": "",
+    "uicon-play-left": "",
+    "uicon-play-right": "",
+    "uicon-minus": "",
+    "uicon-plus": "",
+    "uicon-info": "",
+    "uicon-info-circle": "",
+    "uicon-info-circle-fill": "",
+    "uicon-question": "",
+    "uicon-error": "",
+    "uicon-close": "",
+    "uicon-checkmark": "",
+    "uicon-android-circle-fill": "",
+    "uicon-android-fill": "",
+    "uicon-ie": "",
+    "uicon-IE-circle-fill": "",
+    "uicon-google": "",
+    "uicon-google-circle-fill": "",
+    "uicon-setting-fill": "",
+    "uicon-setting": "",
+    "uicon-minus-square-fill": "",
+    "uicon-plus-square-fill": "",
+    "uicon-heart": "",
+    "uicon-heart-fill": "",
+    "uicon-camera": "",
+    "uicon-camera-fill": "",
+    "uicon-more-circle": "",
+    "uicon-more-circle-fill": "",
+    "uicon-chat": "",
+    "uicon-chat-fill": "",
+    "uicon-bag-fill": "",
+    "uicon-bag": "",
+    "uicon-error-circle-fill": "",
+    "uicon-error-circle": "",
+    "uicon-close-circle": "",
+    "uicon-close-circle-fill": "",
+    "uicon-checkmark-circle": "",
+    "uicon-checkmark-circle-fill": "",
+    "uicon-question-circle-fill": "",
+    "uicon-question-circle": "",
+    "uicon-share": "",
+    "uicon-share-fill": "",
+    "uicon-shopping-cart": "",
+    "uicon-shopping-cart-fill": "",
+    "uicon-bell": "",
+    "uicon-bell-fill": "",
+    "uicon-list": "",
+    "uicon-list-dot": "",
+    "uicon-zhihu": "",
+    "uicon-zhihu-circle-fill": "",
+    "uicon-zhifubao": "",
+    "uicon-zhifubao-circle-fill": "",
+    "uicon-weixin-circle-fill": "",
+    "uicon-weixin-fill": "",
+    "uicon-twitter-circle-fill": "",
+    "uicon-twitter": "",
+    "uicon-taobao-circle-fill": "",
+    "uicon-taobao": "",
+    "uicon-weibo-circle-fill": "",
+    "uicon-weibo": "",
+    "uicon-qq-fill": "",
+    "uicon-qq-circle-fill": "",
+    "uicon-moments-circel-fill": "",
+    "uicon-moments": "",
+    "uicon-qzone": "",
+    "uicon-qzone-circle-fill": "",
+    "uicon-baidu-circle-fill": "",
+    "uicon-baidu": "",
+    "uicon-facebook-circle-fill": "",
+    "uicon-facebook": "",
+    "uicon-car": "",
+    "uicon-car-fill": "",
+    "uicon-warning-fill": "",
+    "uicon-warning": "",
+    "uicon-clock-fill": "",
+    "uicon-clock": "",
+    "uicon-edit-pen": "",
+    "uicon-edit-pen-fill": "",
+    "uicon-email": "",
+    "uicon-email-fill": "",
+    "uicon-minus-circle": "",
+    "uicon-minus-circle-fill": "",
+    "uicon-plus-circle": "",
+    "uicon-plus-circle-fill": "",
+    "uicon-file-text": "",
+    "uicon-file-text-fill": "",
+    "uicon-pushpin": "",
+    "uicon-pushpin-fill": "",
+    "uicon-grid": "",
+    "uicon-grid-fill": "",
+    "uicon-play-circle": "",
+    "uicon-play-circle-fill": "",
+    "uicon-pause-circle-fill": "",
+    "uicon-pause": "",
+    "uicon-pause-circle": "",
+    "uicon-eye-off": "",
+    "uicon-eye-off-outline": "",
+    "uicon-gift-fill": "",
+    "uicon-gift": "",
+    "uicon-rmb-circle-fill": "",
+    "uicon-rmb-circle": "",
+    "uicon-kefu-ermai": "",
+    "uicon-server-fill": "",
+    "uicon-coupon-fill": "",
+    "uicon-coupon": "",
+    "uicon-integral": "",
+    "uicon-integral-fill": "",
+    "uicon-home-fill": "",
+    "uicon-home": "",
+    "uicon-hourglass-half-fill": "",
+    "uicon-hourglass": "",
+    "uicon-account": "",
+    "uicon-plus-people-fill": "",
+    "uicon-minus-people-fill": "",
+    "uicon-account-fill": "",
+    "uicon-thumb-down-fill": "",
+    "uicon-thumb-down": "",
+    "uicon-thumb-up": "",
+    "uicon-thumb-up-fill": "",
+    "uicon-lock-fill": "",
+    "uicon-lock-open": "",
+    "uicon-lock-opened-fill": "",
+    "uicon-lock": "",
+    "uicon-red-packet-fill": "",
+    "uicon-photo-fill": "",
+    "uicon-photo": "",
+    "uicon-volume-off-fill": "",
+    "uicon-volume-off": "",
+    "uicon-volume-fill": "",
+    "uicon-volume": "",
+    "uicon-red-packet": "",
+    "uicon-download": "",
+    "uicon-arrow-up-fill": "",
+    "uicon-arrow-down-fill": "",
+    "uicon-play-left-fill": "",
+    "uicon-play-right-fill": "",
+    "uicon-rewind-left-fill": "",
+    "uicon-rewind-right-fill": "",
+    "uicon-arrow-downward": "",
+    "uicon-arrow-leftward": "",
+    "uicon-arrow-rightward": "",
+    "uicon-arrow-upward": "",
+    "uicon-arrow-down": "",
+    "uicon-arrow-right": "",
+    "uicon-arrow-left": "",
+    "uicon-arrow-up": "",
+    "uicon-skip-back-left": "",
+    "uicon-skip-forward-right": "",
+    "uicon-rewind-right": "",
+    "uicon-rewind-left": "",
+    "uicon-arrow-right-double": "",
+    "uicon-arrow-left-double": "",
+    "uicon-wifi-off": "",
+    "uicon-wifi": "",
+    "uicon-empty-data": "",
+    "uicon-empty-history": "",
+    "uicon-empty-list": "",
+    "uicon-empty-page": "",
+    "uicon-empty-order": "",
+    "uicon-man": "",
+    "uicon-woman": "",
+    "uicon-man-add": "",
+    "uicon-man-add-fill": "",
+    "uicon-man-delete": "",
+    "uicon-man-delete-fill": "",
+    "uicon-zh": "",
+    "uicon-en": ""
+  };
+  const props$4 = defineMixin({
+    props: {
+      // 图标类名
+      name: {
+        type: String,
+        default: () => props$7.icon.name
+      },
+      // 图标颜色，可接受主题色
+      color: {
+        type: String,
+        default: () => props$7.icon.color
+      },
+      // 字体大小，单位px
+      size: {
+        type: [String, Number],
+        default: () => props$7.icon.size
+      },
+      // 是否显示粗体
+      bold: {
+        type: Boolean,
+        default: () => props$7.icon.bold
+      },
+      // 点击图标的时候传递事件出去的index（用于区分点击了哪一个）
+      index: {
+        type: [String, Number],
+        default: () => props$7.icon.index
+      },
+      // 触摸图标时的类名
+      hoverClass: {
+        type: String,
+        default: () => props$7.icon.hoverClass
+      },
+      // 自定义扩展前缀，方便用户扩展自己的图标库
+      customPrefix: {
+        type: String,
+        default: () => props$7.icon.customPrefix
+      },
+      // 图标右边或者下面的文字
+      label: {
+        type: [String, Number],
+        default: () => props$7.icon.label
+      },
+      // label的位置，只能右边或者下边
+      labelPos: {
+        type: String,
+        default: () => props$7.icon.labelPos
+      },
+      // label的大小
+      labelSize: {
+        type: [String, Number],
+        default: () => props$7.icon.labelSize
+      },
+      // label的颜色
+      labelColor: {
+        type: String,
+        default: () => props$7.icon.labelColor
+      },
+      // label与图标的距离
+      space: {
+        type: [String, Number],
+        default: () => props$7.icon.space
+      },
+      // 图片的mode
+      imgMode: {
+        type: String,
+        default: () => props$7.icon.imgMode
+      },
+      // 用于显示图片小图标时，图片的宽度
+      width: {
+        type: [String, Number],
+        default: () => props$7.icon.width
+      },
+      // 用于显示图片小图标时，图片的高度
+      height: {
+        type: [String, Number],
+        default: () => props$7.icon.height
+      },
+      // 用于解决某些情况下，让图标垂直居中的用途
+      top: {
+        type: [String, Number],
+        default: () => props$7.icon.top
+      },
+      // 是否阻止事件传播
+      stop: {
+        type: Boolean,
+        default: () => props$7.icon.stop
+      }
+    }
+  });
+  const _sfc_main$7 = {
     name: "u-icon",
     data() {
       return {};
     },
     emits: ["click"],
-    mixins: [mpMixin, mixin, props$5],
+    mixins: [mpMixin, mixin, props$4],
     computed: {
       uClasses() {
         let classes = [];
@@ -6774,7 +7049,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -6818,126 +7093,126 @@ if (uni.restoreGlobal) {
       /* CLASS */
     );
   }
-  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-1c933a9a"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-icon/u-icon.vue"]]);
-  const props$4 = defineMixin({
+  const __easycom_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-1c933a9a"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-icon/u-icon.vue"]]);
+  const props$3 = defineMixin({
     props: {
       // 搜索框形状，round-圆形，square-方形
       shape: {
         type: String,
-        default: () => props$6.search.shape
+        default: () => props$7.search.shape
       },
       // 搜索框背景色，默认值#f2f2f2
       bgColor: {
         type: String,
-        default: () => props$6.search.bgColor
+        default: () => props$7.search.bgColor
       },
       // 占位提示文字
       placeholder: {
         type: String,
-        default: () => props$6.search.placeholder
+        default: () => props$7.search.placeholder
       },
       // 是否启用清除控件
       clearabled: {
         type: Boolean,
-        default: () => props$6.search.clearabled
+        default: () => props$7.search.clearabled
       },
       // 是否自动聚焦
       focus: {
         type: Boolean,
-        default: () => props$6.search.focus
+        default: () => props$7.search.focus
       },
       // 是否在搜索框右侧显示取消按钮
       showAction: {
         type: Boolean,
-        default: () => props$6.search.showAction
+        default: () => props$7.search.showAction
       },
       // 右边控件的样式
       actionStyle: {
         type: Object,
-        default: () => props$6.search.actionStyle
+        default: () => props$7.search.actionStyle
       },
       // 取消按钮文字
       actionText: {
         type: String,
-        default: () => props$6.search.actionText
+        default: () => props$7.search.actionText
       },
       // 输入框内容对齐方式，可选值为 left|center|right
       inputAlign: {
         type: String,
-        default: () => props$6.search.inputAlign
+        default: () => props$7.search.inputAlign
       },
       // input输入框的样式，可以定义文字颜色，大小等，对象形式
       inputStyle: {
         type: Object,
-        default: () => props$6.search.inputStyle
+        default: () => props$7.search.inputStyle
       },
       // 是否启用输入框
       disabled: {
         type: Boolean,
-        default: () => props$6.search.disabled
+        default: () => props$7.search.disabled
       },
       // 边框颜色
       borderColor: {
         type: String,
-        default: () => props$6.search.borderColor
+        default: () => props$7.search.borderColor
       },
       // 搜索图标的颜色，默认同输入框字体颜色
       searchIconColor: {
         type: String,
-        default: () => props$6.search.searchIconColor
+        default: () => props$7.search.searchIconColor
       },
       // 输入框字体颜色
       color: {
         type: String,
-        default: () => props$6.search.color
+        default: () => props$7.search.color
       },
       // placeholder的颜色
       placeholderColor: {
         type: String,
-        default: () => props$6.search.placeholderColor
+        default: () => props$7.search.placeholderColor
       },
       // 左边输入框的图标，可以为uView图标名称或图片路径
       searchIcon: {
         type: String,
-        default: () => props$6.search.searchIcon
+        default: () => props$7.search.searchIcon
       },
       searchIconSize: {
         type: [Number, String],
-        default: () => props$6.search.searchIconSize
+        default: () => props$7.search.searchIconSize
       },
       // 组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"、"30px 20px"等写法
       margin: {
         type: String,
-        default: () => props$6.search.margin
+        default: () => props$7.search.margin
       },
       // 开启showAction时，是否在input获取焦点时才显示
       animation: {
         type: Boolean,
-        default: () => props$6.search.animation
+        default: () => props$7.search.animation
       },
       // 输入框的初始化内容
       modelValue: {
         type: String,
-        default: () => props$6.search.value
+        default: () => props$7.search.value
       },
       value: {
         type: String,
-        default: () => props$6.search.value
+        default: () => props$7.search.value
       },
       // 输入框最大能输入的长度，-1为不限制长度(来自uniapp文档)
       maxlength: {
         type: [String, Number],
-        default: () => props$6.search.maxlength
+        default: () => props$7.search.maxlength
       },
       // 搜索框高度，单位px
       height: {
         type: [String, Number],
-        default: () => props$6.search.height
+        default: () => props$7.search.height
       },
       // 搜索框左侧文本
       label: {
         type: [String, Number, null],
-        default: () => props$6.search.label
+        default: () => props$7.search.label
       },
       // 键盘弹起时，是否自动上推页面	
       adjustPosition: {
@@ -6951,9 +7226,9 @@ if (uni.restoreGlobal) {
       }
     }
   });
-  const _sfc_main$7 = {
+  const _sfc_main$6 = {
     name: "u-search",
-    mixins: [mpMixin, mixin, props$4],
+    mixins: [mpMixin, mixin, props$3],
     data() {
       return {
         keyword: "",
@@ -7045,7 +7320,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_u_icon = resolveEasycom(vue.resolveDynamicComponent("u-icon"), __easycom_0$1);
     return vue.openBlock(), vue.createElementBlock(
       "view",
@@ -7141,185 +7416,114 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-ed789780"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-search/u-search.vue"]]);
-  const props$3 = defineMixin({
-    props: {
-      color: {
-        type: String,
-        default: () => props$6.line.color
-      },
-      // 长度，竖向时表现为高度，横向时表现为长度，可以为百分比，带px单位的值等
-      length: {
-        type: [String, Number],
-        default: () => props$6.line.length
-      },
-      // 线条方向，col-竖向，row-横向
-      direction: {
-        type: String,
-        default: () => props$6.line.direction
-      },
-      // 是否显示细边框
-      hairline: {
-        type: Boolean,
-        default: () => props$6.line.hairline
-      },
-      // 线条与上下左右元素的间距，字符串形式，如"30px"、"20px 30px"
-      margin: {
-        type: [String, Number],
-        default: () => props$6.line.margin
-      },
-      // 是否虚线，true-虚线，false-实线
-      dashed: {
-        type: Boolean,
-        default: () => props$6.line.dashed
-      }
-    }
-  });
-  const _sfc_main$6 = {
-    name: "u-line",
-    mixins: [mpMixin, mixin, props$3],
-    computed: {
-      lineStyle() {
-        const style = {};
-        style.margin = this.margin;
-        if (this.direction === "row") {
-          style.borderBottomWidth = "1px";
-          style.borderBottomStyle = this.dashed ? "dashed" : "solid";
-          style.width = addUnit(this.length);
-          if (this.hairline)
-            style.transform = "scaleY(0.5)";
-        } else {
-          style.borderLeftWidth = "1px";
-          style.borderLeftStyle = this.dashed ? "dashed" : "solid";
-          style.height = addUnit(this.length);
-          if (this.hairline)
-            style.transform = "scaleX(0.5)";
-        }
-        style.borderColor = this.color;
-        return deepMerge$1(style, addStyle(this.customStyle));
-      }
-    }
-  };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock(
-      "view",
-      {
-        class: "u-line",
-        style: vue.normalizeStyle([$options.lineStyle])
-      },
-      null,
-      4
-      /* STYLE */
-    );
-  }
-  const __easycom_1$1 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-bbd9963c"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-line/u-line.vue"]]);
+  const __easycom_0 = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-ed789780"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-search/u-search.vue"]]);
   const props$2 = defineMixin({
     props: {
       // 标题
       title: {
         type: [String, Number],
-        default: () => props$6.cell.title
+        default: () => props$7.cell.title
       },
       // 标题下方的描述信息
       label: {
         type: [String, Number],
-        default: () => props$6.cell.label
+        default: () => props$7.cell.label
       },
       // 右侧的内容
       value: {
         type: [String, Number],
-        default: () => props$6.cell.value
+        default: () => props$7.cell.value
       },
       // 左侧图标名称，或者图片链接(本地文件建议使用绝对地址)
       icon: {
         type: String,
-        default: () => props$6.cell.icon
+        default: () => props$7.cell.icon
       },
       // 是否禁用cell
       disabled: {
         type: Boolean,
-        default: () => props$6.cell.disabled
+        default: () => props$7.cell.disabled
       },
       // 是否显示下边框
       border: {
         type: Boolean,
-        default: () => props$6.cell.border
+        default: () => props$7.cell.border
       },
       // 内容是否垂直居中(主要是针对右侧的value部分)
       center: {
         type: Boolean,
-        default: () => props$6.cell.center
+        default: () => props$7.cell.center
       },
       // 点击后跳转的URL地址
       url: {
         type: String,
-        default: () => props$6.cell.url
+        default: () => props$7.cell.url
       },
       // 链接跳转的方式，内部使用的是uView封装的route方法，可能会进行拦截操作
       linkType: {
         type: String,
-        default: () => props$6.cell.linkType
+        default: () => props$7.cell.linkType
       },
       // 是否开启点击反馈(表现为点击时加上灰色背景)
       clickable: {
         type: Boolean,
-        default: () => props$6.cell.clickable
+        default: () => props$7.cell.clickable
       },
       // 是否展示右侧箭头并开启点击反馈
       isLink: {
         type: Boolean,
-        default: () => props$6.cell.isLink
+        default: () => props$7.cell.isLink
       },
       // 是否显示表单状态下的必填星号(此组件可能会内嵌入input组件)
       required: {
         type: Boolean,
-        default: () => props$6.cell.required
+        default: () => props$7.cell.required
       },
       // 右侧的图标箭头
       rightIcon: {
         type: String,
-        default: () => props$6.cell.rightIcon
+        default: () => props$7.cell.rightIcon
       },
       // 右侧箭头的方向，可选值为：left，up，down
       arrowDirection: {
         type: String,
-        default: () => props$6.cell.arrowDirection
+        default: () => props$7.cell.arrowDirection
       },
       // 左侧图标样式
       iconStyle: {
         type: [Object, String],
         default: () => {
-          return props$6.cell.iconStyle;
+          return props$7.cell.iconStyle;
         }
       },
       // 右侧箭头图标的样式
       rightIconStyle: {
         type: [Object, String],
         default: () => {
-          return props$6.cell.rightIconStyle;
+          return props$7.cell.rightIconStyle;
         }
       },
       // 标题的样式
       titleStyle: {
         type: [Object, String],
         default: () => {
-          return props$6.cell.titleStyle;
+          return props$7.cell.titleStyle;
         }
       },
       // 单位元的大小，可选值为large
       size: {
         type: String,
-        default: () => props$6.cell.size
+        default: () => props$7.cell.size
       },
       // 点击cell是否阻止事件传播
       stop: {
         type: Boolean,
-        default: () => props$6.cell.stop
+        default: () => props$7.cell.stop
       },
       // 标识符，cell被点击时返回
       name: {
         type: [Number, String],
-        default: () => props$6.cell.name
+        default: () => props$7.cell.name
       }
     }
   });
@@ -7352,7 +7556,7 @@ if (uni.restoreGlobal) {
   };
   function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_u_icon = resolveEasycom(vue.resolveDynamicComponent("u-icon"), __easycom_0$1);
-    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$1);
+    const _component_u_line = resolveEasycom(vue.resolveDynamicComponent("u-line"), __easycom_1$2);
     return vue.openBlock(), vue.createElementBlock("view", {
       class: vue.normalizeClass(["u-cell", [_ctx.customClass]]),
       style: vue.normalizeStyle([$options.addStyle(_ctx.customStyle)]),
@@ -7460,7 +7664,7 @@ if (uni.restoreGlobal) {
       // 用于滚动到指定item
       anchor: {
         type: [String, Number],
-        default: () => props$6.listItem.anchor
+        default: () => props$7.listItem.anchor
       }
     }
   });
@@ -7542,72 +7746,72 @@ if (uni.restoreGlobal) {
       // 控制是否出现滚动条，仅nvue有效
       showScrollbar: {
         type: Boolean,
-        default: () => props$6.list.showScrollbar
+        default: () => props$7.list.showScrollbar
       },
       // 距底部多少时触发scrolltolower事件
       lowerThreshold: {
         type: [String, Number],
-        default: () => props$6.list.lowerThreshold
+        default: () => props$7.list.lowerThreshold
       },
       // 距顶部多少时触发scrolltoupper事件，非nvue有效
       upperThreshold: {
         type: [String, Number],
-        default: () => props$6.list.upperThreshold
+        default: () => props$7.list.upperThreshold
       },
       // 设置竖向滚动条位置
       scrollTop: {
         type: [String, Number],
-        default: () => props$6.list.scrollTop
+        default: () => props$7.list.scrollTop
       },
       // 控制 onscroll 事件触发的频率，仅nvue有效
       offsetAccuracy: {
         type: [String, Number],
-        default: () => props$6.list.offsetAccuracy
+        default: () => props$7.list.offsetAccuracy
       },
       // 启用 flexbox 布局。开启后，当前节点声明了display: flex就会成为flex container，并作用于其孩子节点，仅微信小程序有效
       enableFlex: {
         type: Boolean,
-        default: () => props$6.list.enableFlex
+        default: () => props$7.list.enableFlex
       },
       // 是否按分页模式显示List，默认值false
       pagingEnabled: {
         type: Boolean,
-        default: () => props$6.list.pagingEnabled
+        default: () => props$7.list.pagingEnabled
       },
       // 是否允许List滚动
       scrollable: {
         type: Boolean,
-        default: () => props$6.list.scrollable
+        default: () => props$7.list.scrollable
       },
       // 值应为某子元素id（id不能以数字开头）
       scrollIntoView: {
         type: String,
-        default: () => props$6.list.scrollIntoView
+        default: () => props$7.list.scrollIntoView
       },
       // 在设置滚动条位置时使用动画过渡
       scrollWithAnimation: {
         type: Boolean,
-        default: () => props$6.list.scrollWithAnimation
+        default: () => props$7.list.scrollWithAnimation
       },
       // iOS点击顶部状态栏、安卓双击标题栏时，滚动条返回顶部，只对微信小程序有效
       enableBackToTop: {
         type: Boolean,
-        default: () => props$6.list.enableBackToTop
+        default: () => props$7.list.enableBackToTop
       },
       // 列表的高度
       height: {
         type: [String, Number],
-        default: () => props$6.list.height
+        default: () => props$7.list.height
       },
       // 列表宽度
       width: {
         type: [String, Number],
-        default: () => props$6.list.width
+        default: () => props$7.list.width
       },
       // 列表前后预渲染的屏数，1代表一个屏幕的高度，1.5代表1个半屏幕高度
       preLoadScreen: {
         type: [String, Number],
-        default: () => props$6.list.preLoadScreen
+        default: () => props$7.list.preLoadScreen
       },
       // 开启自定义下拉刷新
       refresherEnabled: {
@@ -7757,6 +7961,7 @@ if (uni.restoreGlobal) {
     ], 44, ["scroll-into-view", "scroll-y", "scroll-top", "lower-threshold", "upper-threshold", "show-scrollbar", "enable-back-to-top", "scroll-with-animation", "refresher-enabled", "refresher-threshold", "refresher-default-style", "refresher-background", "refresher-triggered"]);
   }
   const __easycom_3 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-9ad03670"], ["__file", "D:/uni/travel-new/node_modules/uview-plus/components/u-list/u-list.vue"]]);
+  const _imports_0 = "/static/GoodItem/deleteWhite.png";
   const keyword = vue.ref("");
   const _sfc_main$2 = {
     data() {
@@ -7772,21 +7977,16 @@ if (uni.restoreGlobal) {
         nowDeleteUser: ""
       };
     },
-    onPullDownRefresh() {
-      formatAppLog("log", "at pages/home/index.vue:68", "refresh");
-      utils.initializeDB();
-      uni.stopPullDownRefresh();
-    },
     methods: {
       async deleteUser(name) {
         this.closeDeleteModal();
-        formatAppLog("log", "at pages/home/index.vue:77", "要删除的名字" + name);
+        formatAppLog("log", "at pages/home/index.vue:72", "要删除的名字" + name);
         try {
-          const result = await util.deleteInformationType("user", "name", name);
-          formatAppLog("log", "at pages/home/index.vue:81", "用户" + name + "删除成功：");
+          const result = await util.deleteUser(name);
+          formatAppLog("log", "at pages/home/index.vue:76", "用户" + name + "删除成功：");
           this.handleSearch();
         } catch (error2) {
-          formatAppLog("error", "at pages/home/index.vue:84", "加载用户失败：", error2);
+          formatAppLog("error", "at pages/home/index.vue:79", "加载用户失败：", error2);
           uni.showToast({
             title: "加载用户失败",
             icon: "none"
@@ -7811,14 +8011,14 @@ if (uni.restoreGlobal) {
             this.loadUsers();
             return;
           } else {
-            formatAppLog("log", "at pages/home/index.vue:113", "按条件搜索： " + keyword2);
+            formatAppLog("log", "at pages/home/index.vue:108", "按条件搜索： " + keyword2);
             result = await util.selectInformationType("user", "name", '"' + keyword2 + '%"');
-            formatAppLog("log", "at pages/home/index.vue:116", "result: ", result);
+            formatAppLog("log", "at pages/home/index.vue:111", "result: ", result);
           }
-          formatAppLog("log", "at pages/home/index.vue:118", "用户列表加载成功：", result);
+          formatAppLog("log", "at pages/home/index.vue:113", "用户列表加载成功：", result);
           this.indexList = result;
         } catch (error2) {
-          formatAppLog("error", "at pages/home/index.vue:121", "加载用户失败：", error2);
+          formatAppLog("error", "at pages/home/index.vue:116", "加载用户失败：", error2);
           uni.showToast({
             title: "加载用户失败",
             icon: "none"
@@ -7828,11 +8028,11 @@ if (uni.restoreGlobal) {
       async loadUsers() {
         try {
           const result = await util.selectInformationType("user");
-          formatAppLog("log", "at pages/home/index.vue:132", "用户列表加载成功：", result);
+          formatAppLog("log", "at pages/home/index.vue:127", "用户列表加载成功：", result);
           this.indexList = result;
           uni.setStorageSync("AllPerson", result);
         } catch (error2) {
-          formatAppLog("error", "at pages/home/index.vue:136", "加载用户失败：", error2);
+          formatAppLog("error", "at pages/home/index.vue:131", "加载用户失败：", error2);
           uni.showToast({
             title: "加载用户失败",
             icon: "none"
@@ -7877,7 +8077,7 @@ if (uni.restoreGlobal) {
           this.closeModal();
           this.loadUsers();
         } catch (error2) {
-          formatAppLog("error", "at pages/home/index.vue:183", "添加用户失败：", error2);
+          formatAppLog("error", "at pages/home/index.vue:178", "添加用户失败：", error2);
           uni.showToast({
             title: "用户添加失败",
             icon: "none"
@@ -7886,7 +8086,7 @@ if (uni.restoreGlobal) {
       }
     },
     mounted() {
-      util.openSqlite();
+      utils.initializeDB();
       this.loadUsers();
     }
   };
@@ -7898,6 +8098,7 @@ if (uni.restoreGlobal) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
       vue.createCommentVNode(" 列表 "),
       vue.createVNode(_component_up_search, {
+        style: { "background-color": "white" },
         placeholder: "输入搜索名字",
         modelValue: $data.keyword,
         "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.keyword = $event),
@@ -7924,11 +8125,12 @@ if (uni.restoreGlobal) {
                 {
                   default: vue.withCtx(() => [
                     vue.createVNode(_component_up_cell, {
+                      "title-style": `color:white`,
                       title: item.name
                     }, null, 8, ["title"]),
                     vue.createElementVNode("image", {
                       src: _imports_0,
-                      style: { "margin-top": "15rpx", "height": "30rpx", "width": "30rpx", "margin-right": "35rpx" },
+                      style: { "margin-top": "13rpx", "height": "30rpx", "width": "30rpx", "margin-right": "35rpx" },
                       onClick: ($event) => $options.showDeleteModal(index2)
                     }, null, 8, ["onClick"])
                   ]),
@@ -7956,7 +8158,10 @@ if (uni.restoreGlobal) {
         class: "modal-overlay"
       }, [
         vue.createElementVNode("view", { class: "modal-content" }, [
-          vue.createElementVNode("view", { class: "modal-header" }, "添加用户"),
+          vue.createElementVNode("view", {
+            class: "modal-header",
+            style: { "color": "#014520" }
+          }, "添加用户"),
           vue.createElementVNode("view", { class: "modal-body" }, [
             vue.withDirectives(vue.createElementVNode(
               "input",
@@ -14970,7 +15175,8 @@ if (uni.restoreGlobal) {
         nowBills: [],
         showBills: [],
         userPriceMap: /* @__PURE__ */ new Map(),
-        isshooting: false
+        isshooting: false,
+        BillUsers: []
       };
     },
     computed: {
@@ -14986,7 +15192,7 @@ if (uni.restoreGlobal) {
       Date() {
         const today = /* @__PURE__ */ new Date();
         const formattedDate = today.toLocaleDateString("zh-CN");
-        formatAppLog("log", "at pages/settleBill/settleBill.vue:117", formattedDate);
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:127", formattedDate);
         return formattedDate;
       }
     },
@@ -14999,28 +15205,38 @@ if (uni.restoreGlobal) {
       },
       async load() {
         this.nowBills = await uni.getStorageSync(STORAGE_KEYS.CURRENTITEMS);
-        formatAppLog("log", "at pages/settleBill/settleBill.vue:130", "初始化project:", this.nowBills);
-        const result = this.nowBills.map((item, index2) => ({
-          index: index2,
-          name: item.name,
-          cnt: item.cnt,
-          price: item.price,
-          total: item.price
-        }));
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:142", "初始化project:", this.nowBills);
+        const result = [];
+        for (const [index2, item] of this.nowBills.entries()) {
+          let billItem = {
+            index: index2,
+            name: item.name,
+            cnt: item.cnt,
+            price: item.price,
+            total: item.price,
+            color: "black"
+            // 默认设置为 black
+          };
+          const persons = await settleBill.selectBillUser("BillUser", item.id);
+          if (persons.length === 0) {
+            billItem.color = "red";
+          }
+          result.push(billItem);
+        }
         this.showBills = result;
-        formatAppLog("log", "at pages/settleBill/settleBill.vue:139", this.showBills);
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:168", this.showBills);
         this.computePerPrice();
       },
       async computePerPrice() {
         for (const obj of this.nowBills) {
           try {
             const result = await settleBill.selectBillUser("BillUser", obj.id);
-            formatAppLog("log", "at pages/settleBill/settleBill.vue:148", "userBill", result);
+            formatAppLog("log", "at pages/settleBill/settleBill.vue:179", "userBill", result);
             result.forEach((item) => {
               const existingUser = this.userPriceMap.get(item.userid);
               if (existingUser) {
                 const updatedPrice = existingUser.price + item.price / result.length;
-                formatAppLog("log", "at pages/settleBill/settleBill.vue:157", "price: ", updatedPrice);
+                formatAppLog("log", "at pages/settleBill/settleBill.vue:188", "price: ", updatedPrice);
                 this.userPriceMap.set(item.userid, {
                   price: updatedPrice,
                   name: existingUser.name
@@ -15035,18 +15251,18 @@ if (uni.restoreGlobal) {
               }
               formatAppLog(
                 "log",
-                "at pages/settleBill/settleBill.vue:171",
+                "at pages/settleBill/settleBill.vue:202",
                 `${item.userid}: ${JSON.stringify(this.userPriceMap.get(item.userid))}`
               );
             });
           } catch (error2) {
-            formatAppLog("error", "at pages/settleBill/settleBill.vue:176", "Error fetching bill user:", error2);
+            formatAppLog("error", "at pages/settleBill/settleBill.vue:207", "Error fetching bill user:", error2);
           }
         }
-        formatAppLog("log", "at pages/settleBill/settleBill.vue:181", "Final userPriceMap:", JSON.stringify([...this.userPriceMap.entries()]));
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:212", "Final userPriceMap:", JSON.stringify([...this.userPriceMap.entries()]));
       },
       closeModal() {
-        formatAppLog("log", "at pages/settleBill/settleBill.vue:186", "关闭模态框");
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:217", "关闭模态框");
       },
       chooseImage() {
         uni.chooseImage({
@@ -15055,16 +15271,16 @@ if (uni.restoreGlobal) {
           sourceType: ["album"],
           // 仅允许从相册选择
           success: (res) => {
-            formatAppLog("log", "at pages/settleBill/settleBill.vue:194", "图片路径:", res.tempFilePaths[0]);
+            formatAppLog("log", "at pages/settleBill/settleBill.vue:225", "图片路径:", res.tempFilePaths[0]);
             const filePath = res.tempFilePaths[0];
             this.imageSrc = [];
             this.imageSrc.push(filePath.startsWith("file://") ? filePath : `file://${filePath}`);
           },
           fail: (err) => {
-            formatAppLog("error", "at pages/settleBill/settleBill.vue:203", "选择图片失败:", err);
+            formatAppLog("error", "at pages/settleBill/settleBill.vue:234", "选择图片失败:", err);
           }
         });
-        formatAppLog("log", "at pages/settleBill/settleBill.vue:206", this.imageSrc);
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:237", this.imageSrc);
       },
       previewImg(current) {
         uni.previewImage({
@@ -15080,10 +15296,10 @@ if (uni.restoreGlobal) {
         const currentWebview = currentPage.$getAppWebview();
         const windowHeight = plus.screen.resolutionHeight;
         const windowWidth = plus.screen.resolutionWidth;
-        formatAppLog("log", "at pages/settleBill/settleBill.vue:225", `当前屏幕分辨率：宽=${windowWidth}px, 高=${windowHeight}px`);
+        formatAppLog("log", "at pages/settleBill/settleBill.vue:256", `当前屏幕分辨率：宽=${windowWidth}px, 高=${windowHeight}px`);
         let scrollTop = 0;
         const captureStep = () => {
-          formatAppLog("log", "at pages/settleBill/settleBill.vue:235", currentWebview);
+          formatAppLog("log", "at pages/settleBill/settleBill.vue:266", currentWebview);
           setTimeout(() => {
             const tempBitmap = new plus.nativeObj.Bitmap("temp_screenshot");
             currentWebview.draw(
@@ -15093,11 +15309,11 @@ if (uni.restoreGlobal) {
                 if (scrollTop < contentHeight) {
                   captureStep();
                 } else {
-                  formatAppLog("log", "at pages/settleBill/settleBill.vue:251", "长截图完成");
+                  formatAppLog("log", "at pages/settleBill/settleBill.vue:282", "长截图完成");
                 }
               },
               (error2) => {
-                formatAppLog("error", "at pages/settleBill/settleBill.vue:255", "截屏失败:", error2);
+                formatAppLog("error", "at pages/settleBill/settleBill.vue:286", "截屏失败:", error2);
               }
             );
           }, 200);
@@ -15125,13 +15341,13 @@ if (uni.restoreGlobal) {
         vue.createElementVNode("view", { class: "info" }, [
           vue.createElementVNode("view", { class: "info-line" }, [
             vue.createElementVNode("text", null, "NO:"),
-            vue.createElementVNode(
+            $data.nowBills.length > 0 ? (vue.openBlock(), vue.createElementBlock(
               "text",
-              null,
+              { key: 0 },
               vue.toDisplayString($options.formatId($data.nowBills[0].projectId)),
               1
               /* TEXT */
-            )
+            )) : vue.createCommentVNode("v-if", true)
           ]),
           vue.createElementVNode("view", { class: "info-line" }, [
             vue.createElementVNode("text", null, "Date:"),
@@ -15155,54 +15371,61 @@ if (uni.restoreGlobal) {
             vue.createElementVNode("text", { class: "table-cell" }, "Total")
           ]),
           vue.createElementVNode("view", { class: "table-body" }, [
-            (vue.openBlock(true), vue.createElementBlock(
+            $data.showBills.length > 0 ? (vue.openBlock(true), vue.createElementBlock(
               vue.Fragment,
-              null,
+              { key: 0 },
               vue.renderList($data.showBills, (item, index2) => {
-                return vue.openBlock(), vue.createElementBlock("view", {
-                  class: "table-row",
-                  key: index2
-                }, [
-                  vue.createElementVNode(
-                    "text",
-                    { class: "table-cell" },
-                    vue.toDisplayString(index2 + 1),
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode(
-                    "text",
-                    { class: "table-cell" },
-                    vue.toDisplayString(item.name),
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode(
-                    "text",
-                    { class: "table-cell" },
-                    vue.toDisplayString(item.cnt),
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode(
-                    "text",
-                    { class: "table-cell" },
-                    vue.toDisplayString(item.price.toFixed(1)),
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode(
-                    "text",
-                    { class: "table-cell" },
-                    vue.toDisplayString(item.total),
-                    1
-                    /* TEXT */
-                  )
-                ]);
+                return vue.openBlock(), vue.createElementBlock(
+                  "view",
+                  {
+                    class: "table-row",
+                    key: index2,
+                    style: vue.normalizeStyle({ color: item.color })
+                  },
+                  [
+                    vue.createElementVNode(
+                      "text",
+                      { class: "table-cell" },
+                      vue.toDisplayString(index2 + 1),
+                      1
+                      /* TEXT */
+                    ),
+                    vue.createElementVNode(
+                      "text",
+                      { class: "table-cell" },
+                      vue.toDisplayString(item.name),
+                      1
+                      /* TEXT */
+                    ),
+                    vue.createElementVNode(
+                      "text",
+                      { class: "table-cell" },
+                      vue.toDisplayString(item.cnt),
+                      1
+                      /* TEXT */
+                    ),
+                    vue.createElementVNode(
+                      "text",
+                      { class: "table-cell" },
+                      vue.toDisplayString(item.price.toFixed(1)),
+                      1
+                      /* TEXT */
+                    ),
+                    vue.createElementVNode(
+                      "text",
+                      { class: "table-cell" },
+                      vue.toDisplayString(item.total),
+                      1
+                      /* TEXT */
+                    )
+                  ],
+                  4
+                  /* STYLE */
+                );
               }),
               128
               /* KEYED_FRAGMENT */
-            ))
+            )) : vue.createCommentVNode("v-if", true)
           ])
         ]),
         vue.createCommentVNode(" 总计 "),
@@ -15224,6 +15447,24 @@ if (uni.restoreGlobal) {
             )
           ])
         ]),
+        vue.createElementVNode("view", { class: "total-section" }, [
+          vue.createElementVNode("view", { class: "total-line" }, [
+            vue.createElementVNode("text", {
+              class: "total-title",
+              style: { "font-size": "70rpx" }
+            }, "Average"),
+            vue.createElementVNode(
+              "text",
+              {
+                class: "total-amount",
+                style: { "margin-right": "50rpx", "display": "flex", "align-items": "center", "justify-content": "center" }
+              },
+              vue.toDisplayString(($options.totalAmount / $options.userPriceArray.length).toFixed(1)) + " ¥",
+              1
+              /* TEXT */
+            )
+          ])
+        ]),
         vue.createCommentVNode(" 人员信息 "),
         vue.createElementVNode("view", { class: "person-section" }, [
           vue.createElementVNode("view", { class: "person-line" }, [
@@ -15234,9 +15475,9 @@ if (uni.restoreGlobal) {
             }, "Price")
           ]),
           vue.createElementVNode("view", { class: "person-line" }, [
-            (vue.openBlock(true), vue.createElementBlock(
+            $options.userPriceArray.length > 0 ? (vue.openBlock(true), vue.createElementBlock(
               vue.Fragment,
-              null,
+              { key: 0 },
               vue.renderList($options.userPriceArray, (item, index2) => {
                 return vue.openBlock(), vue.createElementBlock("view", {
                   class: "table-row",
@@ -15263,7 +15504,7 @@ if (uni.restoreGlobal) {
               }),
               128
               /* KEYED_FRAGMENT */
-            ))
+            )) : vue.createCommentVNode("v-if", true)
           ])
         ]),
         vue.createCommentVNode(' <button v-if="!isshooting" @click="saveClick()" style="position: fixed;bottom:0; width:90%">保存为图片</button> ')
@@ -16033,7 +16274,7 @@ if (uni.restoreGlobal) {
   let themeType = ["primary", "success", "error", "warning", "info"];
   function setConfig(configs) {
     index.shallowMerge(config, configs.config || {});
-    index.shallowMerge(props$6, configs.props || {});
+    index.shallowMerge(props$7, configs.props || {});
     index.shallowMerge(color$2, configs.color || {});
     index.shallowMerge(zIndex, configs.zIndex || {});
   }
@@ -16056,7 +16297,7 @@ if (uni.restoreGlobal) {
     throttle,
     mixin,
     mpMixin,
-    props: props$6,
+    props: props$7,
     ...index,
     color: color$2,
     platform: platform$1

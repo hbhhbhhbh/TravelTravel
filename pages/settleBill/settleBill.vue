@@ -15,7 +15,7 @@
 		<view class="info">
 			<view class="info-line">
 				<text>NO:</text>
-				<text>{{formatId(nowBills[0].projectId)}}</text>
+				<text v-if="nowBills.length>0">{{formatId(nowBills[0].projectId)}}</text>
 			</view>
 			<view class="info-line">
 				<text>Date:</text>
@@ -35,7 +35,8 @@
 				<text class="table-cell">Total</text>
 			</view>
 			<view class="table-body">
-				<view class="table-row" v-for="(item, index) in showBills" :key="index">
+				<view class="table-row" v-if="showBills.length>0" v-for="(item, index) in showBills" :key="index"
+					:style="{color:item.color}">
 					<text class="table-cell">{{ index + 1 }}</text>
 					<text class="table-cell">{{ item.name }}</text>
 					<text class="table-cell">{{ item.cnt }}</text>
@@ -54,7 +55,14 @@
 					¥</text>
 			</view>
 		</view>
-
+		<view class="total-section">
+			<view class="total-line">
+				<text class="total-title" style="font-size: 70rpx;">Average</text>
+				<text class="total-amount"
+					style="margin-right:50rpx;display: flex;align-items: center;justify-content: center">{{ (totalAmount/userPriceArray.length).toFixed(1)  }}
+					¥</text>
+			</view>
+		</view>
 		<!-- 人员信息 -->
 		<view class="person-section">
 			<view class="person-line">
@@ -62,7 +70,8 @@
 				<text class="person-title" style="margin-left:400rpx;">Price</text>
 			</view>
 			<view class="person-line">
-				<view class="table-row" v-for="(item, index) in userPriceArray" :key="index">
+				<view class="table-row" v-if="userPriceArray.length>0" v-for="(item, index) in userPriceArray"
+					:key="index">
 					<text class="person-value">{{item.name}}</text>
 					<text class="person-value" style="margin-right:50rpx;">{{ item.price.toFixed(1) }}</text>
 				</view>
@@ -98,6 +107,7 @@
 				showBills: [],
 				userPriceMap: new Map(),
 				isshooting: false,
+				BillUsers: [],
 			};
 		},
 		computed: {
@@ -116,7 +126,8 @@
 				const formattedDate = today.toLocaleDateString('zh-CN'); // 中文格式
 				console.log(formattedDate); // 输出类似：2024/11/25
 				return formattedDate;
-			}
+			},
+
 		},
 		mounted() {
 			this.load();
@@ -126,17 +137,37 @@
 				return String(id).padStart(5, '0'); // 使用 padStart 补齐 0
 			},
 			async load() {
+
 				this.nowBills = await uni.getStorageSync(STORAGE_KEYS.CURRENTITEMS);
 				console.log("初始化project:", this.nowBills);
-				const result = this.nowBills.map((item, index) => ({
-					index: index,
-					name: item.name,
-					cnt: item.cnt,
-					price: item.price,
-					total: item.price
-				}));
+
+				const result = [];
+				for (const [index, item] of this.nowBills.entries()) {
+					// 先构建账目的基本信息
+					let billItem = {
+						index: index,
+						name: item.name,
+						cnt: item.cnt,
+						price: item.price,
+						total: item.price,
+						color: "black" // 默认设置为 black
+					};
+
+					// 查询 BillUser 表，检查是否有与此账目相关联的人员
+					const persons = await settleBill.selectBillUser("BillUser", item.id);
+
+					// 如果没有人员，则将 color 设置为 red
+					if (persons.length === 0) {
+						billItem.color = "red";
+					}
+
+					result.push(billItem);
+				}
+
 				this.showBills = result;
 				console.log(this.showBills);
+
+				// 调用计算价格的方法
 				this.computePerPrice();
 			},
 			async computePerPrice() {

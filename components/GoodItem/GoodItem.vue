@@ -2,20 +2,23 @@
 	<!-- 卡片 -->
 	<view class="Item-container" :style="{ height: contentHeight }">
 		<view class=" card">
-			<view class="top-bar">
-				<view style="font-size: 25rpx; width: 200rpx">名称</view>
-				<view style="font-size: 25rpx; width: 200rpx">数量</view>
-				<view style="font-size: 25rpx; width: 200rpx">价格</view>
+			<view class="top-bar" @click="toggleModal">
+				<view style="font-size: 25rpx; width: 200rpx" class="text">名称</view>
+				<view style="font-size: 25rpx; width: 200rpx" class="text">数量</view>
+				<view style="font-size: 25rpx; width: 200rpx" class="text">价格</view>
 				<image @click="toggleModal" src="../../static/GoodItem/edit.png" class="set-info"></image>
 			</view>
 			<view class="top-bar bot-bar">
-				<view class="input-item name" style="font-size: 25rpx; width: 200rpx">{{ showData.name }}</view>
-				<view class="input-item cnt" style="font-size: 25rpx; width: 200rpx">{{ showData.cnt }}</view>
-				<view class="input-item price" style="font-size: 25rpx; width: 200rpx">{{ showData.price }}</view>
+				<view class="input-item name" @click="toggleModal" style="font-size: 25rpx; width: 200rpx">
+					{{ showData.name }}</view>
+				<view class="input-item cnt" @click="toggleModal" style="font-size: 25rpx; width: 200rpx">
+					{{ showData.cnt }}</view>
+				<view class="input-item price" @click="toggleModal" style="font-size: 25rpx; width: 200rpx">
+					{{ showData.price }}</view>
 				<image @click="deleteSelf" src="../../static/GoodItem/delete.png" class="set-info"></image>
 			</view>
 
-			<uni-collapse>
+			<uni-collapse class="collapse">
 				<uni-collapse-item class="showPer" title="查看人员" @click="toggleCollapse">
 					<view class="content">
 						<view v-if="loading">加载中...</view>
@@ -35,10 +38,10 @@
 	<view v-if="showModal" class="modal">
 		<view class="modal-content">
 			<view class="modal-header">
-				<text>填写内容</text>
+				<text style="font-size:40rpx; margin-top: 10rpx;color:#014520">填写内容</text>
 				<view class="close-button" @click="toggleModal">×</view>
 			</view>
-
+			<up-divider></up-divider>
 			<!-- 表单内容 -->
 			<form @submit.prevent="submitForm">
 				<view class="form-group">
@@ -141,7 +144,7 @@
 							console.log("Item-container: " + itemData.height);
 
 							this.contentHeight =
-								`${this.pxToRpx(this.Persons.length*15 + itemData.height + 20)}rpx`;
+								`${this.pxToRpx(this.Persons.length*15 + 132 + 20)}rpx`;
 							console.log("调整后的高度:", this.contentHeight);
 
 
@@ -215,12 +218,16 @@
 <style scoped>
 	@import '@/components/GoodItem/box.css';
 
+	.text {
+		color: #014520;
+	}
+
 	.Item-container {
 		width: 700rpx;
 		height: auto;
 		background-color: RGB(250, 249, 240);
-		border-radius: 5rpx;
-		box-shadow: 5rpx 5rpx 9rpx rgba(0, 0, 0, 0.5);
+		border-radius: 20rpx;
+		//box-shadow: 5rpx 5rpx 9rpx rgba(0, 0, 0, 0.5);
 		margin: 20rpx;
 		overflow: visible;
 	}
@@ -258,9 +265,15 @@
 		text-align: center;
 		font-size: 20rpx;
 		border: 1px solid #000000;
-		height: 105rpx;
+		height: 107rpx;
 		border-radius: 8rpx;
 		overflow: visible;
+
+	}
+
+	.collapse {
+		background-color: #fff;
+		border-radius: 8rpx;
 	}
 
 	.content {
@@ -268,6 +281,7 @@
 		border: 1px solid #000000;
 		transition: height 0.3s ease;
 		overflow: visible;
+		border-radius: 8rpx;
 		background-color: #fff;
 		z-index: 510;
 	}

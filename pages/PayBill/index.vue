@@ -24,6 +24,7 @@
 		</view>
 		<!-- 列表 -->
 		<view class="item-container">
+
 			<GoodItem v-for="(item, idx) in currentItems" :key="item.id" :index="idx" :showData="item"
 				@delete-item="handleDelete" @update-item="handleUpdate" @edit-per="editPer" />
 		</view>
@@ -39,7 +40,7 @@
 		<!-- 弹窗 -->
 		<view v-if="showModalAddProject" class="modal-overlay">
 			<view class="modal-content">
-				<view class="modal-header">添加项目</view>
+				<view class="modal-header" style="color:#014520;">添加项目</view>
 				<view class="modal-body">
 					<input class="input" type="text" placeholder="请输入项目名称" v-model="newProjectName" />
 				</view>
@@ -52,11 +53,21 @@
 		<!-- 新增账单 -->
 		<view v-if="showModalAddBill" class="modal-overlay">
 			<view class="modal-content">
-				<view class="modal-header">添加账目</view>
+				<view class="modal-header" style="color:#014520;">添加账目</view>
+
 				<view class="modal-body">
-					<input class="input" type="text" placeholder="请输入名称" v-model="newItemName" />
-					<input class="input" type="text" placeholder="请输入数量" v-model="newItemCnt" />
-					<input class="input" type="text" placeholder="请输入价格" v-model="newItemPrice" />
+					<view style="margin-top:30rpx;color:#014520;">
+						<text style="margin-right: 500rpx;color:#014520;">名称</text>
+						<input class="input" type="text" placeholder="请输入名称" v-model="newItemName" />
+					</view>
+					<view style="margin-top:30rpx;color:#014520;">
+						<text style="margin-right: 500rpx;">数量</text>
+						<input class="input" type="text" placeholder="请输入数量" v-model="newItemCnt" />
+					</view>
+					<view style="margin-top:30rpx;color:#014520;">
+						<text style="margin-right: 500rpx;">价格</text>
+						<input class="input" type="text" placeholder="请输入价格" v-model="newItemPrice" />
+					</view>
 				</view>
 				<view class="modal-footer">
 					<button class="btn" @click="addBillsToDB">确认</button>
@@ -67,7 +78,7 @@
 		<!-- 编辑项目 -->
 		<view v-if="showModaledit" class="modal-overlay">
 			<view class="modal-content">
-				<view class="modal-header">添加项目</view>
+				<view class="modal-header" style="color:#014520;">编辑项目</view>
 				<view class="modal-body">
 					<input class="input" type="text" placeholder="请输入项目名称" v-model="updateProjectName" />
 				</view>
@@ -82,7 +93,7 @@
 		<!-- 编辑账单人员 -->
 		<view v-if="showModaleditPer" class="modal-overlay">
 			<view class="modal-content">
-				<view class="modal-header">编辑人员</view>
+				<view class="modal-header" style="color:#014520;">编辑人员</view>
 				<!-- 人员列表 -->
 				<uni-table ref="tableRef" border stripe emptyText="暂无更多数据" type="selection"
 					@selection-change="selectionChange">
@@ -175,17 +186,12 @@
 			this.reloadData();
 
 		},
-		onPullDownRefresh() {
-			console.log('refresh');
 
-			utils.initializeDB();
-			uni.stopPullDownRefresh();
-			this.reloadData();
-		},
 		methods: {
 
 			async reloadData() {
 				try {
+					utils.initializeDB();
 					console.log("重新加载数据...");
 					await this.selectProjects(); // 加载项目列表
 					await this.updateprojectBill(); // 加载账单数据
@@ -248,6 +254,7 @@
 				this.nowBillId = this.currentItems[index].id;
 				this.nowBillPerson = result;
 				console.log("nowBillPerson: ", result);
+
 
 			},
 			updateBillUserToDB() {
@@ -416,25 +423,30 @@
 
 <style scoped>
 	@import "@/pages/PayBill/box.css";
-	@import "@/pages/PayBill/inputbox.css";
+	@import "@/css/inputbox.css";
 
 	.total-price {
-		height: 60rpx;
-		background-color: white;
+		background-color: #183a32;
+		height: 100rpx;
+		color: white;
 		z-index: 1000;
 		position: fixed;
-		top: 80rpx;
+		bottom: 10rpx;
+		margin-top: 90rpx;
 		display: flex;
-		width: 100%;
+		width: 80%;
+		border-radius: 8rpx;
 		justify-content: center;
 		align-items: center;
-		height: 60rpx;
+
 	}
 
 	.main-container {
+		background-color: #ACBDAA;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		height: 100%
 	}
 
 
@@ -455,7 +467,7 @@
 		margin-right: 10rpx;
 		padding: 0 20rpx;
 		font-size: 28rpx;
-		background-color: #007aff;
+		background-color: #1f3e53;
 		color: white;
 		border-radius: 5rpx;
 		text-align: center;

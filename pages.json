@@ -12,15 +12,15 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "欢迎！！",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "欢迎！！"
+
 			}
 		},
 		{
 			"path": "pages/PayBill/index",
 			"style": {
-				"navigationBarTitleText": "分账啦",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "分账啦"
+
 			}
 		},
 		{
@@ -32,8 +32,8 @@
 		{
 			"path": "pages/home/index",
 			"style": {
-				"navigationBarTitleText": "人员",
-				"enablePullDownRefresh": true
+				"navigationBarTitleText": "人员"
+
 			}
 		},
 

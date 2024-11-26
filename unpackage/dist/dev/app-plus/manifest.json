@@ -75,6 +75,15 @@
           }
         }
       },
+      "splashscreen": {
+        "useOriginalMsgbox": false,
+        "androidStyle": "default",
+        "android": {
+          "hdpi": "static/logo.png",
+          "xhdpi": "static/logo.png",
+          "xxhdpi": "static/logo.png"
+        }
+      },
       "google": {
         "permissions": [
           "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
@@ -154,12 +163,6 @@
         {
           "pagePath": "pages/PayBill/index",
           "text": "分账",
-          "iconPath": "/static/paylist.png",
-          "selectedIconPath": "/static/paylistSelected.png"
-        },
-        {
-          "pagePath": "pages/sql/sql",
-          "text": "sql-test",
           "iconPath": "/static/paylist.png",
           "selectedIconPath": "/static/paylistSelected.png"
         },

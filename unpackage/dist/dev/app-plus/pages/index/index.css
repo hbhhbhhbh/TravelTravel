@@ -1,6 +1,10 @@
 
+.main-container[data-v-1cf27b2a] {
+		background-color: #ACBDAA;
+		height: 100%
+}
 .typing-container[data-v-1cf27b2a] {
-		margin-top: 6.25rem;
+		padding-top: 6.25rem;
 		align-items: center;
 		justify-content: center;
 		width: 100%;

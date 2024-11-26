@@ -1,7 +1,11 @@
 <template>
-	<div class="typing-container">
-		<span class="typing">HBH's Travel Tools</span>
-	</div>
+	<view class="main-container">
+
+
+		<view class="typing-container">
+			<span class="typing">HBH's Travel Tools</span>
+		</view>
+	</view>
 </template>
 <script>
 	import BillUser from '../../common/util/BillUser';
@@ -31,14 +35,9 @@
 
 			}
 		},
-		onPullDownRefresh() {
-			console.log('refresh');
 
-			utils.initializeDB();
-			uni.stopPullDownRefresh();
-
-		},
 		onLoad() {
+			utils.initializeDB();
 			// console.log('Sqlite:',Sqlite)
 			// this.open();
 		},
@@ -49,8 +48,13 @@
 	}
 </script>
 <style scoped>
+	.main-container {
+		background-color: #ACBDAA;
+		height: 100%
+	}
+
 	.typing-container {
-		margin-top: 200rpx;
+		padding-top: 200rpx;
 		align-items: center;
 		justify-content: center;
 		width: 100%;

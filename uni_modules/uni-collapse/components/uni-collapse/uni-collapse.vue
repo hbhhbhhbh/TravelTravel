@@ -14,7 +14,7 @@
 	 */
 	export default {
 		name: 'uniCollapse',
-		emits:['change','activeItem','input','update:modelValue'],
+		emits: ['change', 'activeItem', 'input', 'update:modelValue'],
 		props: {
 			value: {
 				type: [String, Array],
@@ -60,7 +60,7 @@
 			this.names = []
 		},
 		mounted() {
-			this.$nextTick(()=>{
+			this.$nextTick(() => {
 				this.setOpen(this.dataValue)
 			})
 		},
@@ -125,18 +125,19 @@
 				this.$emit('change', activeItem)
 				this.emit(activeItem)
 			},
-			emit(val){
+			emit(val) {
 				this.$emit('input', val)
 				this.$emit('update:modelValue', val)
 			}
 		}
 	}
 </script>
-<style lang="scss" >
+<style lang="scss">
 	.uni-collapse {
 		/* #ifndef APP-NVUE */
 		width: 100%;
 		display: flex;
+
 		/* #endif */
 		/* #ifdef APP-NVUE */
 		flex: 1;

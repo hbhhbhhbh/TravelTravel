@@ -1,17 +1,18 @@
 <template>
 	<view class="container">
 		<!-- 列表 -->
-		<up-search placeholder="输入搜索名字" v-model="keyword" :clearabled="true" :show-action="true" actionText="搜索"
-			@search="handleSearch" @custom="handleSearch">
+		<up-search style="background-color: white;" placeholder="输入搜索名字" v-model="keyword" :clearabled="true"
+			:show-action="true" actionText="搜索" @search="handleSearch" @custom="handleSearch">
 
 		</up-search>
 
 		<up-list @scrolltolower=" scrolltolower">
 			<up-list-item v-for="(item, index) in indexList" :key="index" class="items">
-				<up-cell :title=item.name>
+				<up-cell :title-style="`color:white`" :title=item.name>
+
 				</up-cell>
-				<image src="../../static/GoodItem/delete.png"
-					style="margin-top: 15rpx; height: 30rpx;width:30rpx ;margin-right: 35rpx;"
+				<image src="../../static/GoodItem/deleteWhite.png"
+					style="margin-top: 13rpx; height: 30rpx;width:30rpx ;margin-right: 35rpx;"
 					@click="showDeleteModal(index)">
 				</image>
 			</up-list-item>
@@ -21,7 +22,7 @@
 		<button class="add-button" @click="showAddModal">+</button>
 		<view v-if="showModal" class="modal-overlay">
 			<view class="modal-content">
-				<view class="modal-header">添加用户</view>
+				<view class="modal-header" style="color:#014520;">添加用户</view>
 				<view class="modal-body">
 					<input class="input" type="text" placeholder="请输入用户名称" v-model="newUserName" />
 				</view>
@@ -64,20 +65,14 @@
 				nowDeleteUser: ""
 			}
 		},
-		onPullDownRefresh() {
-			console.log('refresh');
 
-			utils.initializeDB();
-			uni.stopPullDownRefresh();
-
-		},
 		methods: {
 			async deleteUser(name) {
 				this.closeDeleteModal();
 				console.log("要删除的名字" + name);
 				try {
 					// 调用 selectInformationType，传入表名和查询条件
-					const result = await util.deleteInformationType("user", "name", name);
+					const result = await util.deleteUser(name);
 					console.log("用户" + name + "删除成功：");
 					this.handleSearch();
 				} catch (error) {
@@ -189,7 +184,7 @@
 			}
 		},
 		mounted() {
-			util.openSqlite();
+			utils.initializeDB();
 			this.loadUsers();
 		}
 	}
@@ -197,15 +192,16 @@
 
 
 <style scoped>
-	@import "@/pages/home/inputbox.css";
+	@import "@/css/inputbox.css";
 
 	.container {
 		display: flex;
 		flex-direction: column;
 		height: 100vh;
+
 		/* 占满整个屏幕 */
-		background-color: #f5f5f5;
-		position: relative;
+		background-color: #ACBDAA;
+
 	}
 
 
@@ -229,13 +225,13 @@
 	.add-button {
 		position: fixed;
 		/* 固定位置 */
-		bottom: 20px;
+		bottom: 40px;
 		/* 距离底部 20px */
 		right: 20px;
 		/* 距离右侧 20px */
 		width: 60px;
 		height: 60px;
-		background-color: #007aff;
+		background-color: #687267;
 		border: none;
 		border-radius: 50%;
 		color: white;
@@ -255,9 +251,13 @@
 	}
 
 	.items {
-		background-color: white;
+		border-radius: 10rpx;
+		margin-left: 30rpx;
+		width: 90%;
+
+		background-color: #788377;
 		display: flex;
 		justify-content: space-between;
-		margin-top: 10rpx;
+		margin-top: 20rpx;
 	}
 </style>

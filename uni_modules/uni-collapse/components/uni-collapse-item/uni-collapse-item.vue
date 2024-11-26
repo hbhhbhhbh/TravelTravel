@@ -254,12 +254,14 @@
 		/* #ifndef APP-NVUE */
 		box-sizing: border-box;
 
+
 		/* #endif */
 		&__title {
 			/* #ifndef APP-NVUE */
 			display: flex;
 			width: 100%;
 			box-sizing: border-box;
+
 			/* #endif */
 			flex-direction: row;
 			align-items: center;
@@ -277,6 +279,7 @@
 				padding: 0 15px;
 				/* #ifndef APP-NVUE */
 				display: flex;
+				border-radius: 8rpx;
 				width: 100%;
 				box-sizing: border-box;
 				/* #endif */
@@ -303,7 +306,7 @@
 			}
 
 			&.uni-collapse-item-border {
-				border-bottom: 1px solid #ebeef5;
+				//border-bottom: 1px solid #ebeef5;
 			}
 
 			&.is-open {
