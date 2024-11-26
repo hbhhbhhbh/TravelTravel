@@ -49,6 +49,8 @@
 		ref
 	} from 'vue';
 	import util from "@/common/util/operateSqlite.js";
+	import utils from '@/common/util/init.js';
+
 	const keyword = ref('');
 	export default {
 
@@ -61,6 +63,13 @@
 				showModaldelete: false, //控制删除确认弹窗
 				nowDeleteUser: ""
 			}
+		},
+		onPullDownRefresh() {
+			console.log('refresh');
+
+			utils.initializeDB();
+			uni.stopPullDownRefresh();
+
 		},
 		methods: {
 			async deleteUser(name) {

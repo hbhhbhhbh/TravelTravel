@@ -41,6 +41,7 @@
 			"path": "pages/settleBill/settleBill",
 			"style": {
 				"navigationBarTitleText": "结算"
+
 			}
 		}
 	],
@@ -60,13 +61,13 @@
 				"selectedIconPath": "static/paylistSelected.png"
 
 			},
-			{
-				"pagePath": "pages/sql/sql",
-				"text": "sql-test",
-				"iconPath": "static/paylist.png",
-				"selectedIconPath": "static/paylistSelected.png"
+			// {
+			// 	"pagePath": "pages/sql/sql",
+			// 	"text": "sql-test",
+			// 	"iconPath": "static/paylist.png",
+			// 	"selectedIconPath": "static/paylistSelected.png"
 
-			},
+			// },
 			{
 				"pagePath": "pages/home/index",
 				"text": "人员",

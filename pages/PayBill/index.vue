@@ -111,6 +111,7 @@
 	import Bill from '@/common/util/Bill.js';
 	import util from '@/common/util/operateSqlite.js';
 	import BillUser from '@/common/util/BillUser.js';
+	import utils from '@/common/util/init.js'
 	import {
 		STORAGE_KEYS
 	} from '@/utils/key.js';
@@ -146,6 +147,7 @@
 				nowBillId: '',
 			};
 		},
+
 		computed: {
 			currentItems() {
 				if (!this.projects.length) {
@@ -175,9 +177,10 @@
 		},
 		onPullDownRefresh() {
 			console.log('refresh');
-			setTimeout(function() {
-				uni.stopPullDownRefresh();
-			}, 1000);
+
+			utils.initializeDB();
+			uni.stopPullDownRefresh();
+			this.reloadData();
 		},
 		methods: {
 

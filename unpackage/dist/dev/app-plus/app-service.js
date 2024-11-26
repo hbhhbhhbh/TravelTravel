@@ -608,6 +608,66 @@ if (uni.restoreGlobal) {
     modifyInformation: modifyInformation$2,
     addUser: addUser$1
   };
+  const utils = {
+    async initializeDB() {
+      try {
+        await this.isopenDB();
+        await this.createBillTable();
+        await this.createBillUserTable();
+        await this.createProjectTable();
+        await this.createUserTable();
+        formatAppLog("log", "at common/util/init.js:10", "数据库初始化成功");
+      } catch (error2) {
+        formatAppLog("error", "at common/util/init.js:12", "数据库初始化失败：", error2);
+        throw error2;
+      }
+    },
+    async isopenDB() {
+      return util.openSqlite().then((result) => {
+        formatAppLog("log", "at common/util/init.js:20", "数据库打开成功：", result);
+        return result;
+      }).catch((error2) => {
+        formatAppLog("error", "at common/util/init.js:24", "数据库打开失败：", error2);
+        throw error2;
+      });
+    },
+    async createBillTable() {
+      return util.CreateBillSQL().then((result) => {
+        formatAppLog("log", "at common/util/init.js:32", "Bill表创建成功：", result);
+        return result;
+      }).catch((error2) => {
+        formatAppLog("error", "at common/util/init.js:36", "Bill表创建失败：", error2);
+        throw error2;
+      });
+    },
+    async createBillUserTable() {
+      return util.CreateBillUserSQL().then((result) => {
+        formatAppLog("log", "at common/util/init.js:44", "BillUser表创建成功：", result);
+        return result;
+      }).catch((error2) => {
+        formatAppLog("error", "at common/util/init.js:48", "BillUser表创建失败：", error2);
+        throw error2;
+      });
+    },
+    async createUserTable() {
+      return util.CreateUserSQL().then((result) => {
+        formatAppLog("log", "at common/util/init.js:56", "User表创建成功：", result);
+        return result;
+      }).catch((error2) => {
+        formatAppLog("error", "at common/util/init.js:60", "User表创建失败：", error2);
+        throw error2;
+      });
+    },
+    async createProjectTable() {
+      return util.CreateProjectSQL().then((result) => {
+        formatAppLog("log", "at common/util/init.js:68", "Project表创建成功：", result);
+        return result;
+      }).catch((error2) => {
+        formatAppLog("error", "at common/util/init.js:72", "Project表创建失败：", error2);
+        throw error2;
+      });
+    }
+  };
   const _export_sfc = (sfc, props2) => {
     const target = sfc.__vccOpts || sfc;
     for (const [key, val] of props2) {
@@ -637,152 +697,13 @@ if (uni.restoreGlobal) {
       };
     },
     onPullDownRefresh() {
-      formatAppLog("log", "at pages/index/index.vue:34", "refresh");
-      this.initializeDB();
+      formatAppLog("log", "at pages/index/index.vue:35", "refresh");
+      utils.initializeDB();
       uni.stopPullDownRefresh();
     },
     onLoad() {
     },
-    methods: {
-      async initializeDB() {
-        try {
-          await this.isopenDB();
-          await this.createBillTable();
-          await this.createBillUserTable();
-          await this.createProjectTable();
-          await this.createUserTable();
-          formatAppLog("log", "at pages/index/index.vue:52", "数据库初始化成功");
-        } catch (error2) {
-          formatAppLog("error", "at pages/index/index.vue:54", "数据库初始化失败：", error2);
-        }
-      },
-      clearBillUser() {
-        BillUser.clear("BillUser").then((result) => {
-          formatAppLog("log", "at pages/index/index.vue:60", "数据库清除成功：", result);
-        }).catch((error2) => {
-          formatAppLog("error", "at pages/index/index.vue:64", "数据库清除失败：", error2);
-        });
-      },
-      dropTable() {
-        util.dropTable().then((result) => {
-          formatAppLog("log", "at pages/index/index.vue:70", "表格删除成功：", result);
-        }).catch((error2) => {
-          formatAppLog("error", "at pages/index/index.vue:74", "表格删除失败：", error2);
-        });
-      },
-      isopenDB() {
-        util.openSqlite().then((result) => {
-          formatAppLog("log", "at pages/index/index.vue:80", "表格创建成功：", result);
-        }).catch((error2) => {
-          formatAppLog("error", "at pages/index/index.vue:84", "表格创建失败：", error2);
-        });
-      },
-      createBillTable() {
-        util.CreateBillSQL().then((result) => {
-          formatAppLog("log", "at pages/index/index.vue:92", "表格创建成功：", result);
-        }).catch((error2) => {
-          formatAppLog("error", "at pages/index/index.vue:96", "表格创建失败：", error2);
-        });
-      },
-      createBillUserTable() {
-        util.CreateBillUserSQL().then((result) => {
-          formatAppLog("log", "at pages/index/index.vue:104", "表格创建成功：", result);
-        }).catch((error2) => {
-          formatAppLog("error", "at pages/index/index.vue:108", "表格创建失败：", error2);
-        });
-      },
-      createUserTable() {
-        util.CreateUserSQL().then((result) => {
-          formatAppLog("log", "at pages/index/index.vue:116", "表格创建成功：", result);
-        }).catch((error2) => {
-          formatAppLog("error", "at pages/index/index.vue:120", "表格创建失败：", error2);
-        });
-      },
-      createProjectTable() {
-        util.CreateProjectSQL().then((result) => {
-          formatAppLog("log", "at pages/index/index.vue:128", "Project表格成功：", result);
-        }).catch((error2) => {
-          formatAppLog("error", "at pages/index/index.vue:132", "Project表格失败：", error2);
-        });
-      },
-      updateTable() {
-        util.updateTableStructure("Bill", "project", "INTEGER");
-      },
-      deleteTable() {
-        uni.showToast({
-          title: "测试",
-          icon: "success",
-          duration: 2e3
-        });
-        util.deleteTable("Bill").then((result) => {
-          uni.showToast({
-            title: "Bill表格删除成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/index/index.vue:152", "表格创建成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "表格创建失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/index/index.vue:160", "表格创建失败：", error2);
-        });
-      },
-      addproject(id, name) {
-        const obj = this.project1;
-        project.addUser(obj).then((result) => {
-          uni.showToast({
-            title: "Project插入成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/index/index.vue:171", "Project插入成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "Project插入失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/index/index.vue:179", "Project插入失败：", error2);
-        });
-      },
-      selectproject() {
-        project.selectInformationType("project").then((result) => {
-          uni.showToast({
-            title: "Project查询成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/index/index.vue:189", "Project查询成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "Project查询失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/index/index.vue:197", "Project查询失败：", error2);
-        });
-      },
-      deleteproject() {
-        project.deleteInformationType("project").then((result) => {
-          uni.showToast({
-            title: "Project删除成功",
-            icon: "success",
-            duration: 2e3
-          });
-          formatAppLog("log", "at pages/index/index.vue:207", "Project删除成功：", result);
-        }).catch((error2) => {
-          uni.showToast({
-            title: "Project删除失败",
-            icon: "error",
-            duration: 2e3
-          });
-          formatAppLog("error", "at pages/index/index.vue:215", "Project查询失败：", error2);
-        });
-      }
-    }
+    methods: {}
   };
   function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("div", { class: "typing-container" }, [
@@ -3118,12 +3039,12 @@ if (uni.restoreGlobal) {
       currentItems() {
         var _a;
         if (!this.projects.length) {
-          formatAppLog("warn", "at pages/PayBill/index.vue:152", "当前项目列表为空");
+          formatAppLog("warn", "at pages/PayBill/index.vue:154", "当前项目列表为空");
           return [];
         }
         const selectedProject = ((_a = this.projects[this.selectedProjectIndex]) == null ? void 0 : _a.projectName) || "默认项目";
-        formatAppLog("log", "at pages/PayBill/index.vue:156", "当前project:" + selectedProject);
-        formatAppLog("log", "at pages/PayBill/index.vue:157", "看看账单：" + this.projectItems[selectedProject]);
+        formatAppLog("log", "at pages/PayBill/index.vue:158", "当前project:" + selectedProject);
+        formatAppLog("log", "at pages/PayBill/index.vue:159", "看看账单：" + this.projectItems[selectedProject]);
         uni.setStorageSync(STORAGE_KEYS.CURRENTITEMS, this.projectItems[selectedProject] || []);
         return this.projectItems[selectedProject] || [];
       },
@@ -3137,49 +3058,49 @@ if (uni.restoreGlobal) {
       this.reloadData();
     },
     onPullDownRefresh() {
-      formatAppLog("log", "at pages/PayBill/index.vue:177", "refresh");
-      setTimeout(function() {
-        uni.stopPullDownRefresh();
-      }, 1e3);
+      formatAppLog("log", "at pages/PayBill/index.vue:179", "refresh");
+      utils.initializeDB();
+      uni.stopPullDownRefresh();
+      this.reloadData();
     },
     methods: {
       async reloadData() {
         try {
-          formatAppLog("log", "at pages/PayBill/index.vue:186", "重新加载数据...");
+          formatAppLog("log", "at pages/PayBill/index.vue:189", "重新加载数据...");
           await this.selectProjects();
           await this.updateprojectBill();
           await this.selectAllPer();
-          formatAppLog("log", "at pages/PayBill/index.vue:190", "数据重新加载完成");
+          formatAppLog("log", "at pages/PayBill/index.vue:193", "数据重新加载完成");
         } catch (error2) {
-          formatAppLog("error", "at pages/PayBill/index.vue:192", "重新加载数据时出错：", error2);
+          formatAppLog("error", "at pages/PayBill/index.vue:195", "重新加载数据时出错：", error2);
         }
       },
       //选中人员
       selectionChange(selectedRows) {
-        formatAppLog("log", "at pages/PayBill/index.vue:197", "选中的行", selectedRows);
+        formatAppLog("log", "at pages/PayBill/index.vue:200", "选中的行", selectedRows);
         const selectedRow = selectedRows.detail.index || [];
         this.nowBillPerson = selectedRow;
       },
       setDefaultSelection() {
         const selectedUserIds = this.nowBillPerson.map((person) => person.userid);
-        formatAppLog("log", "at pages/PayBill/index.vue:205", "selectedUserIds ", selectedUserIds);
+        formatAppLog("log", "at pages/PayBill/index.vue:208", "selectedUserIds ", selectedUserIds);
         const matchedDetails = this.AllPerson.map((person, index3) => ({
           person,
           index: index3
         })).filter(({
           person
         }) => selectedUserIds.includes(person.id));
-        formatAppLog("log", "at pages/PayBill/index.vue:217", "matchedDetails ", matchedDetails);
+        formatAppLog("log", "at pages/PayBill/index.vue:220", "matchedDetails ", matchedDetails);
         const index2 = matchedDetails.map(({
           index: index3
         }) => index3);
-        formatAppLog("log", "at pages/PayBill/index.vue:225", "detail ", index2);
+        formatAppLog("log", "at pages/PayBill/index.vue:228", "detail ", index2);
         this.$refs.tableRef.toggleRowSelection(index2, true);
       },
       //编辑账单人员
       async selectAllPer() {
         const result = await util.selectInformationType("user");
-        formatAppLog("log", "at pages/PayBill/index.vue:233", "找出的AllPerson", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:236", "找出的AllPerson", result);
         this.AllPerson = result;
         uni.setStorageSync(STORAGE_KEYS.AllPerson, result);
       },
@@ -3188,18 +3109,18 @@ if (uni.restoreGlobal) {
         this.selectAllPer().then(() => this.selectBillUser(index2).then(() => this.setDefaultSelection()));
       },
       async selectBillUser(index2) {
-        formatAppLog("log", "at pages/PayBill/index.vue:242", this.currentItems[index2]);
+        formatAppLog("log", "at pages/PayBill/index.vue:245", this.currentItems[index2]);
         const result = await BillUser.selectInformationType("BillUser", "Billid", this.currentItems[index2].id);
-        formatAppLog("log", "at pages/PayBill/index.vue:244", "当前账单: " + this.currentItems[index2] + "result: ", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:247", "当前账单: " + this.currentItems[index2] + "result: ", result);
         this.nowBillId = this.currentItems[index2].id;
         this.nowBillPerson = result;
-        formatAppLog("log", "at pages/PayBill/index.vue:247", "nowBillPerson: ", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:250", "nowBillPerson: ", result);
       },
       updateBillUserToDB() {
-        formatAppLog("log", "at pages/PayBill/index.vue:251", this.nowBillPerson);
+        formatAppLog("log", "at pages/PayBill/index.vue:254", this.nowBillPerson);
         const result = this.nowBillPerson.map((index2) => this.AllPerson[index2].id);
-        formatAppLog("log", "at pages/PayBill/index.vue:255", "选中的用户id:", result);
-        formatAppLog("log", "at pages/PayBill/index.vue:256", "当前账单Id:", this.nowBillId);
+        formatAppLog("log", "at pages/PayBill/index.vue:258", "选中的用户id:", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:259", "当前账单Id:", this.nowBillId);
         const result1 = result.map((userId) => {
           return {
             userid: userId,
@@ -3209,7 +3130,7 @@ if (uni.restoreGlobal) {
           };
         });
         BillUser.deleteInformationType("BillUser", "Billid", this.nowBillId);
-        formatAppLog("log", "at pages/PayBill/index.vue:266", "选中的用户与账单合成对象:", result1);
+        formatAppLog("log", "at pages/PayBill/index.vue:269", "选中的用户与账单合成对象:", result1);
         result1.forEach((obj) => {
           BillUser.addUser(obj);
         });
@@ -3220,30 +3141,30 @@ if (uni.restoreGlobal) {
         const result = await project.selectInformationType("project");
         if (result.length > 0)
           this.projects = result;
-        formatAppLog("log", "at pages/PayBill/index.vue:277", "SELECTPROJECTS: ", this.projects);
+        formatAppLog("log", "at pages/PayBill/index.vue:280", "SELECTPROJECTS: ", this.projects);
         this.projectNames = this.projects.map(
           (project2) => `${project2.id}: ${project2.projectName}`
         );
         this.selectedProjectIndex = 0;
-        formatAppLog("log", "at pages/PayBill/index.vue:282", this.projects);
+        formatAppLog("log", "at pages/PayBill/index.vue:285", this.projects);
       },
       handleProjectChange(e2) {
-        formatAppLog("log", "at pages/PayBill/index.vue:285", "e" + e2);
+        formatAppLog("log", "at pages/PayBill/index.vue:288", "e" + e2);
         this.selectedProjectIndex = parseInt(e2.detail.value, 10);
         uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
-        formatAppLog("log", "at pages/PayBill/index.vue:288", "测试本地缓存", uni.getStorageSync(STORAGE_KEYS.nowproject));
-        formatAppLog("log", "at pages/PayBill/index.vue:289", "切换到项目:", this.projects[this.selectedProjectIndex].projectName);
+        formatAppLog("log", "at pages/PayBill/index.vue:291", "测试本地缓存", uni.getStorageSync(STORAGE_KEYS.nowproject));
+        formatAppLog("log", "at pages/PayBill/index.vue:292", "切换到项目:", this.projects[this.selectedProjectIndex].projectName);
         this.updateprojectBill();
       },
       //更新Item
       handleDelete(index2) {
         this.projects[this.selectedProjectIndex].id;
-        formatAppLog("log", "at pages/PayBill/index.vue:295", this.currentItems[index2]);
+        formatAppLog("log", "at pages/PayBill/index.vue:298", this.currentItems[index2]);
         Bill.deleteInformationType("Bill", "id", this.currentItems[index2].id).then(() => this.updateprojectBill());
         BillUser.deleteInformationType("BillUser", "Billid", this.currentItems[index2].id);
       },
       handleUpdate(index2, updatedItem) {
-        formatAppLog("log", "at pages/PayBill/index.vue:302", "更新索引：", index2, "更新数据：", updatedItem);
+        formatAppLog("log", "at pages/PayBill/index.vue:305", "更新索引：", index2, "更新数据：", updatedItem);
         this.projects[this.selectedProjectIndex].projectName;
         Bill.modifyInformation(updatedItem).then(() => this.updateprojectBill());
       },
@@ -3269,12 +3190,12 @@ if (uni.restoreGlobal) {
       },
       //更新项目账单
       async updateprojectBill() {
-        formatAppLog("log", "at pages/PayBill/index.vue:338", "当前index: " + this.selectedProjectIndex);
+        formatAppLog("log", "at pages/PayBill/index.vue:341", "当前index: " + this.selectedProjectIndex);
         const selectedProjectId = this.projects[this.selectedProjectIndex].id;
         const selectedProject = this.projects[this.selectedProjectIndex].projectName;
-        formatAppLog("log", "at pages/PayBill/index.vue:341", "当前projects:", this.projects);
+        formatAppLog("log", "at pages/PayBill/index.vue:344", "当前projects:", this.projects);
         const result = await Bill.selectInformationType("Bill", "projectId", selectedProjectId);
-        formatAppLog("log", "at pages/PayBill/index.vue:343", "更新项目账单： ", result);
+        formatAppLog("log", "at pages/PayBill/index.vue:346", "更新项目账单： ", result);
         this.projectItems[selectedProject] = result;
       },
       //新增project
@@ -3288,7 +3209,7 @@ if (uni.restoreGlobal) {
         };
         project.addUser(obj);
         this.selectProjects();
-        formatAppLog("log", "at pages/PayBill/index.vue:359", "添加新项目:", this.newProjectName);
+        formatAppLog("log", "at pages/PayBill/index.vue:362", "添加新项目:", this.newProjectName);
         this.closeModal();
       },
       closeModal() {
@@ -3304,8 +3225,8 @@ if (uni.restoreGlobal) {
       //结算页面，开始生成账单
       handleSettle() {
         uni.setStorageSync(STORAGE_KEYS.nowproject, this.projects[this.selectedProjectIndex]);
-        formatAppLog("log", "at pages/PayBill/index.vue:377", "当前项目的结算数据:", this.currentItems);
-        formatAppLog("log", "at pages/PayBill/index.vue:378", "存入的project ", uni.getStorageSync(STORAGE_KEYS.nowproject));
+        formatAppLog("log", "at pages/PayBill/index.vue:380", "当前项目的结算数据:", this.currentItems);
+        formatAppLog("log", "at pages/PayBill/index.vue:381", "存入的project ", uni.getStorageSync(STORAGE_KEYS.nowproject));
         uni.navigateTo({
           url: "/pages/settleBill/settleBill"
         });
@@ -7851,16 +7772,21 @@ if (uni.restoreGlobal) {
         nowDeleteUser: ""
       };
     },
+    onPullDownRefresh() {
+      formatAppLog("log", "at pages/home/index.vue:68", "refresh");
+      utils.initializeDB();
+      uni.stopPullDownRefresh();
+    },
     methods: {
       async deleteUser(name) {
         this.closeDeleteModal();
-        formatAppLog("log", "at pages/home/index.vue:68", "要删除的名字" + name);
+        formatAppLog("log", "at pages/home/index.vue:77", "要删除的名字" + name);
         try {
           const result = await util.deleteInformationType("user", "name", name);
-          formatAppLog("log", "at pages/home/index.vue:72", "用户" + name + "删除成功：");
+          formatAppLog("log", "at pages/home/index.vue:81", "用户" + name + "删除成功：");
           this.handleSearch();
         } catch (error2) {
-          formatAppLog("error", "at pages/home/index.vue:75", "加载用户失败：", error2);
+          formatAppLog("error", "at pages/home/index.vue:84", "加载用户失败：", error2);
           uni.showToast({
             title: "加载用户失败",
             icon: "none"
@@ -7885,14 +7811,14 @@ if (uni.restoreGlobal) {
             this.loadUsers();
             return;
           } else {
-            formatAppLog("log", "at pages/home/index.vue:104", "按条件搜索： " + keyword2);
+            formatAppLog("log", "at pages/home/index.vue:113", "按条件搜索： " + keyword2);
             result = await util.selectInformationType("user", "name", '"' + keyword2 + '%"');
-            formatAppLog("log", "at pages/home/index.vue:107", "result: ", result);
+            formatAppLog("log", "at pages/home/index.vue:116", "result: ", result);
           }
-          formatAppLog("log", "at pages/home/index.vue:109", "用户列表加载成功：", result);
+          formatAppLog("log", "at pages/home/index.vue:118", "用户列表加载成功：", result);
           this.indexList = result;
         } catch (error2) {
-          formatAppLog("error", "at pages/home/index.vue:112", "加载用户失败：", error2);
+          formatAppLog("error", "at pages/home/index.vue:121", "加载用户失败：", error2);
           uni.showToast({
             title: "加载用户失败",
             icon: "none"
@@ -7902,11 +7828,11 @@ if (uni.restoreGlobal) {
       async loadUsers() {
         try {
           const result = await util.selectInformationType("user");
-          formatAppLog("log", "at pages/home/index.vue:123", "用户列表加载成功：", result);
+          formatAppLog("log", "at pages/home/index.vue:132", "用户列表加载成功：", result);
           this.indexList = result;
           uni.setStorageSync("AllPerson", result);
         } catch (error2) {
-          formatAppLog("error", "at pages/home/index.vue:127", "加载用户失败：", error2);
+          formatAppLog("error", "at pages/home/index.vue:136", "加载用户失败：", error2);
           uni.showToast({
             title: "加载用户失败",
             icon: "none"
@@ -7951,7 +7877,7 @@ if (uni.restoreGlobal) {
           this.closeModal();
           this.loadUsers();
         } catch (error2) {
-          formatAppLog("error", "at pages/home/index.vue:174", "添加用户失败：", error2);
+          formatAppLog("error", "at pages/home/index.vue:183", "添加用户失败：", error2);
           uni.showToast({
             title: "用户添加失败",
             icon: "none"
